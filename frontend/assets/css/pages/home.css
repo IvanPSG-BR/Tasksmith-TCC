@@ -1,0 +1,76 @@
+#home_hdr{
+    background-color: #d8e6fa;
+    background-image: url("http://localhost/Tasksmith/frontend/assets/images/textures/clouds.webp");
+    background-size: contain;
+    opacity: 95%;
+}
+
+#logo{
+    display: flex;
+    align-items: center;
+    padding-left: 1rem;
+}
+
+#logo > h1{
+    color: #676370;
+    font-family: "MedievalSharp", system-ui;
+    font-size: 3rem;
+    letter-spacing: 6%;
+    font-weight: 600;
+}
+
+#anvil{
+    width: 2rem;
+}
+
+#auth_section{
+    display: flex;
+    padding-right: 0.25rem;
+}
+
+#auth_section > li{
+    padding: 0.6rem;
+    padding-bottom: 1rem;
+    list-style: none;
+}
+
+#home_ftr{
+    background-color: #583e28;
+    opacity: 95%;
+}
+
+.home_nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.no_bg_btn{
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    display: flex;
+    justify-self: center;
+}
+
+.no_bg_btn > img{
+    width: 2rem;
+    height: auto;
+}
+
+.wooden_sign{
+    background-color: #d98530;
+    background-image: url("http://localhost/Tasksmith/frontend/assets/images/textures/dark-wood.webp");
+    background-repeat: repeat;
+    padding: 0.25rem;
+}
+
+.auth_btn{
+    cursor: pointer;
+    border: goldenrod solid 0.15rem;
+    color: antiquewhite;
+    font-family: "Pirata One", system-ui;
+    letter-spacing: 0.06rem;
+    font-weight: 500;
+    font-size: larger;
+}
