@@ -1,8 +1,18 @@
-#logomarca{
-    width: 5rem;
-    height: auto;
-    margin-left: 1rem;
-    margin-right: 0.5rem;
-    margin-bottom: 1rem;
-    border: darkgray solid 0.15rem;
+#logo{
+    display: flex;
+    align-items: center;
+    padding-left: 1rem;
+}
+
+.no_bg_btn{
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    display: flex;
+}
+
+.home_nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
