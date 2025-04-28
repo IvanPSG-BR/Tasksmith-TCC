@@ -6,18 +6,19 @@
         <meta name="description" content="Agendador de Tarefas gamificado no estilo RPG Medieval">
 
         <link rel="stylesheet" href="assets/css/style.css">
+        <link rel="stylesheet" href="assets/css/pages/home.css">
 
-        <title>Tasksmith - Construa suas Tarefas!</title>
+        <title>Tasksmith - Forje suas Tarefas!</title>
         <link rel="icon" href="favicon.ico">
     </head>
 
     <body>
         <header id="home_hdr">
-            <nav class="home_nav">
+            <nav class="nav just-between">
                 <ul id="logo">
-                    <li><img src="assets/images/icons/notepad.webp" alt="" id="notepad"></li>
-                    <li><h1>Tasksmith</h1></li>
-                    <li><button class="no_bg_btn"><img src="assets/images/icons/anvil.webp" id="anvil" alt="anvil_emoji"></button></li>
+                    <li><img src="assets/images/icons/notepad.webp" alt="notepad" id="notepad_icon"></li>
+                    <li><h1 id="logo_name">TaskSmith</h1></li>
+                    <li><button class="no-bg-btn" id="anvil_btn"><img src="assets/images/icons/anvil.webp" alt="anvil" id="anvil_icon"></button></li>
                 </ul>
 
                 <ul id="menu">
@@ -27,21 +28,22 @@
                 </ul>
 
                 <ul id="auth">
-                    <li><a href=""><button class="wooden_sign auth_btn">Entrar</button></a></li>
+                    <li><a href=""><button class="no-bg-btn" id="login_btn">Entrar</button></a></li>
                 </ul>
             </nav>
         </header>
 
         <main>
             <section id="cta">
-
+                <div id="background"><img src="assets/images/home-bg.webp" alt=""></div>
             </section>
+            <div class="section-transition img-to-paper"></div>
 
             <section id="lore">
 
             </section>
 
-            <section id="imgs">
+            <section id="slideshow">
 
             </section>
 
@@ -60,31 +62,29 @@
 
         <footer id="home_ftr">
             <nav>
-                <ul>
-                    <li>Linha</li>
-                    <li class="home_nav">
-                        <span>
-                            <h6>Conteúdo</h6>
-                            <h6>Do</h6>
-                            <h6>Footer</h6>
-                        </span>
-
-                        <span>
-                            <h6>Mais</h6>
-                            <h6>Conteúdo</h6>
-                            <h6>Do Footer</h6>
-                        </span>
-
-                        <span>
-                            <h6>Ainda mais</h6>
-                            <h6>Conteúdo</h6>
-                            <h6>Do Footer</h6>
-                        </span>
+                <div>Linha</div>
+                <ul class="nav just-center">
+                    <li>
+                        <p>Conteúdo</p>
+                        <p>Do</p>
+                        <p>Footer</p>
                     </li>
-                    <li>Linha</li>
 
-                    <li>Todos os direitos reservados</li>
+                    <li>
+                        <p>Mais</p>
+                        <p>Conteúdo</p>
+                        <p>Do Footer</p>
+                    </li>
+
+                    <li>
+                        <p>Ainda mais</p>
+                        <p>Conteúdo</p>
+                        <p>Do Footer</p>
+                    </li>
                 </ul>
+                <div>Linha</div>
+
+                <p>Todos os direitos reservados</p>
             </nav>
         </footer>
     </body>
