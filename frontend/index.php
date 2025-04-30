@@ -22,8 +22,8 @@
                 </ul>
 
                 <ul id="menu">
-                    <li><a href="">Sobre Nós</a></li>
-                    <li><a href="">Páginas</a></li>
+                    <li><a href="">Sobre</a></li>
+                    <li><button class="no-bg-btn"><img src="assets/images/icons/menu.svg" alt="menu icon" id="nav_menu"></img></button></li>
                     <li><a href="">Contato</a></li>
                 </ul>
 
@@ -35,7 +35,7 @@
 
         <main>
             <section id="cta">
-                <div id="background"><img src="assets/images/home-bg.webp" alt=""></div>
+
             </section>
             <div class="section-transition img-to-paper"></div>
 

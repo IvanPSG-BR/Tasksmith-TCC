@@ -28,6 +28,7 @@
     font-family: "MedievalSharp", cursive;
     font-size: 1.75rem;
     color: #898792;
+    filter: brightness(1.2);
     padding-inline: 0.2rem;
     white-space: nowrap;
 }
@@ -55,6 +56,13 @@
     color: #e6e6e6;
 }
 
+#nav_menu{
+    padding-top: 0.08rem;
+    width: 1.2rem;
+    height: auto;
+    filter: invert(1);
+}
+
 /* HEADER - Auth */
 
 #auth{
@@ -69,7 +77,7 @@
     font-family: "Pirata One", cursive;
     font-size: 1.25rem;
     letter-spacing: 0.06rem;
-    color: hsl(40, 90%, 50%);
+    color: #f2a60d;
     padding-top: 0.1rem;
     padding-bottom: 0.1rem;
     border-radius: 0.5rem;
@@ -80,7 +88,7 @@
 /* FOOTER */
 
 #home_ftr{
-    background-color: rgb(140, 135, 150);
+    background-color: #8c8796;
 }
 
 #home_ftr > nav > ul > li{
