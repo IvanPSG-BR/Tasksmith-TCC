@@ -18,7 +18,7 @@ body{
     min-height: 100%;
     max-width: 100%;
     position: relative;
-    background-color: #ffdeb3;
+    background-color: #ffd399;
     background-image: url(../../images/textures/leather.webp);
     background-size: cover;
     background-repeat: no-repeat;
@@ -31,7 +31,7 @@ body{
 
 header{
     width: 100%;
-    min-height: 5vh;
+    min-height: 8vh;
 }
 
 main{
@@ -39,7 +39,7 @@ main{
 }
 
 footer{
-    min-height: 20vh;
+    overflow-y: hidden;
 }
 
 a{

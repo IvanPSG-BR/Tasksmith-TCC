@@ -1,4 +1,4 @@
-#home_hdr{
+#hdr{
     position: fixed;
     background: linear-gradient(#00060aab, #00060a00);
     z-index: 1;
@@ -6,7 +6,7 @@
 
 /* HEADER - Logo */
 
-#logo {
+#logo{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -27,8 +27,7 @@
 #logo_name{
     font-family: "MedievalSharp", cursive;
     font-size: 1.75rem;
-    color: #898792;
-    filter: brightness(1.2);
+    color: #f2a60dbf;
     padding-inline: 0.2rem;
     white-space: nowrap;
 }
@@ -46,14 +45,17 @@
 }
 
 #menu > li{
-    padding-inline: 1.75rem;
+    padding-inline: 1.1rem;
 }
 
 #menu > li > a{
     font-family: "Pirata One", cursive;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     letter-spacing: 0.1rem;
-    color: #e6e6e6;
+    color: #cac9cf;
+    padding-inline: 0.4rem;
+    background-color: #57535f2d;    
+    border-radius: 0.8rem;
 }
 
 #nav_menu{
@@ -69,29 +71,32 @@
     display: flex;
     align-items: center;
     padding-top: 0.4rem;
-    padding-right: 1.5rem;
-    height: 100%;
+    padding-inline: 1.5rem;
 }
 
 #login_btn{
+    position: relative;
+    z-index: 1;
     font-family: "Pirata One", cursive;
-    font-size: 1.25rem;
+    font-size: 1.3rem;
     letter-spacing: 0.06rem;
-    color: #f2a60d;
-    padding-top: 0.1rem;
-    padding-bottom: 0.1rem;
-    border-radius: 0.5rem;
-    margin-right: 0.5rem;
-    white-space: nowrap; 
+    color: #5a2a83;
+    filter: brightness(1.2) contrast(1.5);
+    padding: 0.1rem;
+    padding-inline: 0.4rem;
+    background-color: #57535f40;    
+    border-radius: 0.8rem;
+    white-space: nowrap;
 }
 
 /* FOOTER */
 
-#home_ftr{
+#ftr{
     background-color: #8c8796;
+    height: 15vh;
 }
 
-#home_ftr > nav > ul > li{
+#ftr > nav > ul > li{
     padding-inline: 2.5rem;
 }
 

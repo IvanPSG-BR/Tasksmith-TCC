@@ -13,17 +13,17 @@
     </head>
 
     <body>
-        <header id="home_hdr">
+        <header id="hdr">
             <nav class="nav just-between">
                 <ul id="logo">
                     <li><img src="assets/images/icons/notepad.webp" alt="notepad" id="notepad_icon"></li>
-                    <li><h1 id="logo_name">TaskSmith</h1></li>
+                    <li><a href=""><h1 id="logo_name">TaskSmith</h1></a></li>
                     <li><button class="no-bg-btn" id="anvil_btn"><img src="assets/images/icons/anvil.webp" alt="anvil" id="anvil_icon"></button></li>
                 </ul>
 
                 <ul id="menu">
                     <li><a href="">Sobre</a></li>
-                    <li><button class="no-bg-btn"><img src="assets/images/icons/menu.svg" alt="menu icon" id="nav_menu"></img></button></li>
+                    <li><button class="no-bg-btn"><img src="assets/images/icons/menu.svg" alt="menu icon" id="nav_menu"></button></li>
                     <li><a href="">Contato</a></li>
                 </ul>
 
@@ -35,7 +35,11 @@
 
         <main>
             <section id="cta">
-
+                <div>
+                    <span id="cta_title">TÍTULO</span>
+                    <span id="cta_text">TEXTO</span>
+                    <span id="cta_btn"><a href=""><button>BOTÃO</button></a></span>
+                </div>
             </section>
             <div class="section-transition img-to-paper"></div>
 
@@ -60,9 +64,9 @@
             </section>
         </main>
 
-        <footer id="home_ftr">
+        <footer id="ftr">
+            <div>Linha</div>
             <nav>
-                <div>Linha</div>
                 <ul class="nav just-center">
                     <li>
                         <p>Conteúdo</p>
@@ -82,10 +86,10 @@
                         <p>Do Footer</p>
                     </li>
                 </ul>
-                <div>Linha</div>
-
-                <p>Todos os direitos reservados</p>
             </nav>
+            <div>Linha</div>
+
+            <p>Todos os direitos reservados</p>            
         </footer>
     </body>
 </html>
