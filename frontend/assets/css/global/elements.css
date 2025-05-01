@@ -4,18 +4,23 @@
     z-index: 1;
 }
 
+#hdr > nav{
+    height: inherit;
+    width: inherit;
+}
+
 /* HEADER - Logo */
 
 #logo{
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0.25rem 1.6rem;
-    background-image: url(../../images/medieval-elements/frames/rectangle-frame-3-darkbrown.webp);
+    padding-inline: 1.6rem;
+    background-image: url(../images/medieval-elements/frames/rectangle-frame-3-darkbrown.webp);
     background-repeat: no-repeat;
     background-position: center;
-    background-size: 100% 100%;
-    width: fit-content;    
+    background-size: 100% 120%;
+    width: fit-content;
     max-height: 5vh;
     min-height: min-content;
 }
@@ -26,7 +31,6 @@
 
 #logo_name{
     font-family: "MedievalSharp", cursive;
-    font-size: 1.75rem;
     color: #f2a60dbf;
     padding-inline: 0.2rem;
     white-space: nowrap;
@@ -41,24 +45,21 @@
 #menu{
     display: flex;
     justify-content: space-between;
-    padding-top: 0.5rem;
 }
 
 #menu > li{
-    padding-inline: 1.1rem;
+    padding-inline: 1rem;
 }
 
 #menu > li > a{
     font-family: "Pirata One", cursive;
-    font-size: 1.2rem;
     letter-spacing: 0.1rem;
     color: #cac9cf;
-    padding-inline: 0.4rem;
     background-color: #57535f2d;    
     border-radius: 0.8rem;
 }
 
-#nav_menu{
+#nav_sections{
     padding-top: 0.08rem;
     width: 1.2rem;
     height: auto;
@@ -70,7 +71,6 @@
 #auth{
     display: flex;
     align-items: center;
-    padding-top: 0.4rem;
     padding-inline: 1.5rem;
 }
 
@@ -78,7 +78,6 @@
     position: relative;
     z-index: 1;
     font-family: "Pirata One", cursive;
-    font-size: 1.3rem;
     letter-spacing: 0.06rem;
     color: #5a2a83;
     filter: brightness(1.2) contrast(1.5);
@@ -112,67 +111,4 @@
 .nav{
     display: flex;
     align-items: center;
-}
-
-.just-between{
-    justify-content: space-between;
-}
-
-.just-center{
-    justify-content: center;
-}
-
-/* Para telas menores que 768px */
-@media screen and (max-width: 768px) {
-    #menu > li > a {
-        font-size: 1rem;
-    }
-
-    #login_btn {
-        font-size: 1.1rem;
-    }
-
-    #logo_name {
-        font-size: 1.5rem;
-    }
-}
-
-/* Para telas ainda menores, tipo celular */
-@media screen and (max-width: 480px) {
-    #menu > li > a {
-        font-size: 0.9rem;
-        padding-inline: 1rem;
-    }
-
-    #login_btn {
-        font-size: 1rem;
-    }
-
-    #logo_name {
-        font-size: 1.25rem;
-    }
-
-    #menu > li {
-        padding-inline: 1rem;  /* Reduzir o padding entre itens do menu */
-    }
-}
-
-/* Para telas muito pequenas */
-@media screen and (max-width: 360px) {
-    #menu > li > a {
-        font-size: 0.8rem;
-        padding-inline: 0.5rem;
-    }
-
-    #login_btn {
-        font-size: 0.9rem;
-    }
-
-    #logo_name {
-        font-size: 1.1rem;
-    }
-
-    #menu > li {
-        padding-inline: 0.75rem;
-    }
 }
