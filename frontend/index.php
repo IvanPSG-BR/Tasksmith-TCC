@@ -37,9 +37,13 @@
         <main>
             <section id="cta">
                 <div>
-                    <span id="cta_title">TÍTULO</span>
-                    <span id="cta_text">TEXTO</span>
-                    <span id="cta_btn"><a href=""><button>BOTÃO</button></a></span>
+                    <span id="cta_title" class="text-base sm:text-xl md:text-2xl"><h1>"Enquanto há vida, Há esperança"</h1></span>
+                    <span id="cta_text">
+                        <p class="text-xs sm:text-base md:text-lg">
+                            Você recebeu uma nova chance para mudar sua vida. Agora, com tempo, sabedoria e Hammilton ao seu lado, é hora de transformar metas em missões — e tarefas em conquistas.
+                        </p>
+                    </span>
+                    <span id="cta_btn"><a href=""><button class="text-base sm:text-xl md:text-2xl">Começar Jornada</button></a></span>
                 </div>
             </section>
             <div class="section-transition img-to-paper"></div>

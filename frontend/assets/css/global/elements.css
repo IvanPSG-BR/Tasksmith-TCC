@@ -31,7 +31,9 @@
 
 #logo_name{
     font-family: "MedievalSharp", cursive;
-    color: #f2a60dbf;
+    color: #f2a60d;
+    text-shadow: 0rem -0.1rem rgba(255, 255, 255, 0.699);
+    filter: contrast(1.2);
     padding-inline: 0.2rem;
     white-space: nowrap;
 }
@@ -55,7 +57,7 @@
     font-family: "Pirata One", cursive;
     letter-spacing: 0.1rem;
     color: #cac9cf;
-    background-color: #57535f2d;    
+    background: radial-gradient(circle, #4a535850, transparent);  
     border-radius: 0.8rem;
 }
 
@@ -79,11 +81,13 @@
     z-index: 1;
     font-family: "Pirata One", cursive;
     letter-spacing: 0.06rem;
-    color: #5a2a83;
-    filter: brightness(1.2) contrast(1.5);
+    color: #f2a60dbf;
+    text-shadow: 0rem -0.1rem #00000050;
+    filter: contrast(1.2);
     padding: 0.1rem;
     padding-inline: 0.4rem;
-    background-color: #57535f40;    
+    background-color: #57535f40;
+    background: radial-gradient(circle, #4a535850, transparent);  
     border-radius: 0.8rem;
     white-space: nowrap;
 }
