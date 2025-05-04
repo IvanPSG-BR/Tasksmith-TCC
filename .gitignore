@@ -1,6 +1,6 @@
-/.env
-/.htaccess
-/vendor/
-/node_modules/
-/composer.lock
-/package-lock.json
+.env
+.htaccess
+vendor/
+node_modules/
+composer.lock
+package-lock.json
