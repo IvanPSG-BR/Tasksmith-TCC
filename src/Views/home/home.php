@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-br">
     <head>
-        <?php $assets = "public/assets"?>
+        <?php $assets = "public/assets";?>
 
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,13 +25,13 @@
                 </ul>
 
                 <ul id="menu">
-                    <li><a href="" class="text-sm px-0.5 sm:text-base sm:px-1 md:text-xl md:px-1.5">Sobre</a></li>
+                    <li><a href="/about-project" class="text-sm px-0.5 sm:text-base sm:px-1 md:text-xl md:px-1.5">Sobre</a></li>
                     <li><button class="no-bg-btn"><img src=<?php echo "{$assets}/images/icons/menu.svg"?> alt="menu icon" id="nav_sections"></button></li>
-                    <li><a href="" class="text-sm px-0.5 sm:text-base sm:px-1 md:text-xl md:px-1.5">Contato</a></li>
+                    <li><a href="" class="text-sm px-0.5 sm:text-base sm:px-1 md:text-xl md:px-1.5">Opção 2</a></li>
                 </ul>
 
                 <ul id="auth">
-                    <li><a href=""><button class="no-bg-btn text-base sm:text-xl md:text-2xl" id="login_btn">Entrar</button></a></li>
+                    <li><a href="/login"><button class="no-bg-btn text-base sm:text-xl md:text-2xl" id="login_btn">Entrar</button></a></li>
                 </ul>
             </nav>
         </header>
@@ -45,7 +45,7 @@
                             Você recebeu uma nova chance para mudar sua vida. Agora, com tempo, sabedoria e Hammilton ao seu lado, é hora de transformar metas em missões — e tarefas em conquistas.
                         </p>
                     </span>
-                    <span id="cta_btn"><a href=""><button class="text-base sm:text-xl md:text-2xl">Começar Jornada</button></a></span>
+                    <span id="cta_btn"><a href="/signup"><button class="text-base sm:text-xl md:text-2xl">Começar Jornada</button></a></span>
                 </div>
             </section>
             <div class="section-transition img-to-paper"></div>

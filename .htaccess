@@ -1,0 +1,66 @@
+# Ativar o motor de reescrita
+RewriteEngine On
+
+# Definir diretório base
+RewriteBase /
+
+# Proteger apenas o arquivo .env (mais crítico para segurança)
+<Files ~ "^\.env$">
+    Order allow,deny
+    Deny from all
+</Files>
+
+# Nota: Proteção de diretórios sensíveis foi removida para evitar problemas com virtual hosts
+# É recomendável implementar essa proteção no servidor de produção
+
+# Definir página de erro 404
+ErrorDocument 404 /index.php
+
+# Definir página de erro 403
+ErrorDocument 403 /index.php
+
+# Definir página de erro 500
+ErrorDocument 500 /index.php
+
+# Permitir acesso direto a arquivos e diretórios existentes
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Redirecionar todas as requisições para index.php
+RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
+
+# Comprimir arquivos para melhorar performance
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/x-javascript application/json
+</IfModule>
+
+# Definir cabeçalhos de cache para melhorar performance
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType image/jpg "access plus 1 year"
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/gif "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/webp "access plus 1 year"
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+    ExpiresByType text/javascript "access plus 1 month"
+    ExpiresByType text/html "access plus 1 day"
+</IfModule>
+
+# Desativar a assinatura do servidor
+ServerSignature Off
+
+# Definir o charset padrão
+AddDefaultCharset UTF-8
+
+# Permitir acesso a arquivos específicos
+<Files ~ "\.(css|js|jpg|jpeg|png|gif|webp|ico|svg|woff|woff2|ttf|eot)$">
+    Order allow,deny
+    Allow from all
+    Satisfy any
+</Files>
+
+# Forçar HTTPS (descomente se estiver usando HTTPS)
+# RewriteCond %{HTTPS} off
+# RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]

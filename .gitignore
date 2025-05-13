@@ -1,5 +1,4 @@
 .env
-.htaccess
 vendor/
 node_modules/
 composer.lock

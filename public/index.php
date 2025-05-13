@@ -5,18 +5,21 @@ use App\Router;
 
 // Verifica se o acesso está vindo do index.php da raiz
 if (!defined('FROM_ROOT')) {
-    echo "Você não deveria estar aqui >:(";
-    echo "<a href=\"/\">Voltar para página inicial</a>";
+    header('Location: /');
+    exit;
 }
 
-$url = $_SERVER['REQUEST_URI'];
-$path = parse_url($url, PHP_URL_PATH);
-
-if (isset(Router::web_routes()[$path])) {
-    // Apresentar página (view) correspondente à URL
-    require_once Router::web_routes()[$path];
-} else {
-    // Tratar página não encontrada (404)
-    header("HTTP/1.0 404 Not Found");
-    echo "404 Página Não Encontrada";
+function front_controller(string $url) {
+    $paths = Router::web_routes();
+    if (isset($paths[$url])) {
+        // Apresentar página (view) correspondente à URL
+        require_once $paths[$url];
+    } else {
+        // Tratar página não encontrada (404)
+        header("HTTP/1.0 404 Not Found");
+        echo "404 Página Não Encontrada";
+    }
 }
+
+$url = "/" . $_GET['url'];
+front_controller($url);
