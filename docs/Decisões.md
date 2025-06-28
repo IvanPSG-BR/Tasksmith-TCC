@@ -1,0 +1,85 @@
+# Decisões Fundamentais e Planejamento Estratégico do Tasksmith
+
+Este documento detalha o processo de planejamento estratégico e as decisões fundamentais tomadas durante o desenvolvimento do Tasksmith, abrangendo aspectos de arquitetura, funcionalidades, priorização e roadmap.
+
+## 1. Processo de Planejamento Estratégico
+
+O planejamento estratégico do Tasksmith foi guiado por uma abordagem **iterativa e incremental**, com foco principal na entrega de um **Produto Mínimo Viável (MVP)** robusto e funcional para o Trabalho de Conclusão de Curso (TCC). A metodologia adotada enfatizou o **aprendizado prático** e a **resolução de problemas**, com cada etapa de implementação de funcionalidade sendo acompanhada de:
+
+* **Registro de Decisões:** Documentação das escolhas técnicas e de design.
+* **Identificação de Desafios:** Análise dos obstáculos encontrados durante o desenvolvimento.
+* **Soluções Implementadas:** Detalhamento de como os desafios foram superados, incluindo pesquisa e aquisição de novos conhecimentos.
+* **Reflexão:** Avaliação do aprendizado em cada etapa e sua contribuição para o conhecimento geral do desenvolvedor.
+
+Este processo garantiu que o projeto não fosse apenas a criação de um produto, mas também um relato detalhado da jornada de desenvolvimento e aprendizado.
+
+## 2. Decisões Fundamentais Tomadas
+
+As seguintes decisões foram cruciais para moldar o Tasksmith e seu desenvolvimento:
+
+### 2.1. Arquitetura Monolítica
+
+* **Justificativa:** A escolha de uma arquitetura monolítica foi feita para **otimizar o desenvolvimento e a entrega do MVP** dentro do prazo do TCC. Esta abordagem simplifica a gestão do projeto, a depuração e a implantação inicial, permitindo um foco maior na implementação das funcionalidades essenciais. Além disso, facilita a compreensão dos fundamentos de uma aplicação web completa sem a complexidade adicional de múltiplos serviços.
+* **Alternativas Consideradas:** Arquiteturas baseadas em microsserviços foram consideradas, mas descartadas para o escopo do MVP devido à sua maior complexidade de desenvolvimento, orquestração e implantação, o que poderia desviar o foco do objetivo principal do TCC.
+* **Impacto Esperado:** Desenvolvimento ágil, menor curva de aprendizado inicial, facilidade de manutenção e implantação para o MVP.
+
+### 2.2. Tecnologias "Puras" (PHP puro, JavaScript vanilla, Tailwind CSS)
+
+* **Justificativa:** A decisão de utilizar PHP puro, JavaScript vanilla e Tailwind CSS visa demonstrar a capacidade de construir uma aplicação web robusta e funcional sem a dependência excessiva de frameworks complexos. Esta escolha promove um **aprendizado aprofundado das linguagens e tecnologias base**, permitindo um controle mais granular sobre o código e uma compreensão mais clara dos mecanismos internos da aplicação. Adicionalmente, a **curva de aprendizado menor** dessas tecnologias contribui para a otimização do tempo de entrega do projeto.
+* **Alternativas Consideradas:** Frameworks populares como Laravel (PHP), React/Vue/Angular (JavaScript) e Bootstrap/Materialize (CSS) foram consideradas. No entanto, a prioridade foi dada à compreensão dos fundamentos e à minimização de abstrações para o contexto do TCC.
+* **Impacto Esperado:** Maior controle sobre o código, otimização potencial de performance para o MVP, e um conhecimento mais sólido das tecnologias subjacentes.
+
+### 2.3. Foco na Gamificação com Tema RPG Medieval
+
+* **Justificativa:** O cerne do Tasksmith é transformar a gestão de tarefas em uma **experiência envolvente e motivadora**. A aplicação de elementos de RPG medieval (XP, Ouro, Níveis, Customização de Personagem, Mapa de Jornada) foi escolhida para criar um ambiente lúdico que incentive a conclusão de tarefas e o engajamento do usuário. Este tema é amplamente reconhecido e oferece um vasto campo para a criatividade no design. Além disso, a escolha do tema fantasia medieval é motivada pela **paixão pessoal**, o que proporciona um **maior engajamento** e, consequentemente, uma **dedicação aprimorada** ao desenvolvimento do projeto.
+* **Alternativas Consideradas:** Outros temas de gamificação (ex: ficção científica, esportes) ou abordagens mais abstratas foram possíveis, mas o tema medieval foi selecionado por sua riqueza visual e narrativa, que se alinha bem com a proposta de transformar tarefas em "aventuras".
+* **Impacto Esperado:** Aumento significativo da motivação e produtividade do usuário, diferenciação do Tasksmith no mercado de aplicativos de gestão de tarefas. Embora um nicho possa ter um alcance inicial mais restrito, a qualidade da execução tem o potencial de fomentar uma **comunidade robusta e engajada**.
+
+### 2.4. Utilização do GamifyPHP para Implementação da Gamificação
+
+* **Justificativa:** A decisão de utilizar a biblioteca GamifyPHP foi tomada para **acelerar o desenvolvimento das mecânicas de gamificação** e garantir uma implementação robusta e bem estruturada dos elementos de RPG no Tasksmith. O GamifyPHP oferece uma **base sólida e testada** para sistemas de pontuação, níveis, conquistas e recompensas, permitindo que o foco do desenvolvimento seja direcionado para a **experiência do usuário e a integração temática** ao invés da criação de algoritmos básicos de gamificação do zero. Além disso, a biblioteca é **compatível com PHP puro**, alinhando-se perfeitamente com a decisão de utilizar tecnologias "puras" no projeto.
+* **Alternativas Consideradas:** Foram avaliadas três principais alternativas: (1) **Implementação própria completa** dos sistemas de gamificação, que demandaria tempo significativo e poderia introduzir bugs desnecessários; (2) **Integração com APIs externas** como Habitica ou Todoist, que limitaria o controle sobre a experiência do usuário e criaria dependências externas; (3) **Frameworks de gamificação mais complexos**, que introduziriam overhead desnecessário para o escopo do MVP.
+* **Impacto Esperado:** Redução significativa do tempo de desenvolvimento das funcionalidades de gamificação, maior confiabilidade dos sistemas de XP e níveis, possibilidade de implementar funcionalidades avançadas (como conquistas e badges) de forma mais eficiente, e manutenção da filosofia de controle total sobre o código através de uma biblioteca leve e bem documentada.
+
+### 2.5. Definição do Escopo do Produto Mínimo Viável (MVP)
+
+* **Justificativa:** Para garantir a conclusão do projeto dentro do prazo do TCC, foi essencial definir um escopo claro e limitado para o MVP. As funcionalidades selecionadas (Página Inicial, Autenticação, Painel do Usuário, Gestão de Tarefas CRUD, Sistema de XP e Níveis, Loja de Itens e Customização de Personagem, Mapa de Jornada, Notificações e Penalidades) representam o conjunto mínimo necessário para demonstrar o conceito central de gamificação e produtividade.
+* **Alternativas Consideradas:** Funcionalidades mais avançadas, como WebSockets para notificações em tempo real, sistemas de clãs, ou uma variedade maior de itens e customizações, foram identificadas como "Trabalhos Futuros" ou "Oportunidades Futuras", mas conscientemente excluídas do MVP para evitar a diluição do foco e o atraso na entrega.
+* **Impacto Esperado:** Entrega de um produto funcional e demonstrável dentro do cronograma, validação dos princípios de gamificação aplicados.
+
+### 2.6. Metodologia de Desenvolvimento Iterativa e Incremental com Ênfase na Documentação do Processo de Aprendizado
+
+* **Justificativa:** Esta metodologia foi adotada para que o TCC não fosse apenas a descrição de um produto final, mas também um **relato da jornada de aprendizado e resolução de problemas**. Ao documentar decisões, desafios e soluções em cada etapa, o projeto ganha um valor acadêmico adicional, servindo como um estudo de caso prático de desenvolvimento de software.
+* **Alternativas Consideradas:** Metodologias mais lineares, como o modelo Cascata (Waterfall), foram consideradas inadequadas para um projeto com forte componente de aprendizado prático e a necessidade de adaptação contínua.
+* **Impacto Esperado:** Documentação rica em insights técnicos e pedagógicos, fortalecimento do caráter de pesquisa e aprendizado do TCC.
+
+## 3. Abrangência dos Aspectos
+
+### 3.1. Arquitetura
+
+A arquitetura do Tasksmith é monolítica, com uma clara separação lógica entre o frontend e o backend.
+
+* **Frontend:** Desenvolvido com HTML, CSS (utilizando Tailwind CSS para utilitários e estilização rápida) e JavaScript vanilla para interatividade. As views são renderizadas no servidor e complementadas com lógica no cliente.
+* **Backend:** Implementado em PHP puro, responsável pela lógica de negócios, manipulação de dados e interação com o banco de dados. Inclui módulos para autenticação, gestão de tarefas, sistema de XP/Níveis, loja e customização.
+* **Banco de Dados:** Utilizado para persistir todos os dados da aplicação, incluindo usuários, tarefas, itens, inventário e notificações.
+
+### 3.2. Funcionalidades
+
+O MVP do Tasksmith abrange as seguintes funcionalidades principais:
+
+* **Autenticação e Autorização:** Login e cadastro de usuários.
+* **Gestão de Tarefas (CRUD):** Criação, leitura, atualização e exclusão de tarefas, incluindo suporte a sub-tarefas e marcação de conclusão.
+* **Sistema de XP e Níveis:** Geração de pontos de experiência e "Ouro" ao concluir tarefas, com progressão de nível do personagem.
+* **Loja de Itens e Customização de Personagem:** Aquisição de itens com "Ouro" e visualização dinâmica do personagem com itens equipados.
+* **Mapa de Jornada:** Visualização de tarefas e metas como um caminho de progresso, com interatividade para detalhes.
+* **Notificações:** Sistema para alertar o usuário sobre eventos importantes (ganho de XP, subida de nível, tarefas atrasadas).
+* **Política de Penalidades:** Dedução de XP ou Ouro para tarefas não cumpridas no prazo.
+
+### 3.3. Priorização e Roadmap
+
+A priorização foi focada na entrega do MVP para o TCC, garantindo que as funcionalidades essenciais de gamificação e produtividade estivessem presentes e operacionais. O roadmap implícito no projeto prevê:
+
+* **Fase 1 (MVP - TCC):** Implementação das funcionalidades listadas acima, com foco na estabilidade e demonstração do conceito.
+* **Fase 2 (Trabalhos Futuros):** Expansão das funcionalidades, como aprimoramento das notificações (potencialmente com WebSockets), adição de mais tipos de itens e customizações, implementação de sistemas sociais (ex: amigos, clãs), e aprofundamento das mecânicas de jogo.
+
+O desenvolvimento seguirá um ciclo iterativo, permitindo a adição de novas funcionalidades e melhorias contínuas após a conclusão do MVP.

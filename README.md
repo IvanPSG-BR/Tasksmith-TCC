@@ -1,8 +1,7 @@
 
 # Tasksmith
 
-![Logomarca Tasksmith](https://github.com/IvanPSG-BR/Tasksmith/blob/main/public/assets/images/logomarca.jpg)
-
+![Logomarca Tasksmith](https://github.com/IvanPSG-BR/Tasksmith-TCC/blob/main/public/assets/images/logomark.png)
 
 ## *Você foi um grande artesão. Criava maravilhas, moldava sonhos... mas desperdiçou tempo como quem deixa areia escorrer por entre os dedos.*
 
@@ -14,6 +13,7 @@ Ao seu lado?  Seu velho martelo, agora falante e auto intitulado Hammilton, teim
 Está pronto para forjar sua nova jornada?"
 
 ## Descrição do Projeto
+
 Tasksmith é uma To‑do List gamificada com temática RPG medieval, onde você assume o papel de um artesão renascido e forja seu próprio destino organizando tarefas e metas. Cada ação do dia a dia vira uma “missão” com recompensas e desafios, e seu ajudante tagarela, Hammilton (seu antigo martelo), não vai deixar você sossegar até cumprir cada objetivo.
 
 ### Principais funcionalidades
@@ -37,6 +37,7 @@ Tasksmith é uma To‑do List gamificada com temática RPG medieval, onde você 
 ## Sobre o Desenvolvimento
 
 ### MVP para TCC
+
 Este projeto está sendo desenvolvido como Trabalho de Conclusão de Curso (TCC), com foco na entrega de um MVP (Produto Mínimo Viável) funcional. Para esta fase inicial, optei por:
 
 - **Estrutura Simplificada:** Arquitetura mais direta e sem frameworks complexos para facilitar o desenvolvimento e a avaliação acadêmica.
@@ -44,6 +45,7 @@ Este projeto está sendo desenvolvido como Trabalho de Conclusão de Curso (TCC)
 - **Monolito:** Backend e frontend no mesmo repositório para simplificar a implantação e demonstração.
 
 ### Planos Futuros
+
 Após a conclusão do TCC, pretendo continuar o desenvolvimento com:
 
 - **Separação de API e Frontend:** Criação de repositórios distintos para backend e frontend.
@@ -87,22 +89,26 @@ Tasksmith-TCC/
 ## Instalação
 
 1. Clone o repositório:
+
    ```bash
    git clone https://github.com/IvanPSG-BR/Tasksmith.git
    cd Tasksmith
    ```
 
 2. Instale as dependências do PHP:
+
    ```bash
    composer install
    ```
 
 3. Instale as dependências do Tailwind CSS:
+
    ```bash
    npm install
    ```
 
 4. Compile os estilos CSS:
+
    ```bash
    npm run tailwind
    ```
@@ -110,6 +116,7 @@ Tasksmith-TCC/
 5. Configure seu servidor web (Apache/XAMPP) para apontar para o diretório do projeto.
 
 6. Acesse o projeto em seu navegador:
+
    ```
    http://localhost/Tasksmith-TCC/
    ```
