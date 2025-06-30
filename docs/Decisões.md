@@ -22,12 +22,14 @@ As seguintes decisões foram cruciais para moldar o Tasksmith e seu desenvolvime
 * **Justificativa:** A escolha de uma arquitetura monolítica foi feita para **otimizar o desenvolvimento e a entrega do MVP** dentro do prazo do TCC. Esta abordagem simplifica a gestão do projeto, a depuração e a implantação inicial, permitindo um foco maior na implementação das funcionalidades essenciais. Além disso, facilita a compreensão dos fundamentos de uma aplicação web completa sem a complexidade adicional de múltiplos serviços.
 * **Alternativas Consideradas:** Arquiteturas baseadas em microsserviços foram consideradas, mas descartadas para o escopo do MVP devido à sua maior complexidade de desenvolvimento, orquestração e implantação, o que poderia desviar o foco do objetivo principal do TCC.
 * **Impacto Esperado:** Desenvolvimento ágil, menor curva de aprendizado inicial, facilidade de manutenção e implantação para o MVP.
+* **Implementação Realizada:** A estrutura final adotada organiza o projeto em diretórios claros: `src/` para código PHP, `public/` para arquivos acessíveis pelo navegador, e `config/` para configurações, mantendo a simplicidade monolítica desejada.
 
 ### 2.2. Tecnologias "Puras" (PHP puro, JavaScript vanilla, Tailwind CSS)
 
 * **Justificativa:** A decisão de utilizar PHP puro, JavaScript vanilla e Tailwind CSS visa demonstrar a capacidade de construir uma aplicação web robusta e funcional sem a dependência excessiva de frameworks complexos. Esta escolha promove um **aprendizado aprofundado das linguagens e tecnologias base**, permitindo um controle mais granular sobre o código e uma compreensão mais clara dos mecanismos internos da aplicação. Adicionalmente, a **curva de aprendizado menor** dessas tecnologias contribui para a otimização do tempo de entrega do projeto.
 * **Alternativas Consideradas:** Frameworks populares como Laravel (PHP), React/Vue/Angular (JavaScript) e Bootstrap/Materialize (CSS) foram consideradas. No entanto, a prioridade foi dada à compreensão dos fundamentos e à minimização de abstrações para o contexto do TCC.
 * **Impacto Esperado:** Maior controle sobre o código, otimização potencial de performance para o MVP, e um conhecimento mais sólido das tecnologias subjacentes.
+* **Implementação Realizada:** O Tailwind CSS foi configurado com sucesso para compilação automática, permitindo estilização moderna e responsiva. O sistema de roteamento foi implementado em PHP puro, demonstrando controle total sobre o fluxo da aplicação.
 
 ### 2.3. Foco na Gamificação com Tema RPG Medieval
 
@@ -47,11 +49,18 @@ As seguintes decisões foram cruciais para moldar o Tasksmith e seu desenvolvime
 * **Alternativas Consideradas:** Funcionalidades mais avançadas, como WebSockets para notificações em tempo real, sistemas de clãs, ou uma variedade maior de itens e customizações, foram identificadas como "Trabalhos Futuros" ou "Oportunidades Futuras", mas conscientemente excluídas do MVP para evitar a diluição do foco e o atraso na entrega.
 * **Impacto Esperado:** Entrega de um produto funcional e demonstrável dentro do cronograma, validação dos princípios de gamificação aplicados.
 
-### 2.6. Metodologia de Desenvolvimento Iterativa e Incremental com Ênfase na Documentação do Processo de Aprendizado
+### 2.6. Implementação de Sistema de Roteamento Personalizado
+
+* **Justificativa:** A decisão de implementar um sistema de roteamento próprio ao invés de utilizar frameworks existentes foi tomada para **demonstrar compreensão dos mecanismos de roteamento web** e manter o controle total sobre o fluxo da aplicação. Esta abordagem permite um aprendizado mais aprofundado sobre como as requisições HTTP são processadas e direcionadas.
+* **Alternativas Consideradas:** Frameworks como Laravel ou Slim PHP foram considerados, mas descartados para manter a filosofia de "tecnologias puras" e maximizar o aprendizado.
+* **Impacto Esperado:** Maior compreensão dos fundamentos web, controle total sobre o roteamento, e flexibilidade para implementações futuras.
+* **Implementação Realizada:** Foi desenvolvido um sistema de roteamento em PHP puro com suporte a URLs amigáveis através de .htaccess, permitindo navegação intuitiva entre as páginas da aplicação.
+
+### 2.8. Metodologia de Desenvolvimento Iterativa e Incremental com Ênfase na Documentação do Processo de Aprendizado
 
 * **Justificativa:** Esta metodologia foi adotada para que o TCC não fosse apenas a descrição de um produto final, mas também um **relato da jornada de aprendizado e resolução de problemas**. Ao documentar decisões, desafios e soluções em cada etapa, o projeto ganha um valor acadêmico adicional, servindo como um estudo de caso prático de desenvolvimento de software.
-* **Alternativas Consideradas:** Metodologias mais lineares, como o modelo Cascata (Waterfall), foram consideradas inadequadas para um projeto com forte componente de aprendizado prático e a necessidade de adaptação contínua.
 * **Impacto Esperado:** Documentação rica em insights técnicos e pedagógicos, fortalecimento do caráter de pesquisa e aprendizado do TCC.
+* **Implementação Realizada:** Cada commit foi documentado com mensagens detalhadas explicando as mudanças implementadas, criando um histórico completo da evolução do projeto e das decisões tomadas.
 
 ## 3. Abrangência dos Aspectos
 

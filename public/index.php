@@ -9,11 +9,29 @@ if (!defined('FROM_ROOT')) {
     exit;
 }
 
-function front_controller(string $url) {
+function front_controller(string $url, string $http_method) {
     $paths = Router::web_routes();
     if (isset($paths[$url])) {
-        // Apresentar página (view) correspondente à URL
-        require_once $paths[$url];
+        $controller = explode("@", $paths[$url])[0];
+        $action = explode("@", $paths[$url])[1];
+
+        $current_controller = new ("App\\Controllers\\" . $controller);
+
+        switch ($http_method) {
+            case "GET":
+                Router::get($url, $paths[$url]);
+                $current_controller->$action();
+
+            case "POST":
+                Router::post($url, $paths[$url]);
+
+            case "PUT":
+                Router::put($url, $paths[$url]);
+
+            case "DELETE":
+                Router::delete($url, $paths[$url]);
+        }
+
     } else {
         // Tratar página não encontrada (404)
         header("HTTP/1.0 404 Not Found");
@@ -22,4 +40,4 @@ function front_controller(string $url) {
 }
 
 $url = "/" . $_GET['url'];
-front_controller($url);
+front_controller($url, $_SERVER['REQUEST_METHOD']);

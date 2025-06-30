@@ -10,13 +10,23 @@ Este projeto é altamente relevante para um TCC por permitir a exploração prá
 **Aspectos Técnicos do MVP:**
 O MVP do Tasksmith para o TCC incluirá:
 
-* **Página Inicial:** Apresentação do projeto e seus conceitos.
-* **Autenticação:** Funcionalidades de Login e Cadastro de Usuários.
-* **Painel do Usuário:** Navegação para as áreas de "Aventura" (onde as tarefas são gerenciadas) e "Configurações".
-* **Gestão de Tarefas:** Criação, edição e remoção de tarefas.
+* **Página Inicial:** Apresentação do projeto e seus conceitos com seção call-to-action implementada.
+* **Sistema de Roteamento:** Implementação de roteador personalizado em PHP puro com URLs amigáveis.
+* **Autenticação:** Funcionalidades de Login e Cadastro de Usuários (estrutura preparada).
+* **Painel do Usuário:** Navegação para as áreas de "Forja", "Quadro de Missões", "Inventário", "Loja", "Jornadas" e "Configurações".
+* **Gestão de Tarefas:** Criação, edição e remoção de tarefas (estrutura preparada).
 * **Sistema de XP e Níveis:** Conclusão de tarefas para ganho de experiência e progressão de nível do personagem.
 * **Loja de Itens e Customização de Personagem:** Aquisição de itens com "Ouro" (gerado por XP) para personalizar o avatar do usuário.
 * **Mapa de Jornada:** Visualização de tarefas como um caminho de progresso, com suporte a sub-tarefas e metas de curto, médio e longo prazo.
+
+**Estado Atual da Implementação:**
+
+* ✅ **Estrutura Base:** Arquitetura monolítica implementada com organização clara de diretórios
+* ✅ **Sistema de Roteamento:** Router personalizado funcional com suporte a URLs amigáveis
+* 🔄 **Página Inicial:** Interface responsiva com Tailwind CSS e seção call-to-action, outras seções em progresso
+* ✅ **Configuração de Ambiente:** Tailwind CSS configurado, .htaccess implementado, estrutura de assets organizada
+* 🔄 **Páginas de Autenticação:** Estrutura criada, aguardando implementação da lógica
+* 🔄 **Funcionalidades de Gamificação:** Estrutura preparada para implementação futura
 
 ## 2. Proposta de Escopo do TCC
 
@@ -33,14 +43,19 @@ Desenvolver uma aplicação web gamificada (Tasksmith) que auxilie na organizaç
 
 **Objetivos Específicos:**
 
-1. Projetar e implementar um sistema de autenticação e autorização para usuários.
-2. Desenvolver as funcionalidades essenciais de gestão de tarefas (CRUD), incluindo suporte a sub-tarefas e metas.
-3. Implementar um sistema de experiência (XP) e níveis atrelado à conclusão de tarefas, gerando "Ouro" como recompensa.
-4. Desenvolver uma loja de itens e um sistema de customização visual do personagem.
-5. Implementar a visualização de "Mapa de Jornada" para tarefas, metas e progresso do usuário.
-6. Analisar a arquitetura monolítica e a escolha de tecnologias (PHP puro, JS vanilla, Tailwind CSS) para o desenvolvimento ágil do MVP.
-7. Discutir os princípios de gamificação aplicados no Tasksmith (XP, Níveis, Loja, Customização, Mapa de Jornada) e seus potenciais impactos na motivação do usuário.
-8. Documentar o processo de desenvolvimento, destacando os desafios técnicos e as soluções adotadas, como parte da estratégia de aprendizado prático.
+1. ✅ **Implementar uma arquitetura monolítica bem estruturada** com separação clara de responsabilidades entre diretórios e componentes.
+2. ✅ **Desenvolver um sistema de roteamento personalizado** em PHP puro para gerenciar navegação e URLs amigáveis.
+3. ✅ **Criar interface responsiva e atrativa** para a página inicial com elementos temáticos medievais.
+4. 🔄 **Projetar e implementar um sistema de autenticação e autorização** para usuários (estrutura preparada).
+5. 🔄 **Desenvolver as funcionalidades essenciais de gestão de tarefas (CRUD)**, incluindo suporte a sub-tarefas e metas.
+6. 🔄 **Implementar um sistema de experiência (XP) e níveis** atrelado à conclusão de tarefas, gerando "Ouro" como recompensa.
+7. 🔄 **Desenvolver uma loja de itens e um sistema de customização visual** do personagem.
+8. 🔄 **Implementar a visualização de "Mapa de Jornada"** para tarefas, metas e progresso do usuário.
+9. ✅ **Analisar a arquitetura monolítica e a escolha de tecnologias** (PHP puro, JS vanilla, Tailwind CSS) para o desenvolvimento ágil do MVP.
+10. 🔄 **Discutir os princípios de gamificação aplicados** no Tasksmith e seus potenciais impactos na motivação do usuário.
+11. ✅ **Documentar o processo de desenvolvimento**, destacando os desafios técnicos e as soluções adotadas, como parte da estratégia de aprendizado prático.
+
+**Legenda:** ✅ Concluído | 🔄 Em desenvolvimento/Planejado
 
 ### 2.3. Estrutura do TCC (Sugestão de Capítulos/Seções)
 
@@ -51,80 +66,106 @@ Desenvolver uma aplicação web gamificada (Tasksmith) que auxilie na organizaç
   * 1.4. Estrutura do Trabalho
 
 * **Capítulo 2: Fundamentação Teórica**
-  * 2.1. Desenvolvimento Web: Conceitos e Tecnologias (PHP, JavaScript, CSS)
-  * 2.2. Arquiteturas de Software: Monolítica vs. Microsserviços (foco na escolha para o MVP)
-  * 2.3. Gamificação: Definição, Elementos e Princípios
-  * 2.4. Gamificação na Produtividade e Educação
+  * 2.1. Gamificação: Conceitos e Aplicações
+  * 2.2. Produtividade e Motivação: Teorias Psicológicas
+  * 2.3. Desenvolvimento Web com Tecnologias "Puras"
+  * 2.4. Arquiteturas Monolíticas vs. Microsserviços
 
-* **Capítulo 3: Projeto e Desenvolvimento do Tasksmith**
-  * 3.1. Requisitos Funcionais e Não Funcionais do MVP
-  * 3.2. Arquitetura do Sistema (com diagrama)
-  * 3.3. Tecnologias Utilizadas e Justificativa da Escolha
-  * 3.4. Detalhamento das Funcionalidades Implementadas (Autenticação, Gestão de Tarefas, Sistema de XP, Envio de Notificações)
-  * 3.5. Desafios Técnicos e Soluções Adotadas (Aprendizado Prático)
+* **Capítulo 3: Metodologia**
+  * 3.1. Abordagem de Desenvolvimento (Iterativa e Incremental)
+  * 3.2. Tecnologias Utilizadas (PHP, JS Vanilla, Tailwind CSS)
+  * 3.3. Ferramentas de Desenvolvimento e Versionamento
 
-* **Capítulo 4: Análise da Gamificação no Tasksmith**
-  * 4.1. Elementos de Gamificação Aplicados (XP, Níveis, Recompensas Implícitas)
-  * 4.2. Potenciais Impactos na Motivação e Produtividade
-  * 4.3. Limitações e Oportunidades Futuras
+* **Capítulo 4: Desenvolvimento do Tasksmith**
+  * 4.1. Planejamento e Definição do MVP
+  * 4.2. Arquitetura e Design do Sistema
+  * 4.3. Implementação das Funcionalidades
+    * 4.3.1. Sistema de Autenticação
+    * 4.3.2. Gestão de Tarefas (CRUD)
+    * 4.3.3. Sistema de XP e Níveis
+    * 4.3.4. Loja de Itens e Customização
+    * 4.3.5. Mapa de Jornada
+  * 4.4. Desafios Técnicos e Soluções Adotadas
 
-* **Capítulo 5: Conclusão**
-  * 5.1. Resultados Alcançados
-  * 5.2. Contribuições do Trabalho
-  * 5.3. Trabalhos Futuros
-  * 5.4. Considerações Finais
+* **Capítulo 5: Análise e Discussão**
+  * 5.1. Avaliação da Arquitetura Monolítica
+  * 5.2. Eficácia dos Elementos de Gamificação
+  * 5.3. Experiência do Usuário e Interface
+  * 5.4. Limitações e Oportunidades de Melhoria
 
-### 2.4. Metodologia (Aprendizado Prático)
+* **Capítulo 6: Considerações Finais**
+  * 6.1. Conclusões
+  * 6.2. Trabalhos Futuros
+  * 6.3. Contribuições do Projeto
 
-A metodologia será baseada no desenvolvimento iterativo e incremental do Tasksmith, com ênfase na documentação do processo de aprendizado. Cada etapa de implementação de uma funcionalidade será acompanhada de:
+### 2.4. Metodologia de Documentação do Processo de Aprendizado
 
-* **Registro de Decisões:** Por que certas abordagens técnicas foram escolhidas.
-* **Identificação de Desafios:** Problemas encontrados durante o desenvolvimento.
-* **Soluções Implementadas:** Como os desafios foram superados, incluindo a pesquisa e o aprendizado de novas técnicas ou conceitos.
+Uma característica distintiva deste TCC será a **documentação detalhada do processo de aprendizado** durante o desenvolvimento. Cada etapa de implementação será acompanhada de:
+
+* **Decisões:** Justificativas para escolhas técnicas e de design.
+* **Desafios:** Obstáculos encontrados e como foram identificados.
+* **Soluções:** Estratégias adotadas para superar os desafios, incluindo pesquisa e aquisição de novos conhecimentos.
 * **Reflexão:** O que foi aprendido em cada etapa e como isso contribui para o conhecimento geral do desenvolvedor.
 
 Esta abordagem permitirá que o TCC não seja apenas a descrição de um produto, mas também um relato da jornada de aprendizado e resolução de problemas.
 
-## 3. Diagrama de Arquitetura (Mermaid)
+## 3. Diagrama de Arquitetura Implementada (Mermaid)
 
 ```mermaid
 graph TD
     A[Usuário] -->|Acessa| B(Navegador Web)
     B -->|Requisição HTTP| C(Servidor Web - Apache/XAMPP)
-    C -->|Redireciona| D(public/index.php)
-    D -->|Inicializa| E(src/Router.php)
-    E -->|Mapeia Rota| F{Controlador/View Correspondente}
+    C -->|.htaccess Rewrite| D(index.php - Raiz)
+    D -->|Redireciona| E(public/index.php)
+    E -->|Inicializa| F(src/Router.php)
+    F -->|Mapeia Rota| G{View Correspondente}
 
-    subgraph Backend (PHP Puro)
-        F --> G[Autenticação/Autorização]
-        F --> H[Gestão de Tarefas (CRUD)]
-        F --> I[Sistema de XP e Níveis]
-        F --> J[Loja de Itens]
-        F --> K[Customização de Personagem]
-        G -- Dados --> L(Banco de Dados)
-        H -- Dados --> L
-        I -- Dados --> L
-        J -- Dados --> L
-        K -- Dados --> L
+    subgraph "Estrutura Implementada"
+        subgraph "Sistema de Roteamento ✅"
+            F --> H[Rotas Web Definidas]
+            H --> I[/home → home.php]
+            H --> J[/login → login.php]
+            H --> K[/signup → signup.php]
+            H --> L[/game/* → game views]
+        end
+
+        subgraph "Views Implementadas ✅"
+            G --> M[src/Views/home/home.php]
+            G --> N[src/Views/auth/* (estrutura)]
+            G --> O[src/Views/game/* (estrutura)]
+            G --> P[src/Views/info/* (estrutura)]
+        end
+
+        subgraph "Assets e Estilização ✅"
+            M --> Q[public/assets/css/style.css]
+            M --> R[public/assets/js/main.js]
+            M --> S[public/assets/images/*]
+            Q --> T[Tailwind CSS Compilado]
+            T --> U[Responsividade Implementada]
+        end
+
+        subgraph "Configuração e Segurança ✅"
+            C --> V[.htaccess - URLs Amigáveis]
+            V --> W[Compressão e Cache]
+            V --> X[Proteção de Arquivos]
+            E --> Y[Verificação FROM_ROOT]
+        end
     end
 
-    subgraph Frontend (HTML, CSS, JS Vanilla)
-        F --> M[Views (src/Views)]
-        M --> N[public/assets/css/style.css (Tailwind)]
-        M --> O[public/assets/js/main.js]
-        M --> P{Visualizações de Tarefas}
-        P --> Q[Quadro Kanban]
-        P --> R[Mapa de Jornada]
-        M --> S[Interface da Loja]
-        M --> T[Visualização do Personagem]
+    subgraph "Funcionalidades Futuras 🔄"
+        Z[Banco de Dados]
+        AA[Sistema de XP/Níveis]
+        BB[Loja de Itens]
+        CC[Gestão de Tarefas]
+        DD[Autenticação]
     end
 
-    L[Banco de Dados]
-    O -- Interage com --> F
-    N -- Estiliza --> M
-    I -- Gera Ouro/XP --> J
-    J -- Itens --> K
-    H -- Dados --> P
-    R -- Inclui --> H
-    R -- Inclui --> U[Sub-tarefas/Metas]
-```
+    style F fill:#90EE90
+    style M fill:#90EE90
+    style Q fill:#90EE90
+    style V fill:#90EE90
+    style Z fill:#FFE4B5
+    style AA fill:#FFE4B5
+    style BB fill:#FFE4B5
+    style CC fill:#FFE4B5
+    style DD fill:#FFE4B5
