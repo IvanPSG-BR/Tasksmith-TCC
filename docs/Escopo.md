@@ -13,11 +13,9 @@ O MVP do Tasksmith para o TCC incluirá:
 * **Página Inicial:** Apresentação do projeto e seus conceitos com seção call-to-action implementada.
 * **Sistema de Roteamento:** Implementação de roteador personalizado em PHP puro com URLs amigáveis.
 * **Autenticação:** Funcionalidades de Login e Cadastro de Usuários (estrutura preparada).
-* **Painel do Usuário:** Navegação para as áreas de "Forja", "Quadro de Missões", "Inventário", "Loja", "Jornadas" e "Configurações".
+* **Painel do Usuário:** Navegação para as áreas de "Forja" e "Quadro de Missões".
 * **Gestão de Tarefas:** Criação, edição e remoção de tarefas (estrutura preparada).
 * **Sistema de XP e Níveis:** Conclusão de tarefas para ganho de experiência e progressão de nível do personagem.
-* **Loja de Itens e Customização de Personagem:** Aquisição de itens com "Ouro" (gerado por XP) para personalizar o avatar do usuário.
-* **Mapa de Jornada:** Visualização de tarefas como um caminho de progresso, com suporte a sub-tarefas e metas de curto, médio e longo prazo.
 
 **Estado Atual da Implementação:**
 
@@ -49,11 +47,9 @@ Desenvolver uma aplicação web gamificada (Tasksmith) que auxilie na organizaç
 4. 🔄 **Projetar e implementar um sistema de autenticação e autorização** para usuários (estrutura preparada).
 5. 🔄 **Desenvolver as funcionalidades essenciais de gestão de tarefas (CRUD)**, incluindo suporte a sub-tarefas e metas.
 6. 🔄 **Implementar um sistema de experiência (XP) e níveis** atrelado à conclusão de tarefas, gerando "Ouro" como recompensa.
-7. 🔄 **Desenvolver uma loja de itens e um sistema de customização visual** do personagem.
-8. 🔄 **Implementar a visualização de "Mapa de Jornada"** para tarefas, metas e progresso do usuário.
-9. ✅ **Analisar a arquitetura monolítica e a escolha de tecnologias** (PHP puro, JS vanilla, Tailwind CSS) para o desenvolvimento ágil do MVP.
-10. 🔄 **Discutir os princípios de gamificação aplicados** no Tasksmith e seus potenciais impactos na motivação do usuário.
-11. ✅ **Documentar o processo de desenvolvimento**, destacando os desafios técnicos e as soluções adotadas, como parte da estratégia de aprendizado prático.
+7. ✅ **Analisar a arquitetura monolítica e a escolha de tecnologias** (PHP puro, JS vanilla, Tailwind CSS) para o desenvolvimento ágil do MVP.
+8. 🔄 **Discutir os princípios de gamificação aplicados** no Tasksmith e seus potenciais impactos na motivação do usuário.
+9. ✅ **Documentar o processo de desenvolvimento**, destacando os desafios técnicos e as soluções adotadas, como parte da estratégia de aprendizado prático.
 
 **Legenda:** ✅ Concluído | 🔄 Em desenvolvimento/Planejado
 
@@ -83,8 +79,6 @@ Desenvolver uma aplicação web gamificada (Tasksmith) que auxilie na organizaç
     * 4.3.1. Sistema de Autenticação
     * 4.3.2. Gestão de Tarefas (CRUD)
     * 4.3.3. Sistema de XP e Níveis
-    * 4.3.4. Loja de Itens e Customização
-    * 4.3.5. Mapa de Jornada
   * 4.4. Desafios Técnicos e Soluções Adotadas
 
 * **Capítulo 5: Análise e Discussão**
@@ -155,7 +149,6 @@ graph TD
     subgraph "Funcionalidades Futuras 🔄"
         Z[Banco de Dados]
         AA[Sistema de XP/Níveis]
-        BB[Loja de Itens]
         CC[Gestão de Tarefas]
         DD[Autenticação]
     end

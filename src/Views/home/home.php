@@ -18,16 +18,14 @@
     <body>
         <header id="hdr">
             <nav class="nav justify-between">
-                <ul id="logo">
+                <ul id="app_name">
                     <li><img src=<?php echo "{$assets}/images/icons/notepad.webp"?> alt="notepad" id="notepad_icon"></li>
-                    <li><a href="" id="logo_name" class="text-xl sm:text-2xl md:text-4xl">TaskSmith</a></li>
+                    <li><a href="" id="app_name_text" class="text-xl sm:text-2xl md:text-4xl">TaskSmith</a></li>
                     <li><button class="no-bg-btn" id="anvil_btn"><img src=<?php echo "{$assets}/images/icons/anvil.webp"?> alt="anvil" id="anvil_icon"></button></li>
                 </ul>
 
-                <ul id="menu">
-                    <li><a href="/about-project" class="text-sm px-0.5 sm:text-base sm:px-1 md:text-xl md:px-1.5">Sobre</a></li>
-                    <li><button class="no-bg-btn"><img src=<?php echo "{$assets}/images/icons/menu.svg"?> alt="menu icon" id="nav_sections"></button></li>
-                    <li><a href="" class="text-sm px-0.5 sm:text-base sm:px-1 md:text-xl md:px-1.5">Opção 2</a></li>
+                <ul id="logo">
+                    <li><img src=<?php echo "{$assets}/images/logomark.png"?> alt="tasksmith logomark" id="logomark"></li>
                 </ul>
 
                 <ul id="auth">

@@ -5,8 +5,8 @@ class Router {
     private static $routes = [];
     private static $web_routes = [
         '/' => 'HomeController@index',
-        '/login' => 'src/Views/auth/login.php',
-        '/signup' => 'src/Views/auth/signup.php',
+        '/login' => 'AuthController@login_index',
+        '/signup' => 'AuthController@signup_index',
         '/game' => 'src/Views/game/task-board.php',
         '/game/task-board' => 'src/Views/game/task-board.php',
         '/game/inventory' => 'src/Views/game/inventory.php',

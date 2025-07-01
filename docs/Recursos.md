@@ -17,8 +17,6 @@ Este documento detalha as funcionalidades propostas para o Tasksmith, incluindo 
 - Sistema de autenticação e autorização
 - Gestão de tarefas (CRUD) e sub-tarefas
 - Sistema de XP, níveis e recompensas
-- Loja de itens e customização de personagem
-- Mapa de jornada interativo
 - Sistema de notificações e penalidades
 
 ## 0. Sistema de Roteamento e Arquitetura Base ✅
@@ -90,73 +88,6 @@ Este documento detalha as funcionalidades propostas para o Tasksmith, incluindo 
 
 **✅ Concluído:** Página inicial totalmente funcional com design responsivo e elementos temáticos implementados.
 
-## 2. Loja de Itens e Customização de Personagem 🔄
-
-### 2.1. Requisitos
-
-- **Sistema de Moeda:** O sistema de XP e Níveis existente será aprimorado para gerar "Ouro" como uma moeda virtual. A conclusão de tarefas e o avanço de nível concederão quantidades de Ouro.
-- **Itens:** Serão definidos diferentes tipos de itens (ex: armaduras, armas, acessórios, capacetes) que o usuário poderá adquirir. Cada item terá um custo em Ouro.
-- **Aquisição de Itens:** O usuário poderá comprar itens na loja utilizando o Ouro acumulado.
-- **Inventário:** O usuário terá um inventário para armazenar os itens adquiridos.
-- **Equipar/Desequipar:** O usuário poderá equipar e desequipar itens para customizar a aparência de seu personagem.
-- **Visualização do Personagem:** O personagem do usuário será exibido em uma área dedicada, e sua aparência será atualizada dinamicamente com base nos itens equipados.
-
-### 2.2. Plano de Implementação
-
-- **Design de Sprites:**
-  - **Abordagem:** Utilizar sprites pré-renderizados para o personagem base e para cada item. Ao equipar um item, o sprite correspondente será sobreposto ao sprite do personagem base.
-  - **Aquisição:** Pesquisar e utilizar recursos de sprites gratuitos (ex: OpenGameArt, Itch.io) ou criar sprites próprios em estilo pixel art/medieval. Focar inicialmente em um conjunto limitado de itens para demonstrar a funcionalidade.
-- **Backend (PHP):**
-  - **Banco de Dados:**
-    - Tabela `items`: `id`, `name`, `type` (e.g., 'armor', 'weapon'), `cost`, `sprite_path`.
-    - Tabela `user_inventory`: `user_id`, `item_id`, `is_equipped` (boolean).
-    - Atualizar tabela `users` para incluir `gold_amount`.
-  - **Lógica:**
-    - Função para adicionar Ouro ao usuário ao completar tarefas/subir de nível.
-    - Endpoints para listar itens da loja, comprar itens (verificando Ouro e inventário), e equipar/desequipar itens.
-    - Lógica para retornar os itens equipados do usuário para o frontend.
-- **Frontend (JavaScript Vanilla, Tailwind CSS):**
-  - **Página da Loja:** Interface para exibir itens disponíveis, seus custos e um botão de compra.
-  - **Página de Personagem/Customização:**
-    - Exibir o sprite base do personagem.
-    - Carregar e sobrepor os sprites dos itens equipados usando CSS (`position: absolute`, `z-index`) ou, se necessário, Canvas API para composições mais complexas.
-    - Lógica JavaScript para gerenciar a seleção de itens no inventário e a atualização visual do personagem.
-    - Exibir a quantidade de Ouro do usuário.
-
-## 3. Mapa de Jornada 🔄
-
-### 3.1. Requisitos
-
-- **Visualização de Progresso:** As tarefas serão representadas como "nós" ou "pontos" em um caminho visual, simulando um mapa de jornada.
-- **Sub-tarefas:** Cada tarefa principal poderá ter sub-tarefas associadas, que serão visualizadas como etapas dentro de um nó principal.
-- **Metas (Curto, Médio, Longo Prazo):** As metas serão representadas como "destinos" ou "regiões" no mapa, alcançadas ao completar conjuntos de tarefas/missões.
-- **Progresso Visual:** O avanço do usuário no mapa será indicado por um marcador ou pelo próprio personagem, movendo-se pelos nós à medida que as tarefas são concluídas.
-- **Interatividade:** O usuário poderá clicar nos nós para ver detalhes da tarefa/sub-tarefa e seu status.
-
-### 3.2. Plano de Implementação
-
-- **Design Visual:**
-  - **Fundo do Mapa:** Utilizar uma imagem de fundo estática de um mapa medieval/fantasia.
-  - **Nós de Tarefas:** Representar tarefas como ícones ou marcadores posicionados dinamicamente sobre o mapa.
-  - **Caminho:** Linhas conectando os nós para indicar a sequência ou dependências das tarefas.
-  - **Metas:** Representar metas de longo prazo como ícones maiores ou "cidades/castelos" no mapa.
-- **Backend (PHP):**
-  - **Banco de Dados:**
-    - Atualizar tabela `tasks` para incluir `parent_task_id` (para sub-tarefas) e `map_x`, `map_y` (coordenadas para posicionamento no mapa).
-    - Nova tabela `goals`: `id`, `name`, `description`, `type` (e.g., 'short', 'medium', 'long'), `map_x`, `map_y`.
-    - Tabela `task_goals`: `task_id`, `goal_id` (para associar tarefas a metas).
-  - **Lógica:**
-    - Endpoints para buscar tarefas, sub-tarefas e metas, incluindo suas coordenadas no mapa e status de conclusão.
-    - Lógica para marcar tarefas/sub-tarefas como concluídas e atualizar o progresso do usuário.
-- **Frontend (JavaScript Vanilla, Tailwind CSS):**
-  - **Renderização do Mapa:** Carregar a imagem de fundo do mapa.
-  - **Posicionamento dos Nós:** Usar JavaScript para posicionar elementos HTML (divs com ícones/texto) sobre o mapa usando `position: absolute` e as coordenadas `map_x`, `map_y` do backend.
-  - **Interatividade:**
-    - Event listeners para cliques nos nós, exibindo modais ou painéis laterais com detalhes da tarefa/sub-tarefa.
-    - Lógica para atualizar a aparência dos nós (ex: mudar cor, adicionar um "check") quando uma tarefa é concluída.
-    - Animação ou transição suave do marcador/personagem do usuário no mapa à medida que ele avança.
-  - **Visualização de Sub-tarefas/Metas:** Implementar a expansão de nós para mostrar sub-tarefas e a exibição de informações sobre as metas.
-
 ## 4. Gerenciamento de Tarefas (CRUD) e Sub-tarefas 🔄
 
 ### 4.1. Requisitos
@@ -209,28 +140,6 @@ Este documento detalha as funcionalidades propostas para o Tasksmith, incluindo 
   - **Barra de Progresso:** Exibir uma barra de progresso visual mostrando o XP atual em relação ao XP necessário para o próximo nível.
   - **Notificações:** Mostrar notificações quando o usuário ganha XP, sobe de nível ou ganha Ouro.
   - **Painel de Status:** Área dedicada para exibir nível, XP total, Ouro e outras estatísticas do personagem.
-
-## 6. Sistema de Notificações 🔄
-
-### 6.1. Requisitos
-
-- **Notificações de Ganho:** Alertar o usuário quando ele ganha XP, sobe de nível ou ganha Ouro.
-- **Lembretes de Tarefas:** Notificar o usuário sobre tarefas próximas do vencimento.
-- **Notificações de Penalidades:** Informar sobre deduções de XP ou Ouro por tarefas não cumpridas.
-
-### 6.2. Plano de Implementação
-
-- **Backend (PHP):**
-  - **Banco de Dados:**
-    - Tabela `notifications`: `id`, `user_id`, `type`, `message`, `is_read`, `created_at`.
-  - **Lógica:**
-    - Função para criar notificações automáticas baseadas em eventos (conclusão de tarefa, subida de nível, etc.).
-    - Endpoint para buscar notificações não lidas do usuário.
-    - Sistema de limpeza automática de notificações antigas.
-- **Frontend (JavaScript Vanilla, Tailwind CSS):**
-  - **Sistema de Toast:** Exibir notificações temporárias na tela quando eventos importantes ocorrem.
-  - **Centro de Notificações:** Área onde o usuário pode ver todas as notificações recentes.
-  - **Indicadores Visuais:** Badges ou ícones para mostrar notificações não lidas.
 
 ## 7. Política de Penalidades 🔄
 

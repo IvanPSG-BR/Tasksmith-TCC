@@ -11,7 +11,7 @@
 
 /* HEADER - Logo */
 
-#logo{
+#app_name{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -29,7 +29,7 @@
     width: 1.5rem;
 }
 
-#logo_name{
+#app_name_text{
     font-family: "MedievalSharp", cursive;
     color: #f2a60d;
     text-shadow: 0rem -0.1rem rgba(255, 255, 255, 0.699);
@@ -40,32 +40,6 @@
 
 #anvil_icon{
     width: 1.8rem;
-}
-
-/* HEADER - Menu */
-
-#menu{
-    display: flex;
-    justify-content: space-between;
-}
-
-#menu > li{
-    padding-inline: 1rem;
-}
-
-#menu > li > a{
-    font-family: "Pirata One", cursive;
-    letter-spacing: 0.1rem;
-    color: #cac9cf;
-    background: radial-gradient(circle, #4a535850, transparent);  
-    border-radius: 0.8rem;
-}
-
-#nav_sections{
-    padding-top: 0.08rem;
-    width: 1.2rem;
-    height: auto;
-    filter: invert(1);
 }
 
 /* HEADER - Auth */
@@ -95,6 +69,7 @@
 /* FOOTER */
 
 #ftr{
+    display:none;
     background-color: #8c8796;
     height: 15vh;
 }

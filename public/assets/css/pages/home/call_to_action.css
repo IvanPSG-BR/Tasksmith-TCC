@@ -7,6 +7,17 @@
     height: 100vh;
 }
 
+#logo > li{
+    display: flex;
+    align-items: center;
+    padding-top: 1rem;
+}
+
+#logomark{
+    width:5rem;
+    height:auto;
+}
+
 #cta::before{
     content: "";
     position: absolute;
@@ -64,6 +75,7 @@
 }
 
 .section-transition{
+    display: none;
     height: 5vh;
 }
 

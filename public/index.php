@@ -11,6 +11,7 @@ if (!defined('FROM_ROOT')) {
 
 function front_controller(string $url, string $http_method) {
     $paths = Router::web_routes();
+
     if (isset($paths[$url])) {
         $controller = explode("@", $paths[$url])[0];
         $action = explode("@", $paths[$url])[1];
@@ -20,7 +21,12 @@ function front_controller(string $url, string $http_method) {
         switch ($http_method) {
             case "GET":
                 Router::get($url, $paths[$url]);
-                $current_controller->$action();
+
+                $previous_route = count(Router::routes()) - 1;
+                $previous_url = Router::routes()[$previous_route]["path"];
+                if ($url != $previous_url){
+                    $current_controller->$action();
+                }
 
             case "POST":
                 Router::post($url, $paths[$url]);
@@ -31,10 +37,9 @@ function front_controller(string $url, string $http_method) {
             case "DELETE":
                 Router::delete($url, $paths[$url]);
         }
-
     } else {
         // Tratar página não encontrada (404)
-        header("HTTP/1.0 404 Not Found");
+        header("HTTP/1.1 404 Not Found");
         echo "404 Página Não Encontrada";
     }
 }

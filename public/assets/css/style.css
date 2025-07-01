@@ -1,4 +1,4 @@
-/*! tailwindcss v4.1.10 | MIT License | https://tailwindcss.com */
+/*! tailwindcss v4.1.11 | MIT License | https://tailwindcss.com */
 @layer properties;
 html {
   display: flex;
@@ -8,7 +8,7 @@ html {
 }
 body {
   width: 100%;
-  height: 570vh;
+  max-height: 570vh;
   min-height: 100%;
   max-width: 100%;
   position: relative;
@@ -41,7 +41,7 @@ footer {
   height: inherit;
   width: inherit;
 }
-#logo {
+#app_name {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -57,7 +57,7 @@ footer {
 #notepad_icon {
   width: 1.5rem;
 }
-#logo_name {
+#app_name_text {
   font-family: "MedievalSharp", cursive;
   color: #f2a60d;
   text-shadow: 0rem -0.1rem rgba(255, 255, 255, 0.699);
@@ -67,26 +67,6 @@ footer {
 }
 #anvil_icon {
   width: 1.8rem;
-}
-#menu {
-  display: flex;
-  justify-content: space-between;
-}
-#menu > li {
-  padding-inline: 1rem;
-}
-#menu > li > a {
-  font-family: "Pirata One", cursive;
-  letter-spacing: 0.1rem;
-  color: #cac9cf;
-  background: radial-gradient(circle, #4a535850, transparent);
-  border-radius: 0.8rem;
-}
-#nav_sections {
-  padding-top: 0.08rem;
-  width: 1.2rem;
-  height: auto;
-  filter: invert(1);
 }
 #auth {
   display: flex;
@@ -109,6 +89,7 @@ footer {
   white-space: nowrap;
 }
 #ftr {
+  display: none;
   background-color: #8c8796;
   height: 15vh;
 }
@@ -132,11 +113,8 @@ footer {
       "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
       "Courier New", monospace;
-    --spacing: 0.25rem;
     --text-xs: 0.75rem;
     --text-xs--line-height: calc(1 / 0.75);
-    --text-sm: 0.875rem;
-    --text-sm--line-height: calc(1.25 / 0.875);
     --text-base: 1rem;
     --text-base--line-height: calc(1.5 / 1);
     --text-lg: 1.125rem;
@@ -321,16 +299,9 @@ footer {
   .justify-center {
     justify-content: center;
   }
-  .px-0\.5 {
-    padding-inline: calc(var(--spacing) * 0.5);
-  }
   .text-base {
     font-size: var(--text-base);
     line-height: var(--tw-leading, var(--text-base--line-height));
-  }
-  .text-sm {
-    font-size: var(--text-sm);
-    line-height: var(--tw-leading, var(--text-sm--line-height));
   }
   .text-xl {
     font-size: var(--text-xl);
@@ -339,11 +310,6 @@ footer {
   .text-xs {
     font-size: var(--text-xs);
     line-height: var(--tw-leading, var(--text-xs--line-height));
-  }
-  .sm\:px-1 {
-    @media (width >= 40rem) {
-      padding-inline: calc(var(--spacing) * 1);
-    }
   }
   .sm\:text-2xl {
     @media (width >= 40rem) {
@@ -363,11 +329,6 @@ footer {
       line-height: var(--tw-leading, var(--text-xl--line-height));
     }
   }
-  .md\:px-1\.5 {
-    @media (width >= 48rem) {
-      padding-inline: calc(var(--spacing) * 1.5);
-    }
-  }
   .md\:text-2xl {
     @media (width >= 48rem) {
       font-size: var(--text-2xl);
@@ -384,12 +345,6 @@ footer {
     @media (width >= 48rem) {
       font-size: var(--text-lg);
       line-height: var(--tw-leading, var(--text-lg--line-height));
-    }
-  }
-  .md\:text-xl {
-    @media (width >= 48rem) {
-      font-size: var(--text-xl);
-      line-height: var(--tw-leading, var(--text-xl--line-height));
     }
   }
 }

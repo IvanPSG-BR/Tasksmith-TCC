@@ -45,7 +45,7 @@ As seguintes decisões foram cruciais para moldar o Tasksmith e seu desenvolvime
 
 ### 2.5. Definição do Escopo do Produto Mínimo Viável (MVP)
 
-* **Justificativa:** Para garantir a conclusão do projeto dentro do prazo do TCC, foi essencial definir um escopo claro e limitado para o MVP. As funcionalidades selecionadas (Página Inicial, Autenticação, Painel do Usuário, Gestão de Tarefas CRUD, Sistema de XP e Níveis, Loja de Itens e Customização de Personagem, Mapa de Jornada, Notificações e Penalidades) representam o conjunto mínimo necessário para demonstrar o conceito central de gamificação e produtividade.
+* **Justificativa:** Para garantir a conclusão do projeto dentro do prazo do TCC, foi essencial definir um escopo claro e limitado para o MVP. As funcionalidades selecionadas (Página Inicial, Autenticação, Painel do Usuário, Gestão de Tarefas CRUD, Sistema de XP e Níveis, Política de Penalidades) representam o conjunto mínimo necessário para demonstrar o conceito central de gamificação e produtividade.
 * **Alternativas Consideradas:** Funcionalidades mais avançadas, como WebSockets para notificações em tempo real, sistemas de clãs, ou uma variedade maior de itens e customizações, foram identificadas como "Trabalhos Futuros" ou "Oportunidades Futuras", mas conscientemente excluídas do MVP para evitar a diluição do foco e o atraso na entrega.
 * **Impacto Esperado:** Entrega de um produto funcional e demonstrável dentro do cronograma, validação dos princípios de gamificação aplicados.
 
@@ -79,9 +79,6 @@ O MVP do Tasksmith abrange as seguintes funcionalidades principais:
 * **Autenticação e Autorização:** Login e cadastro de usuários.
 * **Gestão de Tarefas (CRUD):** Criação, leitura, atualização e exclusão de tarefas, incluindo suporte a sub-tarefas e marcação de conclusão.
 * **Sistema de XP e Níveis:** Geração de pontos de experiência e "Ouro" ao concluir tarefas, com progressão de nível do personagem.
-* **Loja de Itens e Customização de Personagem:** Aquisição de itens com "Ouro" e visualização dinâmica do personagem com itens equipados.
-* **Mapa de Jornada:** Visualização de tarefas e metas como um caminho de progresso, com interatividade para detalhes.
-* **Notificações:** Sistema para alertar o usuário sobre eventos importantes (ganho de XP, subida de nível, tarefas atrasadas).
 * **Política de Penalidades:** Dedução de XP ou Ouro para tarefas não cumpridas no prazo.
 
 ### 3.3. Priorização e Roadmap
