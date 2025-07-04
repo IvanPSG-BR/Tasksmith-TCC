@@ -7,7 +7,8 @@ try{
         "CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,       
             username VARCHAR(18) NOT NULL UNIQUE,
-            password VARCHAR(24) NOT NULL
+            password VARCHAR(24) NOT NULL,
+            exists BOOLEAN NOT NULL DEFAULT FALSE
         );
         
         CREATE TABLE IF NOT EXISTS characters (
@@ -32,10 +33,12 @@ try{
             xp_reward INTEGER NOT NULL,
             gold_reward INTEGER NOT NULL,
             timeout TIMESTAMP NOT NULL,
-            finished BOOLEAN DEFAULT FALSE,
+            finished BOOLEAN NOT NULL DEFAULT FALSE,
             FOREIGN KEY (user_id) REFERENCES users(id)
         );"
     );
+
+    $conn = null;
 } catch (PDOException $e) {
     echo "Erro ao inicializar banco de dados: " . $e->getMessage() . "\n";
 }

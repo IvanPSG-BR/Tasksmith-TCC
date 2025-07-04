@@ -4,17 +4,17 @@ Este documento detalha os desafios enfrentados durante o desenvolvimento do proj
 
 ## 1. Decisão e Planejamento do Projeto de TCC
 
-### Descrição do Desafio
+### 1.1 Descrição do Desafio
 
 Inicialmente, a ideia para o projeto de TCC era uma plataforma de gerenciamento de projetos e gestão de tempo para freelancers. No entanto, essa ideia foi abandonada devido a um planejamento inadequado, falta de motivação e a necessidade de conhecimentos não-técnicos que seriam difíceis de adquirir no tempo disponível.
 
 Posteriormente, surgiu a ideia de transformar um projeto pessoal em andamento – uma aplicação de lista/gerenciamento de tarefas gamificada e temática – no projeto de TCC. Embora o Habitica seja um representante notável nesse nicho, ele carece de imersão. Comecei a conceber recursos e outras necessidades para a aplicação, mas de forma desorganizada e com um escopo muito amplo, sem clareza sobre como implementar essas ideias no programa.
 
-### Como Foi Lidar com o Desafio
+### 1.2 Como Foi Lidar com o Desafio
 
 As ideias foram sendo construídas ao longo do tempo de forma dispersa. Somente mais recentemente, houve um esforço para um planejamento mais centrado e organizado do Produto Mínimo Viável (MVP), incluindo um cronograma de execução para acelerar a finalização do projeto.
 
-### Lições Aprendidas
+### 1.3 Lições Aprendidas
 
 * A importância de um planejamento detalhado e realista desde o início do projeto.
 * A necessidade de definir um escopo claro e gerenciável para evitar a dispersão e o desânimo.
@@ -23,11 +23,11 @@ As ideias foram sendo construídas ao longo do tempo de forma dispersa. Somente 
 
 ## 2. Reestruturação Completa da Arquitetura do Projeto
 
-### Descrição do Desafio
+### 2.1 Descrição do Desafio
 
 Durante o desenvolvimento inicial, o projeto estava estruturado de forma inadequada, com separação entre frontend e backend que não se adequava à abordagem monolítica, posteriormente escolhida. A estrutura original incluía diretórios separados para frontend e backend, com dependências desnecessárias como React e Vite, que contradiziam a decisão de usar tecnologias "puras".
 
-### Como Foi Lidar com o Desafio
+### 2.2 Como Foi Lidar com o Desafio
 
 Foi realizada uma reestruturação completa do projeto, migrando de uma estrutura frontend/backend separada para uma arquitetura monolítica tradicional em PHP. Isso envolveu:
 
@@ -36,7 +36,7 @@ Foi realizada uma reestruturação completa do projeto, migrando de uma estrutur
 * **Configuração do Tailwind CSS:** Implementação adequada do Tailwind para trabalhar com PHP puro ao invés de um ambiente React.
 * **Criação de Sistema de Roteamento:** Desenvolvimento de um roteador personalizado em PHP para gerenciar as rotas da aplicação.
 
-### Lições Aprendidas
+### 2.3 Lições Aprendidas
 
 * A importância de definir claramente a arquitetura desde o início do projeto.
 * A necessidade de alinhar todas as tecnologias e dependências com a filosofia escolhida.
@@ -45,11 +45,11 @@ Foi realizada uma reestruturação completa do projeto, migrando de uma estrutur
 
 ## 3. Implementação de Sistema de Roteamento Personalizado
 
-### Descrição do Desafio
+### 3.1 Descrição do Desafio
 
 A necessidade de implementar um sistema de roteamento funcional sem utilizar frameworks existentes apresentou desafios técnicos significativos. Era necessário criar URLs amigáveis, gerenciar diferentes tipos de requisições, e implementar redirecionamentos adequados, tudo isso mantendo a simplicidade e o controle total sobre o código.
 
-### Como Foi Lidar com o Desafio
+### 3.2 Como Foi Lidar com o Desafio
 
 O desafio foi abordado através de uma implementação incremental:
 
@@ -58,9 +58,103 @@ O desafio foi abordado através de uma implementação incremental:
 * **Sistema de Front Controller:** Implementação do padrão Front Controller para centralizar o processamento de requisições.
 * **Tratamento de Erros:** Configuração de páginas de erro personalizadas (404, 403, 500) integradas ao sistema de roteamento.
 
-### Lições Aprendidas
+### 3.3 Lições Aprendidas
 
 * A compreensão de algums mecanismos de roteamento web.
 * A importância da configuração adequada do servidor web (.htaccess) para o funcionamento correto da aplicação.
 * O valor de implementar funcionalidades básicas do zero para entender completamente seu funcionamento.
 * A necessidade de planejamento cuidadoso ao criar sistemas que serão a base para funcionalidades futuras.
+
+## 4. Erro de Conexão com Banco de Dados SQLite
+
+### 4.1 Descrição do Desafio
+
+O projeto enfrentou um erro de conexão com o banco de dados SQLite, manifestado pela mensagem `SQLSTATE[HY000] [14] unable to open database file`. Este problema impedia a aplicação de persistir ou recuperar dados, sendo um bloqueio crítico para o desenvolvimento.
+
+### 4.2 Como Foi Lidar com o Desafio
+
+A solução foi identificada e implementada através da modificação da string de conexão no arquivo `database/conn.php`. O problema foi resolvido utilizando a constante mágica `__DIR__` para construir um caminho absoluto correto para o arquivo do banco de dados (`tasksmith.db`). Além disso, foi crucial garantir que o diretório `database/` e o arquivo `tasksmith.db` tivessem as permissões de escrita adequadas para o usuário do servidor web.
+
+### 4.3 Lições Aprendidas
+
+*   A importância de utilizar caminhos absolutos para arquivos de banco de dados, especialmente em ambientes de servidor, para evitar problemas de localização.
+*   A necessidade de verificar e configurar corretamente as permissões de arquivo e diretório para que o servidor web possa acessar e manipular o banco de dados.
+*   A utilidade de blocos `try-catch` para depuração de erros de conexão, fornecendo mensagens claras sobre a causa do problema.
+
+## 5. Erro de Sintaxe de Chaves Estrangeiras (FOREIGN KEY)
+
+### 5.1 Descrição do Desafio
+
+Durante a definição do esquema do banco de dados, foi encontrado um erro de sintaxe na declaração de chaves estrangeiras (FOREIGN KEY) para as tabelas `characters` e `tasks`, que referenciam a tabela `users`. A sintaxe inicial estava incorreta, impedindo a correta aplicação das restrições de integridade referencial. Adicionalmente, houve confusão sobre o uso de restrições `MIN` e `MAX` para colunas.
+
+### 5.2 Como Foi Lidar com o Desafio
+
+A sintaxe da declaração de chave estrangeira foi corrigida para o formato padrão do SQLite, que exige uma declaração `FOREIGN KEY` separada no final da definição da tabela, e não inline com a definição da coluna. Por exemplo, `FOREIGN KEY (user_id) REFERENCES users(id)`. Para as restrições de valor mínimo e máximo, foi esclarecido que o SQLite não possui as palavras-chave `MIN` e `MAX` nativas para esse propósito; a funcionalidade desejada foi implementada utilizando a cláusula `CHECK` (ex: `CHECK (level >= 1 AND level <= 3)`). Foi também reforçada a necessidade de habilitar o `PRAGMA foreign_keys = ON;` após a conexão com o banco de dados para que as chaves estrangeiras sejam impostas.
+
+### 5.3 Lições Aprendidas
+
+*   A importância de conhecer a sintaxe específica de SQL para o SGBD utilizado (SQLite), pois pode haver variações em relação a outros bancos de dados.
+*   A necessidade de habilitar explicitamente o suporte a chaves estrangeiras no SQLite via `PRAGMA foreign_keys = ON;` para garantir a integridade referencial.
+*   A flexibilidade da cláusula `CHECK` no SQLite para impor restrições de valor em colunas, substituindo a ausência de `MIN`/`MAX` nativos.
+*   A garantia da integridade referencial é fundamental para a consistência e confiabilidade dos dados da aplicação.
+
+## 6. Proteção do Arquivo de Banco de Dados
+
+### 6.1 Descrição do Desafio
+
+O desafio consistia em garantir a segurança do arquivo de banco de dados SQLite (`tasksmith.db`), evitando sua exposição direta no repositório Git e protegendo-o contra acesso indevido via web.
+
+### 6.2 Como Foi Lidar com o Desafio
+
+Foram implementadas e/ou sugeridas as seguintes abordagens:
+*   **Exclusão do Git:** O arquivo `tasksmith.db` foi adicionado ao `.gitignore` para evitar que seja versionado, prevenindo riscos de segurança e conflitos de merge.
+*   **Variáveis de Ambiente:** Foi recomendada a utilização de variáveis de ambiente para armazenar configurações de conexão sensíveis, embora a implementação atual possa ainda não refletir isso completamente.
+*   **Scripts de Inicialização:** A criação de um arquivo `schema.sql` (com a estrutura do banco) e um script `init_db.php` (para inicializar o banco de dados) foi proposta para garantir a reproducibilidade do ambiente sem a necessidade de versionar o arquivo `.db`.
+*   **Proteção de Acesso Web:** Foi reforçada a necessidade de configurar o servidor web (via `.htaccess` no diretório `database/`) para negar acesso direto ao arquivo do banco de dados, garantindo que ele não possa ser baixado por usuários mal-intencionados.
+
+### 6.3 Lições Aprendidas
+
+*   A segurança de dados é primordial; arquivos de banco de dados nunca devem ser expostos em repositórios públicos ou acessíveis via web.
+*   A importância do `.gitignore` para gerenciar arquivos sensíveis e binários no controle de versão.
+*   A prática de usar variáveis de ambiente para configurações sensíveis melhora a segurança e a flexibilidade da implantação.
+*   Scripts de inicialização de banco de dados são essenciais para a reproducibilidade do ambiente de desenvolvimento e produção.
+
+## 7. Validação de Página Atual em Requisições GET
+
+### 7.1 Descrição do Desafio
+
+O problema abordado foi como otimizar a experiência do usuário, evitando o recarregamento desnecessário de uma página quando o usuário já está nela e uma requisição GET não implica em navegação para uma nova URL.
+
+### 7.2 Como Foi Lidar com o Desafio
+
+Foram discutidas e sugeridas diversas abordagens para lidar com este desafio:
+*   **Comparação de URL:** Verificar se a URL solicitada é a mesma da página atual no lado do servidor (no roteador ou Front Controller).
+*   **Variáveis de Sessão/HTTP Referer:** Utilizar variáveis de sessão para rastrear a última página visitada ou verificar o cabeçalho `HTTP Referer` para inferir a origem da requisição.
+*   **Parâmetros de Consulta:** Adicionar parâmetros de consulta específicos para identificar navegação interna ou ações que não exigem recarregamento completo.
+*   **JavaScript (Frontend):** A abordagem mais eficaz para uma experiência moderna, interceptando cliques em links e usando `history.pushState` ou `fetch` para carregar conteúdo dinamicamente sem recarregar a página inteira.
+*   **Sistema de Histórico de Navegação:** Implementar um controle mais granular do histórico de navegação para gerenciar o estado da aplicação.
+
+### 7.3 Lições Aprendidas
+
+*   A otimização da experiência do usuário vai além da funcionalidade, incluindo a fluidez da navegação e a minimização de recarregamentos desnecessários.
+*   Existem múltiplas estratégias para lidar com a validação de página atual, desde abordagens simples no servidor até soluções mais complexas no frontend com JavaScript.
+*   A escolha da abordagem depende do nível de interatividade e da experiência de "Single Page Application" (SPA) desejada para o projeto.
+
+## 8. Conversão de String para Classe em PHP
+
+### 8.1 Descrição do Desafio
+
+O desafio técnico consistia em como converter dinamicamente uma string (ex: `'HomeController@index'`) em uma chamada de método real em uma classe PHP, uma funcionalidade crucial para sistemas de roteamento e controladores dinâmicos.
+
+### 8.2 Como Foi Lidar com o Desafio
+
+Foram explicadas e discutidas duas maneiras principais de realizar essa conversão:
+*   **Chamada Direta com String de Classe:** Utilizando a sintaxe `$controllerName::$actionName()` para métodos estáticos, onde `$controllerName` e `$actionName` são strings.
+*   **`call_user_func`:** Uma abordagem mais flexível e recomendada, utilizando `call_user_func([$controllerInstance, $methodName])`. Esta função permite chamar métodos de instância (não estáticos) e é mais robusta para cenários onde o controlador precisa ser instanciado e pode ter dependências.
+
+### 8.3 Lições Aprendidas
+
+*   A capacidade de resolver dinamicamente classes e métodos a partir de strings é fundamental para a implementação de um Front Controller e um sistema de roteamento flexível.
+*   `call_user_func` é uma ferramenta poderosa em PHP para chamadas dinâmicas, oferecendo maior flexibilidade em comparação com chamadas estáticas diretas.
+*   A implementação dessa funcionalidade requer atenção ao autoloading de classes (garantindo que as classes dos controladores sejam carregadas) e ao tratamento de erros (verificando a existência da classe e do método antes da chamada).
+*   Esta técnica é um pilar para a evolução da arquitetura do Tasksmith em direção a um padrão MVC mais completo, permitindo que o roteador despache requisições para controladores específicos e seus métodos.
