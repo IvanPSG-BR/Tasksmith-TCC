@@ -195,6 +195,8 @@ O desafio foi abordado através de um processo iterativo de refatoração e feed
 * A importância da **legibilidade e concisão do código**, mesmo ao implementar melhorias de segurança e robustez.
 * O valor do **feedback iterativo** no processo de desenvolvimento e refatoração.
 * Apesar do código final do método ter sido refatorado com auxílio de IA, a lógica inicial foi concebida e implementada pelo usuário, demonstrando um esforço significativo de aprendizado e aplicação prática.
+* **Aprendizado Contínuo e Implementação de `insert`:** Após assistir a um vídeo tutorial sobre CRUD com PHP e SQL, o usuário aprofundou seu entendimento sobre Prepared Statements e bindings, e implementou uma função `execute` privada para centralizar a execução de queries, além de desenvolver o método `insert`. Este esforço demonstrou a capacidade do usuário de aplicar novos conhecimentos de forma prática.
+* **Refinamento e Boas Práticas:** A avaliação do código atualizado revelou a necessidade de ajustes finos para garantir o uso correto dos bindings no método `select` (passando os parâmetros corretos para `execute` e tratando o retorno do `PDOStatement`), e para refinar a lógica do método `insert` (garantindo a correta concatenação dos placeholders e o tratamento do retorno de `lastInsertId()`). Essas interações reforçaram a importância da precisão na manipulação de queries e na gestão de retornos de funções.
 
 ### 9.4 Próximos Passos do Usuário
 

@@ -65,23 +65,25 @@ As seguintes decisões foram cruciais para moldar o Tasksmith e seu desenvolvime
 * **Impacto Esperado:** Maior separação de responsabilidades, melhor processamento de formulários e preparação de dados para views, maior flexibilidade para implementar lógica de negócios complexa, e preparação para a escalabilidade futura do projeto.
 * **Implementação Realizada (em andamento/sugerida):** A migração para um Front Controller que instancia controllers e chama seus métodos está sendo considerada como uma evolução gradual. Para CRUDs (como tarefas), a decisão é manter todas as operações em um único controller para coesão.
 
-### 2.8. Refatoração do Método `select` em `QueryBuilder.php`
+### 2.9. Refatoração do Método `select` e Implementação de `insert` em `QueryBuilder.php`
 
-* **Justificativa:** A refatoração do método `select` foi motivada pela necessidade de aprimorar a **segurança** (prevenção de SQL Injection), a **clareza do código** e o **tratamento de erros** em uma implementação inicial feita pelo usuário. O objetivo era aplicar as melhores práticas sem descaracterizar a lógica original.
+* **Justificativa:** A refatoração do método `select` foi motivada pela necessidade de aprimorar a **segurança** (prevenção de SQL Injection), a **clareza do código** e o **tratamento de erros** em uma implementação inicial feita pelo usuário. O objetivo era aplicar as melhores práticas sem descaracterizar a lógica original. A implementação do método `insert` e a criação de uma função `execute` privada também foram passos importantes para centralizar a lógica de persistência de dados.
 * **Decisões Tomadas:**
   * **Adoção de Prepared Statements:** Priorização do uso de `prepare()` e `execute()` com bindings para todas as variáveis que poderiam ser injetadas na query (especialmente em cláusulas `WHERE` e `LIKE`), garantindo a segurança.
   * **Tratamento de Erros Programático:** Substituição do retorno de strings de erro por valores booleanos (`false`) em caso de falha de validação ou `PDOException`, facilitando o tratamento de erros pelo código chamador. Erros de execução são logados internamente via `error_log()`.
   * **Simplificação da Lógica e Concisão:** O código foi iterativamente simplificado, removendo comentários excessivos e otimizando a construção da query para melhorar a legibilidade, atendendo ao feedback do usuário.
+  * **Centralização da Execução de Queries:** Criação de um método `private function execute()` para encapsular a lógica de preparação e execução de queries, promovendo a reutilização de código e a consistência no tratamento de erros.
+  * **Implementação do Método `insert`:** Desenvolvimento de um método para inserção de dados, utilizando Prepared Statements e a função `execute` centralizada.
 * **Impacto Esperado:** Maior segurança da aplicação, código mais robusto e fácil de manter, e um aprendizado aprofundado para o usuário sobre as melhores práticas de interação com banco de dados em PHP.
-* **Aprendizado e Próximos Passos do Usuário:** Este processo proporcionou ao usuário um entendimento prático sobre Prepared Statements, bindings, `fetchAll`, `error_log`, e a diferença entre `query()` e `prepare() + execute()`. O usuário planeja aprofundar esses conhecimentos após a entrega do TCC, demonstrando um compromisso com a melhoria contínua e a segurança do código.
+* **Aprendizado e Próximos Passos do Usuário:** Este processo proporcionou ao usuário um entendimento prático sobre Prepared Statements, bindings, `fetchAll`, `error_log`, e a diferença entre `query()` e `prepare() + execute()`. O usuário demonstrou proatividade ao buscar conhecimento adicional (vídeo tutorial) e aplicar os conceitos na implementação do método `insert` e na função `execute`. As interações subsequentes refinaram o uso dos bindings e a gestão dos retornos das funções. O usuário planeja aprofundar esses conhecimentos após a entrega do TCC, demonstrando um compromisso com a melhoria contínua e a segurança do código.
 
-### 2.8. Metodologia de Desenvolvimento Iterativa e Incremental com Ênfase na Documentação do Processo de Aprendizado
+### 2.10. Metodologia de Desenvolvimento Iterativa e Incremental com Ênfase na Documentação do Processo de Aprendizado
 
 * **Justificativa:** Esta metodologia foi adotada para que o TCC não fosse apenas a descrição de um produto final, mas também um **relato da jornada de aprendizado e resolução de problemas**. Ao documentar decisões, desafios e soluções em cada etapa, o projeto ganha um valor acadêmico adicional, servindo como um estudo de caso prático de desenvolvimento de software.
 * **Impacto Esperado:** Documentação rica em insights técnicos e pedagógicos, fortalecimento do caráter de pesquisa e aprendizado do TCC.
 * **Implementação Realizada:** Cada commit foi documentado com mensagens detalhadas explicando as mudanças implementadas, criando um histórico completo da evolução do projeto e das decisões tomadas.
 
-### 2.10. Organização da Lógica de Negócio e Persistência de Dados
+### 2.11. Organização da Lógica de Negócio e Persistência de Dados
 
 * **Justificativa:** A decisão de refinar a organização da lógica de negócio e da persistência de dados visa equilibrar a simplicidade do projeto com a manutenção de uma boa separação de responsabilidades. Em vez de introduzir uma camada de Repositórios explícita, optou-se por consolidar a lógica de persistência diretamente nos Serviços, mantendo o projeto mais enxuto e alinhado com a filosofia de "PHP puro" e "simplicidade". A criação de um diretório dedicado para ferramentas de banco de dados de baixo nível (Query Builder) garante uma organização lógica para componentes reutilizáveis.
 * **Abordagens Consideradas:**
