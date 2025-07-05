@@ -58,18 +58,40 @@ As seguintes decisões foram cruciais para moldar o Tasksmith e seu desenvolvime
 
 ### 2.7. Evolução do Front Controller e Organização dos Controllers
 
-*   **Justificativa:** A decisão de evoluir o Front Controller e refinar a organização dos Controllers surgiu da necessidade de aprimorar a separação de responsabilidades e a capacidade de processar lógica de negócios antes da renderização das views. Inicialmente, o roteador mapeava URLs diretamente para views, o que gerava acoplamento e limitava a complexidade da lógica. A evolução visa uma arquitetura MVC mais completa, onde o Front Controller instancia controladores e chama seus métodos.
-*   **Abordagens Consideradas:**
-*   **Controllers Baseados em Modelos vs. Funcionalidades:** Foi discutida a transição de uma abordagem puramente baseada em modelos para uma abordagem híbrida com foco em funcionalidades (ex: `AuthController`, `TaskController`, `GameController`). Esta escolha visa equilibrar a coesão funcional, o tamanho gerenciável dos arquivos e a responsabilidade única de cada controller.
-*   **Despacho Dinâmico:** A necessidade de converter strings (ex: `'HomeController@index'`) em chamadas de classe e método reais foi abordada, com a exploração de técnicas como `call_user_func` para flexibilidade.
-*   **Impacto Esperado:** Maior separação de responsabilidades, melhor processamento de formulários e preparação de dados para views, maior flexibilidade para implementar lógica de negócios complexa, e preparação para a escalabilidade futura do projeto.
-*   **Implementação Realizada (em andamento/sugerida):** A migração para um Front Controller que instancia controllers e chama seus métodos está sendo considerada como uma evolução gradual. Para CRUDs (como tarefas), a decisão é manter todas as operações em um único controller para coesão.
+* **Justificativa:** A decisão de evoluir o Front Controller e refinar a organização dos Controllers surgiu da necessidade de aprimorar a separação de responsabilidades e a capacidade de processar lógica de negócios antes da renderização das views. Inicialmente, o roteador mapeava URLs diretamente para views, o que gerava acoplamento e limitava a complexidade da lógica. A evolução visa uma arquitetura MVC mais completa, onde o Front Controller instancia controladores e chama seus métodos.
+* **Abordagens Consideradas:**
+* **Controllers Baseados em Modelos vs. Funcionalidades:** Foi discutida a transição de uma abordagem puramente baseada em modelos para uma abordagem híbrida com foco em funcionalidades (ex: `AuthController`, `TaskController`, `GameController`). Esta escolha visa equilibrar a coesão funcional, o tamanho gerenciável dos arquivos e a responsabilidade única de cada controller.
+* **Despacho Dinâmico:** A necessidade de converter strings (ex: `'HomeController@index'`) em chamadas de classe e método reais foi abordada, com a exploração de técnicas como `call_user_func` para flexibilidade.
+* **Impacto Esperado:** Maior separação de responsabilidades, melhor processamento de formulários e preparação de dados para views, maior flexibilidade para implementar lógica de negócios complexa, e preparação para a escalabilidade futura do projeto.
+* **Implementação Realizada (em andamento/sugerida):** A migração para um Front Controller que instancia controllers e chama seus métodos está sendo considerada como uma evolução gradual. Para CRUDs (como tarefas), a decisão é manter todas as operações em um único controller para coesão.
+
+### 2.8. Refatoração do Método `select` em `QueryBuilder.php`
+
+* **Justificativa:** A refatoração do método `select` foi motivada pela necessidade de aprimorar a **segurança** (prevenção de SQL Injection), a **clareza do código** e o **tratamento de erros** em uma implementação inicial feita pelo usuário. O objetivo era aplicar as melhores práticas sem descaracterizar a lógica original.
+* **Decisões Tomadas:**
+  * **Adoção de Prepared Statements:** Priorização do uso de `prepare()` e `execute()` com bindings para todas as variáveis que poderiam ser injetadas na query (especialmente em cláusulas `WHERE` e `LIKE`), garantindo a segurança.
+  * **Tratamento de Erros Programático:** Substituição do retorno de strings de erro por valores booleanos (`false`) em caso de falha de validação ou `PDOException`, facilitando o tratamento de erros pelo código chamador. Erros de execução são logados internamente via `error_log()`.
+  * **Simplificação da Lógica e Concisão:** O código foi iterativamente simplificado, removendo comentários excessivos e otimizando a construção da query para melhorar a legibilidade, atendendo ao feedback do usuário.
+* **Impacto Esperado:** Maior segurança da aplicação, código mais robusto e fácil de manter, e um aprendizado aprofundado para o usuário sobre as melhores práticas de interação com banco de dados em PHP.
+* **Aprendizado e Próximos Passos do Usuário:** Este processo proporcionou ao usuário um entendimento prático sobre Prepared Statements, bindings, `fetchAll`, `error_log`, e a diferença entre `query()` e `prepare() + execute()`. O usuário planeja aprofundar esses conhecimentos após a entrega do TCC, demonstrando um compromisso com a melhoria contínua e a segurança do código.
 
 ### 2.8. Metodologia de Desenvolvimento Iterativa e Incremental com Ênfase na Documentação do Processo de Aprendizado
 
 * **Justificativa:** Esta metodologia foi adotada para que o TCC não fosse apenas a descrição de um produto final, mas também um **relato da jornada de aprendizado e resolução de problemas**. Ao documentar decisões, desafios e soluções em cada etapa, o projeto ganha um valor acadêmico adicional, servindo como um estudo de caso prático de desenvolvimento de software.
 * **Impacto Esperado:** Documentação rica em insights técnicos e pedagógicos, fortalecimento do caráter de pesquisa e aprendizado do TCC.
 * **Implementação Realizada:** Cada commit foi documentado com mensagens detalhadas explicando as mudanças implementadas, criando um histórico completo da evolução do projeto e das decisões tomadas.
+
+### 2.10. Organização da Lógica de Negócio e Persistência de Dados
+
+* **Justificativa:** A decisão de refinar a organização da lógica de negócio e da persistência de dados visa equilibrar a simplicidade do projeto com a manutenção de uma boa separação de responsabilidades. Em vez de introduzir uma camada de Repositórios explícita, optou-se por consolidar a lógica de persistência diretamente nos Serviços, mantendo o projeto mais enxuto e alinhado com a filosofia de "PHP puro" e "simplicidade". A criação de um diretório dedicado para ferramentas de banco de dados de baixo nível (Query Builder) garante uma organização lógica para componentes reutilizáveis.
+* **Abordagens Consideradas:**
+  * **Camada de Repositórios Separada:** Considerada inicialmente para uma separação mais rigorosa da persistência, mas descartada para o escopo atual do MVP devido à preferência por manter a estrutura mais simples e evitar a criação de novos diretórios.
+  * **Lógica de Persistência em Models:** Descartada para evitar "modelos gordos" e acoplamento forte das entidades com a camada de dados, mantendo os Models focados apenas na representação dos dados.
+* **Impacto Esperado:** Manutenção da simplicidade do projeto, organização clara da lógica de negócio nos Serviços, e agrupamento de ferramentas de banco de dados em um local dedicado (`src/Db/`), facilitando a manutenção e a compreensão do fluxo de dados.
+* **Implementação Sugerida:**
+  * **Entidades (`src/Models/`):** Foco exclusivo na representação de dados (atributos e métodos básicos). Validações de formato simples podem residir aqui.
+  * **Serviços (`src/Services/`):** Contêm a lógica de negócio complexa (cálculos, consumo de APIs, regras de jogo) e também a lógica de persistência de dados (interação direta com o banco de dados para salvar, buscar, atualizar entidades).
+  * **Ferramentas de Banco de Dados (`src/Db/`):** Novo diretório para abrigar o Query Builder e outras classes/funções utilitárias de baixo nível relacionadas à interação com o banco de dados.
 
 ## 3. Abrangência dos Aspectos
 

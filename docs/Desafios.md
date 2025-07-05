@@ -77,9 +77,9 @@ A solução foi identificada e implementada através da modificação da string 
 
 ### 4.3 Lições Aprendidas
 
-*   A importância de utilizar caminhos absolutos para arquivos de banco de dados, especialmente em ambientes de servidor, para evitar problemas de localização.
-*   A necessidade de verificar e configurar corretamente as permissões de arquivo e diretório para que o servidor web possa acessar e manipular o banco de dados.
-*   A utilidade de blocos `try-catch` para depuração de erros de conexão, fornecendo mensagens claras sobre a causa do problema.
+* A importância de utilizar caminhos absolutos para arquivos de banco de dados, especialmente em ambientes de servidor, para evitar problemas de localização.
+* A necessidade de verificar e configurar corretamente as permissões de arquivo e diretório para que o servidor web possa acessar e manipular o banco de dados.
+* A utilidade de blocos `try-catch` para depuração de erros de conexão, fornecendo mensagens claras sobre a causa do problema.
 
 ## 5. Erro de Sintaxe de Chaves Estrangeiras (FOREIGN KEY)
 
@@ -93,10 +93,10 @@ A sintaxe da declaração de chave estrangeira foi corrigida para o formato padr
 
 ### 5.3 Lições Aprendidas
 
-*   A importância de conhecer a sintaxe específica de SQL para o SGBD utilizado (SQLite), pois pode haver variações em relação a outros bancos de dados.
-*   A necessidade de habilitar explicitamente o suporte a chaves estrangeiras no SQLite via `PRAGMA foreign_keys = ON;` para garantir a integridade referencial.
-*   A flexibilidade da cláusula `CHECK` no SQLite para impor restrições de valor em colunas, substituindo a ausência de `MIN`/`MAX` nativos.
-*   A garantia da integridade referencial é fundamental para a consistência e confiabilidade dos dados da aplicação.
+* A importância de conhecer a sintaxe específica de SQL para o SGBD utilizado (SQLite), pois pode haver variações em relação a outros bancos de dados.
+* A necessidade de habilitar explicitamente o suporte a chaves estrangeiras no SQLite via `PRAGMA foreign_keys = ON;` para garantir a integridade referencial.
+* A flexibilidade da cláusula `CHECK` no SQLite para impor restrições de valor em colunas, substituindo a ausência de `MIN`/`MAX` nativos.
+* A garantia da integridade referencial é fundamental para a consistência e confiabilidade dos dados da aplicação.
 
 ## 6. Proteção do Arquivo de Banco de Dados
 
@@ -107,17 +107,18 @@ O desafio consistia em garantir a segurança do arquivo de banco de dados SQLite
 ### 6.2 Como Foi Lidar com o Desafio
 
 Foram implementadas e/ou sugeridas as seguintes abordagens:
-*   **Exclusão do Git:** O arquivo `tasksmith.db` foi adicionado ao `.gitignore` para evitar que seja versionado, prevenindo riscos de segurança e conflitos de merge.
-*   **Variáveis de Ambiente:** Foi recomendada a utilização de variáveis de ambiente para armazenar configurações de conexão sensíveis, embora a implementação atual possa ainda não refletir isso completamente.
-*   **Scripts de Inicialização:** A criação de um arquivo `schema.sql` (com a estrutura do banco) e um script `init_db.php` (para inicializar o banco de dados) foi proposta para garantir a reproducibilidade do ambiente sem a necessidade de versionar o arquivo `.db`.
-*   **Proteção de Acesso Web:** Foi reforçada a necessidade de configurar o servidor web (via `.htaccess` no diretório `database/`) para negar acesso direto ao arquivo do banco de dados, garantindo que ele não possa ser baixado por usuários mal-intencionados.
+
+* **Exclusão do Git:** O arquivo `tasksmith.db` foi adicionado ao `.gitignore` para evitar que seja versionado, prevenindo riscos de segurança e conflitos de merge.
+* **Variáveis de Ambiente:** Foi recomendada a utilização de variáveis de ambiente para armazenar configurações de conexão sensíveis, embora a implementação atual possa ainda não refletir isso completamente.
+* **Scripts de Inicialização:** A criação de um arquivo `schema.sql` (com a estrutura do banco) e um script `init_db.php` (para inicializar o banco de dados) foi proposta para garantir a reproducibilidade do ambiente sem a necessidade de versionar o arquivo `.db`.
+* **Proteção de Acesso Web:** Foi reforçada a necessidade de configurar o servidor web (via `.htaccess` no diretório `database/`) para negar acesso direto ao arquivo do banco de dados, garantindo que ele não possa ser baixado por usuários mal-intencionados.
 
 ### 6.3 Lições Aprendidas
 
-*   A segurança de dados é primordial; arquivos de banco de dados nunca devem ser expostos em repositórios públicos ou acessíveis via web.
-*   A importância do `.gitignore` para gerenciar arquivos sensíveis e binários no controle de versão.
-*   A prática de usar variáveis de ambiente para configurações sensíveis melhora a segurança e a flexibilidade da implantação.
-*   Scripts de inicialização de banco de dados são essenciais para a reproducibilidade do ambiente de desenvolvimento e produção.
+* A segurança de dados é primordial; arquivos de banco de dados nunca devem ser expostos em repositórios públicos ou acessíveis via web.
+* A importância do `.gitignore` para gerenciar arquivos sensíveis e binários no controle de versão.
+* A prática de usar variáveis de ambiente para configurações sensíveis melhora a segurança e a flexibilidade da implantação.
+* Scripts de inicialização de banco de dados são essenciais para a reproducibilidade do ambiente de desenvolvimento e produção.
 
 ## 7. Validação de Página Atual em Requisições GET
 
@@ -128,17 +129,18 @@ O problema abordado foi como otimizar a experiência do usuário, evitando o rec
 ### 7.2 Como Foi Lidar com o Desafio
 
 Foram discutidas e sugeridas diversas abordagens para lidar com este desafio:
-*   **Comparação de URL:** Verificar se a URL solicitada é a mesma da página atual no lado do servidor (no roteador ou Front Controller).
-*   **Variáveis de Sessão/HTTP Referer:** Utilizar variáveis de sessão para rastrear a última página visitada ou verificar o cabeçalho `HTTP Referer` para inferir a origem da requisição.
-*   **Parâmetros de Consulta:** Adicionar parâmetros de consulta específicos para identificar navegação interna ou ações que não exigem recarregamento completo.
-*   **JavaScript (Frontend):** A abordagem mais eficaz para uma experiência moderna, interceptando cliques em links e usando `history.pushState` ou `fetch` para carregar conteúdo dinamicamente sem recarregar a página inteira.
-*   **Sistema de Histórico de Navegação:** Implementar um controle mais granular do histórico de navegação para gerenciar o estado da aplicação.
+
+* **Comparação de URL:** Verificar se a URL solicitada é a mesma da página atual no lado do servidor (no roteador ou Front Controller).
+* **Variáveis de Sessão/HTTP Referer:** Utilizar variáveis de sessão para rastrear a última página visitada ou verificar o cabeçalho `HTTP Referer` para inferir a origem da requisição.
+* **Parâmetros de Consulta:** Adicionar parâmetros de consulta específicos para identificar navegação interna ou ações que não exigem recarregamento completo.
+* **JavaScript (Frontend):** A abordagem mais eficaz para uma experiência moderna, interceptando cliques em links e usando `history.pushState` ou `fetch` para carregar conteúdo dinamicamente sem recarregar a página inteira.
+* **Sistema de Histórico de Navegação:** Implementar um controle mais granular do histórico de navegação para gerenciar o estado da aplicação.
 
 ### 7.3 Lições Aprendidas
 
-*   A otimização da experiência do usuário vai além da funcionalidade, incluindo a fluidez da navegação e a minimização de recarregamentos desnecessários.
-*   Existem múltiplas estratégias para lidar com a validação de página atual, desde abordagens simples no servidor até soluções mais complexas no frontend com JavaScript.
-*   A escolha da abordagem depende do nível de interatividade e da experiência de "Single Page Application" (SPA) desejada para o projeto.
+* A otimização da experiência do usuário vai além da funcionalidade, incluindo a fluidez da navegação e a minimização de recarregamentos desnecessários.
+* Existem múltiplas estratégias para lidar com a validação de página atual, desde abordagens simples no servidor até soluções mais complexas no frontend com JavaScript.
+* A escolha da abordagem depende do nível de interatividade e da experiência de "Single Page Application" (SPA) desejada para o projeto.
 
 ## 8. Conversão de String para Classe em PHP
 
@@ -149,12 +151,51 @@ O desafio técnico consistia em como converter dinamicamente uma string (ex: `'H
 ### 8.2 Como Foi Lidar com o Desafio
 
 Foram explicadas e discutidas duas maneiras principais de realizar essa conversão:
-*   **Chamada Direta com String de Classe:** Utilizando a sintaxe `$controllerName::$actionName()` para métodos estáticos, onde `$controllerName` e `$actionName` são strings.
-*   **`call_user_func`:** Uma abordagem mais flexível e recomendada, utilizando `call_user_func([$controllerInstance, $methodName])`. Esta função permite chamar métodos de instância (não estáticos) e é mais robusta para cenários onde o controlador precisa ser instanciado e pode ter dependências.
+
+* **Chamada Direta com String de Classe:** Utilizando a sintaxe `$controllerName::$actionName()` para métodos estáticos, onde `$controllerName` e `$actionName` são strings.
+* **`call_user_func`:** Uma abordagem mais flexível e recomendada, utilizando `call_user_func([$controllerInstance, $methodName])`. Esta função permite chamar métodos de instância (não estáticos) e é mais robusta para cenários onde o controlador precisa ser instanciado e pode ter dependências.
 
 ### 8.3 Lições Aprendidas
 
-*   A capacidade de resolver dinamicamente classes e métodos a partir de strings é fundamental para a implementação de um Front Controller e um sistema de roteamento flexível.
-*   `call_user_func` é uma ferramenta poderosa em PHP para chamadas dinâmicas, oferecendo maior flexibilidade em comparação com chamadas estáticas diretas.
-*   A implementação dessa funcionalidade requer atenção ao autoloading de classes (garantindo que as classes dos controladores sejam carregadas) e ao tratamento de erros (verificando a existência da classe e do método antes da chamada).
-*   Esta técnica é um pilar para a evolução da arquitetura do Tasksmith em direção a um padrão MVC mais completo, permitindo que o roteador despache requisições para controladores específicos e seus métodos.
+* A capacidade de resolver dinamicamente classes e métodos a partir de strings é fundamental para a implementação de um Front Controller e um sistema de roteamento flexível.
+* `call_user_func` é uma ferramenta poderosa em PHP para chamadas dinâmicas, oferecendo maior flexibilidade em comparação com chamadas estáticas diretas.
+* A implementação dessa funcionalidade requer atenção ao autoloading de classes (garantindo que as classes dos controladores sejam carregadas) e ao tratamento de erros (verificando a existência da classe e do método antes da chamada).
+* Esta técnica é um pilar para a evolução da arquitetura do Tasksmith em direção a um padrão MVC mais completo, permitindo que o roteador despache requisições para controladores específicos e seus métodos.
+
+## 9. Refatoração do Método `select` em `QueryBuilder.php`
+
+### 9.1 Descrição do Desafio
+
+O método `select` na classe `QueryBuilder` (`src/Db/QueryBuilder.php`) foi inicialmente implementado pelo usuário, que é relativamente iniciante em PHP, SQL e PDO. O objetivo era criar uma funcionalidade de construção de queries flexível, lidando com cláusulas como `DISTINCT`, `WHERE`, `LIKE` e `ORDER BY`.
+
+Apesar de ser uma primeira tentativa robusta, o usuário reconheceu que o código poderia não ser a melhor abordagem e buscou orientação para refatoração, focando em tratamento de erros e limpeza de código, sem descaracterizar a originalidade da sua implementação.
+
+Os principais desafios e limitações de conhecimento identificados na implementação inicial incluíam:
+
+* **Segurança:** A concatenação direta de variáveis na string SQL (`$condition`, `$search_pattern`) abria uma brecha para ataques de SQL Injection.
+* **Tratamento de Erros:** O uso de uma variável para acumular mensagens de erro de validação tornava o fluxo de controle menos explícito e o retorno de strings de erro dificultava o tratamento programático.
+* **Clareza do Código:** A lógica de construção da query, embora funcional, poderia ser simplificada para melhor legibilidade.
+* **Conhecimento sobre PDO:** A falta de familiaridade com conceitos como Prepared Statements, Bindings e métodos de `fetch` era uma limitação natural para um iniciante.
+
+### 9.2 Como Foi Lidar com o Desafio
+
+O desafio foi abordado através de um processo iterativo de refatoração e feedback:
+
+1. **Plano Inicial:** Foi proposto um plano focado em implementar Prepared Statements, refatorar a lógica de validação e melhorar o tratamento de erro de execução.
+2. **Primeira Implementação:** As alterações foram aplicadas, focando em segurança e tratamento de erros.
+3. **Feedback do Usuário:** O usuário indicou que o código resultante, embora funcional e mais seguro, estava "poluído" com muitos comentários e a lógica não era imediatamente compreensível.
+4. **Segunda Implementação:** O código foi refatorado novamente para ser mais conciso e legível, removendo comentários excessivos e simplificando a lógica, mantendo as melhorias de segurança e tratamento de erros.
+
+### 9.3 Lições Aprendidas
+
+* A importância de **Prepared Statements** para prevenir SQL Injection e garantir a segurança das aplicações.
+* A necessidade de um **tratamento de erros** claro e programático, retornando valores que indiquem sucesso ou falha (ex: `true`/`false`) em vez de strings de erro.
+* A relevância de **logar erros** internamente (`error_log()`) para depuração, sem expor informações sensíveis ao usuário final.
+* A diferença entre `query()` e `prepare() + execute()` e quando usar cada um para otimizar segurança e performance.
+* A importância da **legibilidade e concisão do código**, mesmo ao implementar melhorias de segurança e robustez.
+* O valor do **feedback iterativo** no processo de desenvolvimento e refatoração.
+* Apesar do código final do método ter sido refatorado com auxílio de IA, a lógica inicial foi concebida e implementada pelo usuário, demonstrando um esforço significativo de aprendizado e aplicação prática.
+
+### 9.4 Próximos Passos do Usuário
+
+Considerando o prazo de entrega do TCC, o usuário decidiu priorizar a conclusão das outras partes do backend, aproveitando as melhorias de segurança já implementadas (especialmente para `LIKE`). No entanto, o compromisso é de, após a entrega do TCC, aprofundar o conhecimento em Prepared Statements e aplicar essa prática de forma consistente em todas as consultas que envolvem entrada de usuário, garantindo a robustez e segurança da aplicação a longo prazo.
