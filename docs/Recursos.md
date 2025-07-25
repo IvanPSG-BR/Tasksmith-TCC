@@ -31,13 +31,13 @@ Este documento detalha as funcionalidades propostas para o Tasksmith, incluindo 
 ### 0.2. Implementação Realizada
 
 - **Estrutura de Diretórios:**
-  - `src/` - Código PHP da aplicação (Router, Controllers, Models)
+  - `src/` - Código PHP da aplicação (Routes, Controllers, Models)
   - `public/` - Arquivos acessíveis publicamente (assets, index.php)
   - `config/` - Arquivos de configuração
   - `docs/` - Documentação do projeto
 
 - **Sistema de Roteamento:**
-  - Classe `Router.php` com mapeamento de rotas para views
+  - Classe `Routes.php` com mapeamento de rotas para views
   - Suporte a rotas para autenticação (`/login`, `/signup`)
   - Rotas para funcionalidades do jogo (`/game/*`)
   - Rotas informativas (`/about-project`, `/about-creator`)

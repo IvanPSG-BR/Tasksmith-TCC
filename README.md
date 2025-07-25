@@ -95,7 +95,7 @@ Tasksmith-TCC/
 │   ├── Models/           # Modelos de dados (Entidades)
 │   ├── Services/         # Lógica de negócios
 │   ├── Views/            # Arquivos de apresentação (HTML/PHP)
-│   └── Router.php        # Roteador
+│   └── Routes.php        # Roteador
 ├── .env.example          # Exemplo de arquivo de ambiente
 ├── .gitignore
 ├── .htaccess             # Regras de reescrita do Apache

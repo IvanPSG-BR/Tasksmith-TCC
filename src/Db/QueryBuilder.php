@@ -9,15 +9,9 @@ class QueryBuilder {
     private PDO $database;
     private $table;
 
-    public function __construct($table) {
+    public function __construct(PDO $database, string $table) {
+        $this->database = $database;
         $this->table = $table;
-        $this->set_conn();
-    }
-
-    private function set_conn(): PDO {
-        require_once __DIR__ . "/../../database/conn.php";
-        $this->database = $conn;
-        return $this->database;
     }
 
     private function execute(string $query, array $params = []): PDOStatement | bool {
@@ -33,7 +27,7 @@ class QueryBuilder {
         }
     }
 
-    public function select(array $values, array $extra_keywords = null, string $distinct_value = null, string $condition = null, string $order_value = null, string $search_pattern = null) {
+    public function db_select(array $values, array $extra_keywords = null, string $distinct_value = null, string $condition = null, string $order_value = null, string $search_pattern = null) {
         $query = "SELECT ";
         $bindings = [];
 
@@ -78,7 +72,7 @@ class QueryBuilder {
         return false;
     }
 
-    public function insert(array $fields, array $values) {
+    public function db_insert(array $fields, array $values) {
         $query = "INSERT INTO $this->table ";
         $value_bindings = array_pad([], count($values), "?");
 
@@ -101,7 +95,7 @@ class QueryBuilder {
         return false;
     }
 
-    public function update(array $fields, array $values, string $condition) {
+    public function db_update(array $fields, array $values, string $condition, array $condition_values) {
         $query = "UPDATE $this->table SET ";
         $set_parts = [];
 
@@ -114,13 +108,14 @@ class QueryBuilder {
             return false;
         }
 
-        foreach ($fields as $index => $field) {
+        foreach ($fields as $field) {
             $set_parts[] = "$field = ?";
         }
         $query .= implode(", ", $set_parts);
         $query .= " WHERE ($condition);";
 
-        $result = $this->execute($query, $values);
+        $all_values = array_merge($values, $condition_values);
+        $result = $this->execute($query, $all_values);
 
         if ($result) {
             return true;
@@ -128,10 +123,10 @@ class QueryBuilder {
         return false;
     }
 
-    public function delete(string $condition) {
+    public function db_delete(string $condition, array $condition_values) {
         $query = "DELETE FROM " . $this->table . " WHERE ($condition);";
 
-        $result = $this->execute($query);
+        $result = $this->execute($query, $condition_values);
 
         if ($result) {
             return true;

@@ -3,7 +3,7 @@
 namespace App\Controllers;
 
 class HomeController {
-    public function index() {
+    public function page() {
         include_once __DIR__ . "/../Views/home/home.php";
     }
 }

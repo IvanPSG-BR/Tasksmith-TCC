@@ -20,7 +20,7 @@ O MVP do Tasksmith para o TCC incluirá:
 **Estado Atual da Implementação:**
 
 * ✅ **Estrutura Base:** Arquitetura monolítica implementada com organização clara de diretórios
-* ✅ **Sistema de Roteamento:** Router personalizado funcional com suporte a URLs amigáveis
+* ✅ **Sistema de Roteamento:** Routes personalizado funcional com suporte a URLs amigáveis
 * 🔄 **Página Inicial:** Interface responsiva com Tailwind CSS e seção call-to-action, outras seções em progresso
 * ✅ **Configuração de Ambiente:** Tailwind CSS configurado, .htaccess implementado, estrutura de assets organizada
 * 🔄 **Páginas de Autenticação:** Estrutura criada, aguardando implementação da lógica
@@ -60,18 +60,15 @@ Desenvolver uma aplicação web gamificada (Tasksmith) que auxilie na organizaç
   * 1.2. Justificativa
   * 1.3. Objetivos (Geral e Específicos)
   * 1.4. Estrutura do Trabalho
-
 * **Capítulo 2: Fundamentação Teórica**
   * 2.1. Gamificação: Conceitos e Aplicações
   * 2.2. Produtividade e Motivação: Teorias Psicológicas
   * 2.3. Desenvolvimento Web com Tecnologias "Puras"
   * 2.4. Arquiteturas Monolíticas vs. Microsserviços
-
 * **Capítulo 3: Metodologia**
   * 3.1. Abordagem de Desenvolvimento (Iterativa e Incremental)
   * 3.2. Tecnologias Utilizadas (PHP, JS Vanilla, Tailwind CSS)
   * 3.3. Ferramentas de Desenvolvimento e Versionamento
-
 * **Capítulo 4: Desenvolvimento do Tasksmith**
   * 4.1. Planejamento e Definição do MVP
   * 4.2. Arquitetura e Design do Sistema
@@ -80,13 +77,11 @@ Desenvolver uma aplicação web gamificada (Tasksmith) que auxilie na organizaç
     * 4.3.2. Gestão de Tarefas (CRUD)
     * 4.3.3. Sistema de XP e Níveis
   * 4.4. Desafios Técnicos e Soluções Adotadas
-
 * **Capítulo 5: Análise e Discussão**
   * 5.1. Avaliação da Arquitetura Monolítica
   * 5.2. Eficácia dos Elementos de Gamificação
   * 5.3. Experiência do Usuário e Interface
   * 5.4. Limitações e Oportunidades de Melhoria
-
 * **Capítulo 6: Considerações Finais**
   * 6.1. Conclusões
   * 6.2. Trabalhos Futuros
@@ -111,54 +106,52 @@ graph TD
     B -->|Requisição HTTP| C(Servidor Web - Apache/XAMPP)
     C -->|.htaccess Rewrite| D(index.php - Raiz)
     D -->|Redireciona| E(public/index.php)
-    E -->|Inicializa| F(src/Router.php)
-    F -->|Mapeia Rota| G{View Correspondente}
+    E -->|Inicializa| F(src/Routes.php)
+    F -->|Mapeia Rota| G(Controller Correspondente)
 
     subgraph "Estrutura Implementada"
         subgraph "Sistema de Roteamento ✅"
             F --> H[Rotas Web Definidas]
-            H --> I[/home → home.php]
-            H --> J[/login → login.php]
-            H --> K[/signup → signup.php]
-            H --> L[/game/* → game views]
+            H --> I[/home → HomeController]
+            H --> J[/login → AuthController]
+            H --> K[/signup → AuthController]
+            H --> L[/game/* → GameController]
         end
 
-        subgraph "Views Implementadas ✅"
-            G --> M[src/Views/home/home.php]
-            G --> N[src/Views/auth/* (estrutura)]
-            G --> O[src/Views/game/* (estrutura)]
-            G --> P[src/Views/info/* (estrutura)]
+        subgraph "Controllers ✅"
+            G --> M[src/Controllers/HomeController.php]
+            G --> N[src/Controllers/AuthController.php]
+            G --> O[src/Controllers/GameController.php]
         end
 
-        subgraph "Assets e Estilização ✅"
-            M --> Q[public/assets/css/style.css]
-            M --> R[public/assets/js/main.js]
-            M --> S[public/assets/images/*]
-            Q --> T[Tailwind CSS Compilado]
-            T --> U[Responsividade Implementada]
+        subgraph "Views e Assets ✅"
+            M --> P[src/Views/home/home.php]
+            N --> Q[src/Views/auth/*]
+            O --> R[src/Views/game/*]
+            P --> S[public/assets/*]
         end
 
         subgraph "Configuração e Segurança ✅"
-            C --> V[.htaccess - URLs Amigáveis]
-            V --> W[Compressão e Cache]
-            V --> X[Proteção de Arquivos]
-            E --> Y[Verificação FROM_ROOT]
+            C --> T[.htaccess - URLs Amigáveis]
+            T --> U[Compressão e Cache]
+            T --> V[Proteção de Arquivos]
+            E --> W[Verificação FROM_ROOT]
         end
     end
 
     subgraph "Funcionalidades Futuras 🔄"
-        Z[Banco de Dados]
-        AA[Sistema de XP/Níveis]
-        CC[Gestão de Tarefas]
-        DD[Autenticação]
+        X[Banco de Dados]
+        Y[Sistema de XP/Níveis]
+        Z[Gestão de Tarefas]
+        AA[Lógica de Autenticação]
     end
 
     style F fill:#90EE90
     style M fill:#90EE90
-    style Q fill:#90EE90
-    style V fill:#90EE90
+    style P fill:#90EE90
+    style S fill:#90EE90
+    style T fill:#90EE90
+    style X fill:#FFE4B5
+    style Y fill:#FFE4B5
     style Z fill:#FFE4B5
     style AA fill:#FFE4B5
-    style BB fill:#FFE4B5
-    style CC fill:#FFE4B5
-    style DD fill:#FFE4B5

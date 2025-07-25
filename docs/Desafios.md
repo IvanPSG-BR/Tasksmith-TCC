@@ -53,7 +53,7 @@ A necessidade de implementar um sistema de roteamento funcional sem utilizar fra
 
 O desafio foi abordado através de uma implementação incremental:
 
-* **Desenvolvimento do Router.php:** Criação de uma classe Router personalizada para mapear URLs para views correspondentes.
+* **Desenvolvimento do Routes.php:** Criação de uma classe Routes personalizada para mapear URLs para views correspondentes.
 * **Configuração do .htaccess:** Implementação de regras de reescrita para URLs amigáveis e redirecionamento de todas as requisições para o index.php.
 * **Sistema de Front Controller:** Implementação do padrão Front Controller para centralizar o processamento de requisições.
 * **Tratamento de Erros:** Configuração de páginas de erro personalizadas (404, 403, 500) integradas ao sistema de roteamento.
@@ -202,3 +202,53 @@ O desafio foi abordado através de um processo iterativo de refatoração e feed
 ### 9.4 Próximos Passos do Usuário
 
 Considerando o prazo de entrega do TCC, o usuário decidiu priorizar a conclusão das outras partes do backend, aproveitando as melhorias de segurança já implementadas (especialmente para `LIKE`). No entanto, o compromisso é de, após a entrega do TCC, aprofundar o conhecimento em Prepared Statements e aplicar essa prática de forma consistente em todas as consultas que envolvem entrada de usuário, garantindo a robustez e segurança da aplicação a longo prazo.
+
+## 10. Migração para Configuração com Variáveis de Ambiente
+
+### 10.1 Descrição do Desafio
+
+Inicialmente, a conexão com o banco de dados e outras configurações estavam definidas diretamente no código PHP (ex: `database/conn.php`). Essa abordagem, conhecida como "hardcoding", apresentava dois problemas principais:
+
+1. **Segurança:** Expor credenciais de banco de dados diretamente no código é uma prática insegura, especialmente em repositórios versionados.
+2. **Portabilidade:** Dificultava a configuração do projeto em diferentes ambientes (desenvolvimento, produção) sem alterar o código-fonte.
+
+O desafio era refatorar o sistema para carregar configurações de um local externo e seguro, alinhado com as melhores práticas de desenvolvimento.
+
+### 10.2 Como Foi Lidar com o Desafio
+
+A solução foi implementar a biblioteca `vlucas/phpdotenv`, uma padrão de mercado em projetos PHP.
+
+1. **Criação do `.env`:** Um arquivo `.env` foi criado na raiz do projeto para armazenar todas as variáveis de ambiente, como `DB_HOST`, `DB_USER`, `DB_PASS`, etc.
+2. **Adição ao `.gitignore`:** O arquivo `.env` foi imediatamente adicionado ao `.gitignore` para garantir que nunca fosse enviado ao repositório.
+3. **Carregamento das Variáveis:** O arquivo `config/settings.php` foi modificado para usar o `phpdotenv` e carregar as variáveis no início da aplicação.
+4. **Consumo das Variáveis:** Arquivos como `database/conn.php` foram atualizados para consumir as variáveis globais `$_ENV` em vez de usar valores "hardcoded".
+
+### 10.3 Lições Aprendidas
+
+* A importância de separar configuração de código para aumentar a segurança e a flexibilidade.
+* O uso de arquivos `.env` é a forma padrão da indústria para gerenciar credenciais e configurações específicas de cada ambiente.
+* A utilidade do Composer para gerenciar dependências de bibliotecas externas como `phpdotenv`.
+
+## 11. Refatoração do `QueryBuilder` com Injeção de Dependência e Segurança Aprimorada
+
+### 11.1 Descrição do Desafio
+
+A classe `QueryBuilder` (`src/Db/QueryBuilder.php`), embora funcional, apresentava duas oportunidades de melhoria arquitetônica:
+
+1. **Acoplamento:** A classe era responsável por criar sua própria instância de conexão PDO, acoplando-a diretamente ao arquivo `database/conn.php`. Isso dificultava a reutilização e os testes.
+2. **Segurança:** Os métodos `update` e `delete` construíam a cláusula `WHERE` por concatenação de strings, o que abria uma potencial vulnerabilidade a SQL Injection se não fosse manuseado com extremo cuidado na chamada do método.
+
+O desafio era refatorar a classe para torná-la mais desacoplada, segura e alinhada com os princípios de design de software.
+
+### 11.2 Como Foi Lidar com o Desafio
+
+Foram aplicadas duas mudanças principais:
+
+1. **Injeção de Dependência (Dependency Injection):** O construtor da classe foi modificado para **receber** a conexão PDO como um parâmetro (`public function __construct(PDO $database, string $table)`). A responsabilidade de criar a conexão foi movida para fora da classe, que agora apenas depende de uma conexão PDO válida para funcionar.
+2. **Segurança nos Métodos `update` e `delete`:** Os métodos foram renomeados (`db_update`, `db_delete`) e suas assinaturas foram alteradas para aceitar um array de valores (`$condition_values`) correspondentes aos placeholders na cláusula `WHERE`. Isso permite que a execução da query utilize *prepared statements* com *bindings*, eliminando a vulnerabilidade.
+
+### 11.3 Lições Aprendidas
+
+* **Injeção de Dependência** é uma técnica poderosa para escrever código mais limpo, testável e de fácil manutenção, pois inverte o controle sobre as dependências.
+* A segurança contra SQL Injection deve ser uma preocupação em **todas** as partes de uma query que envolvem dados externos, incluindo a cláusula `WHERE`.
+* A refatoração contínua do código não é apenas para corrigir bugs, mas também para melhorar a arquitetura e a qualidade do software a longo prazo.

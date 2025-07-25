@@ -3,11 +3,11 @@
 namespace App\Controllers;
 
 class AuthController {
-    public function signup_index() {
+    public function signup_page() {
         include_once __DIR__ . "/../Views/auth/signup.php";
     }
 
-    public function login_index() {
+    public function login_page() {
         include_once __DIR__ . "/../Views/auth/login.php";
     }
 }

@@ -54,7 +54,7 @@ As seguintes decisões foram cruciais para moldar o Tasksmith e seu desenvolvime
 * **Justificativa:** A decisão de implementar um sistema de roteamento próprio ao invés de utilizar frameworks existentes foi tomada para **demonstrar compreensão dos mecanismos de roteamento web** e manter o controle total sobre o fluxo da aplicação. Esta abordagem permite um aprendizado mais aprofundado sobre como as requisições HTTP são processadas e direcionadas.
 * **Alternativas Consideradas:** Frameworks como Laravel ou Slim PHP foram considerados, mas descartados para manter a filosofia de "tecnologias puras" e maximizar o aprendizado.
 * **Impacto Esperado:** Maior compreensão dos fundamentos web, controle total sobre o roteamento, e flexibilidade para implementações futuras.
-* **Implementação Realizada:** Foi desenvolvido um sistema de roteamento em PHP puro com suporte a URLs amigáveis através de .htaccess, permitindo navegação intuitiva entre as páginas da aplicação.
+* **Implementação Realizada:** Foi desenvolvido um sistema de roteamento em PHP puro que evoluiu de um mapeamento simples para uma classe `Routes.php` robusta, suportando diferentes métodos HTTP por rota e despachando para `Controllers` específicos. O uso de `.htaccess` foi mantido para garantir URLs amigáveis.
 
 ### 2.7. Evolução do Front Controller e Organização dos Controllers
 
@@ -63,7 +63,7 @@ As seguintes decisões foram cruciais para moldar o Tasksmith e seu desenvolvime
 * **Controllers Baseados em Modelos vs. Funcionalidades:** Foi discutida a transição de uma abordagem puramente baseada em modelos para uma abordagem híbrida com foco em funcionalidades (ex: `AuthController`, `TaskController`, `GameController`). Esta escolha visa equilibrar a coesão funcional, o tamanho gerenciável dos arquivos e a responsabilidade única de cada controller.
 * **Despacho Dinâmico:** A necessidade de converter strings (ex: `'HomeController@index'`) em chamadas de classe e método reais foi abordada, com a exploração de técnicas como `call_user_func` para flexibilidade.
 * **Impacto Esperado:** Maior separação de responsabilidades, melhor processamento de formulários e preparação de dados para views, maior flexibilidade para implementar lógica de negócios complexa, e preparação para a escalabilidade futura do projeto.
-* **Implementação Realizada (em andamento/sugerida):** A migração para um Front Controller que instancia controllers e chama seus métodos está sendo considerada como uma evolução gradual. Para CRUDs (como tarefas), a decisão é manter todas as operações em um único controller para coesão.
+* **Implementação Realizada:** O Front Controller (`public/index.php`) foi completamente refatorado. Ele agora instancia dinamicamente o `Controller` e invoca a `action` (método) apropriada com base na rota e no método HTTP da requisição (`GET`, `POST`, etc.). A estrutura de `Controllers` foi reorganizada por funcionalidade (`AuthController`, `HomeController`, `GameController`), abandonando a estrutura anterior que era mais focada em modelos.
 
 ### 2.8. Refatoração do Método `select` e Implementação dos Métodos CRUD em `QueryBuilder.php`
 
@@ -74,9 +74,10 @@ As seguintes decisões foram cruciais para moldar o Tasksmith e seu desenvolvime
   * **Simplificação da Lógica e Concisão:** O código foi iterativamente simplificado, removendo comentários excessivos e otimizando a construção da query para melhorar a legibilidade, atendendo ao feedback do usuário.
   * **Centralização da Execução de Queries:** Criação de um método `private function execute()` para encapsular a lógica de preparação e execução de queries, promovendo a reutilização de código e a consistência no tratamento de erros.
   * **Implementação dos Métodos `insert`, `update` e `delete`:** Desenvolvimento de métodos para inserção, atualização e exclusão de dados, utilizando Prepared Statements e a função `execute` centralizada.
-  * **Refinamento dos Métodos `update` e `delete`:** Correção da sintaxe da cláusula `SET` no `update` (removendo a vírgula extra), padronização do uso de `$this->table` e dos retornos (`true`/`false`) em ambos os métodos. A implementação de bindings para as condições de `WHERE` foi adiada para um momento posterior, a fim de não sobrecarregar o aprendizado inicial.
+  * **Refinamento dos Métodos `update` e `delete`:** Os métodos `update` e `delete` foram aprimorados para aceitar parâmetros de condição (`$condition_values`), permitindo o uso seguro de *prepared statements* em cláusulas `WHERE` e prevenindo SQL Injection.
+  * **Injeção de Dependência:** O construtor da classe foi modificado para receber a conexão PDO como um parâmetro (injeção de dependência), em vez de instanciá-la internamente. Isso desacopla a classe da configuração de conexão e facilita os testes.
 * **Impacto Esperado:** Maior segurança da aplicação, código mais robusto e fácil de manter, e um aprendizado aprofundado para o usuário sobre as melhores práticas de interação com banco de dados em PHP.
-* **Aprendizado e Próximos Passos do Usuário:** Este processo proporcionou ao usuário um entendimento prático sobre Prepared Statements, bindings, `fetchAll`, `error_log`, e a diferença entre `query()` e `prepare() + execute()`. O usuário demonstrou proatividade ao buscar conhecimento adicional (vídeo tutorial) e aplicar os conceitos na implementação dos métodos CRUD e na função `execute`. As interações subsequentes refinaram o uso dos bindings e a gestão dos retornos das funções. O usuário planeja aprofundar esses conhecimentos após a entrega do TCC, demonstrando um compromisso com a melhoria contínua e a segurança do código.
+* **Aprendizado e Próximos Passos do Usuário:** Este processo proporcionou ao usuário um entendimento prático sobre Prepared Statements, bindings, `fetchAll`, `error_log`, e a diferença entre `query()` e `prepare() + execute()`. O usuário demonstrou proatividade ao buscar conhecimento adicional (vídeo tutorial) e aplicar os conceitos na implementação dos métodos CRUD e na função `execute`. As interações subsequentes refinaram o uso dos bindings, a gestão dos retornos das funções e a aplicação de injeção de dependência. O usuário planeja aprofundar esses conhecimentos após a entrega do TCC, demonstrando um compromisso com a melhoria contínua e a segurança do código.
 
 ### 2.9. Metodologia de Desenvolvimento Iterativa e Incremental com Ênfase na Documentação do Processo de Aprendizado
 
@@ -84,7 +85,21 @@ As seguintes decisões foram cruciais para moldar o Tasksmith e seu desenvolvime
 * **Impacto Esperado:** Documentação rica em insights técnicos e pedagógicos, fortalecimento do caráter de pesquisa e aprendizado do TCC.
 * **Implementação Realizada:** Cada commit foi documentado com mensagens detalhadas explicando as mudanças implementadas, criando um histórico completo da evolução do projeto e das decisões tomadas.
 
-### 2.10. Organização da Lógica de Negócio e Persistência de Dados
+### 2.10. Adoção de Variáveis de Ambiente com `phpdotenv`
+
+* **Justificativa:** Para aumentar a segurança e a portabilidade do projeto, foi adotada a biblioteca `vlucas/phpdotenv`. Esta decisão permite que configurações sensíveis, como credenciais de banco de dados, sejam armazenadas em um arquivo `.env` que não é versionado no Git. Isso elimina a necessidade de ter dados sigilosos diretamente no código (hardcoding), facilitando a configuração do ambiente em diferentes máquinas (desenvolvimento, produção) e protegendo as credenciais.
+* **Alternativas Consideradas:** Manter as configurações em um arquivo PHP (`config/settings.php`) foi a abordagem inicial, mas foi descartada por ser menos segura e flexível.
+* **Impacto Esperado:** Maior segurança, facilidade de configuração em novos ambientes, e alinhamento com as melhores práticas de desenvolvimento de aplicações web modernas.
+* **Implementação Realizada:** A biblioteca foi adicionada via Composer. O arquivo `config/settings.php` foi modificado para carregar as variáveis do `.env`, e o `database/conn.php` foi refatorado para consumir essas variáveis, tornando a conexão com o banco de dados totalmente configurável.
+
+### 2.11. Reavaliação do SGBD: Migração para MySQL
+
+* **Justificativa:** Embora a adoção de variáveis de ambiente tenha tornado a aplicação agnóstica ao SGBD, foi tomada a decisão de padronizar o desenvolvimento e a documentação em torno do **MySQL**. Os principais motivos para essa escolha são a **vasta quantidade de recursos de aprendizado** (tutoriais, fóruns, documentação) disponíveis para a combinação PHP e MySQL, o que acelera a resolução de problemas, e a **praticidade oferecida por ambientes de desenvolvimento local como XAMPP/LAMPP**, que já vêm com MySQL pré-configurado e otimizado.
+* **Alternativas Consideradas:** O SQLite foi a opção inicial devido à sua simplicidade (um único arquivo, sem necessidade de servidor). No entanto, para o propósito de um TCC que visa refletir práticas de mercado, o MySQL foi considerado mais representativo e robusto.
+* **Impacto Esperado:** Maior agilidade no desenvolvimento, facilitada pelo amplo suporte da comunidade. Um ambiente de desenvolvimento mais próximo das configurações de hospedagem de produção, e maior facilidade para depurar e otimizar consultas SQL específicas do MySQL.
+* **Implementação Realizada:** O script de criação de banco de dados (`database/db_script.php`) foi revisado para garantir total compatibilidade com a sintaxe do MySQL.
+
+### 2.12. Organização da Lógica de Negócio e Persistência de Dados
 
 * **Justificativa:** A decisão de refinar a organização da lógica de negócio e da persistência de dados visa equilibrar a simplicidade do projeto com a manutenção de uma boa separação de responsabilidades. Em vez de introduzir uma camada de Repositórios explícita, optou-se por consolidar a lógica de persistência diretamente nos Serviços, mantendo o projeto mais enxuto e alinhado com a filosofia de "PHP puro" e "simplicidade". A criação de um diretório dedicado para ferramentas de banco de dados de baixo nível (Query Builder) garante uma organização lógica para componentes reutilizáveis.
 * **Abordagens Consideradas:**
