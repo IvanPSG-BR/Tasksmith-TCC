@@ -73,7 +73,7 @@ As funcionalidades essenciais desenvolvidas para o Produto Mínimo Viável são:
 
 - **Backend:** PHP 8.2+
 - **Frontend:** HTML5, TailwindCSS, JavaScript (Vanilla)
-- **Banco de Dados:** SQLite
+- **Banco de Dados:** MySQL
 - **Servidor:** Apache (via XAMPP/LAMPP)
 - **Gerenciador de Dependências:** Composer (PHP), NPM (Node.js)
 
