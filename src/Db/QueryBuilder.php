@@ -10,13 +10,13 @@ class QueryBuilder {
     private $table;
 
     public function __construct(PDO $database, string $table) {
-        $this->database = $database;
-        $this->table = $table;
+        self::$database = $database;
+        self::$table = $table;
     }
 
-    private function execute(string $query, array $params = []): PDOStatement | bool {
+    private static function execute(string $query, array $params = []): PDOStatement | bool {
         try {
-            $stmt = $this->database->prepare($query);
+            $stmt = self::$database->prepare($query);
             if ($stmt->execute($params)) {
                 return $stmt; // Retorna o PDOStatement em caso de sucesso
             }
@@ -27,7 +27,7 @@ class QueryBuilder {
         }
     }
 
-    public function db_select(array $values, array $extra_keywords = null, string $distinct_value = null, string $condition = null, string $order_value = null, string $search_pattern = null) {
+    public static function db_select(array $values, string $distinct_value = null, string $condition = null, array $condition_values = [], string $search_pattern = null, array $extra_keywords = null, string $order_value = null) {
         $query = "SELECT ";
         $bindings = [];
 
@@ -35,18 +35,22 @@ class QueryBuilder {
             $query .= "DISTINCT " . $distinct_value . " ";
         }
 
-        $query .= implode(", ", $values) . " FROM " . $this->table;
+        $query .= implode(", ", $values) . " FROM " . self::$table;
+
+        if ($condition) {
+            $query .= " WHERE " . $condition;
+            $bindings = array_merge($bindings, $condition_values);
+        }
 
         if ($search_pattern) {
             if ($condition) {
-                $query .= " WHERE " . "($condition)" . " LIKE ?";
+                // Adiciona LIKE à condição existente
+                $query .= " LIKE ?";
                 $bindings[] = "%" . $search_pattern . "%";
             } else {
                 error_log("Erro: search_pattern fornecido sem uma coluna para a condição LIKE.");
                 return false;
             }
-        } else if ($condition) {
-            $query .= " WHERE " . "($condition)";
         }
 
         if ($extra_keywords) {
@@ -64,7 +68,7 @@ class QueryBuilder {
             }
         }
 
-        $stmt = $this->execute($query, $bindings);
+        $stmt = self::execute($query, $bindings);
 
         if ($stmt instanceof PDOStatement) {
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -72,8 +76,8 @@ class QueryBuilder {
         return false;
     }
 
-    public function db_insert(array $fields, array $values) {
-        $query = "INSERT INTO $this->table ";
+    public static function db_insert(array $fields, array $values) {
+        $query = "INSERT INTO self::table ";
         $value_bindings = array_pad([], count($values), "?");
 
         if (count($fields) != count($values)) {
@@ -87,16 +91,16 @@ class QueryBuilder {
 
         $fields = implode(", ", $fields);
         $query .= "($fields) VALUES (" . implode(", ", $value_bindings) . ");";
-        $result = $this->execute($query, $values);
+        $result = self::execute($query, $values);
 
         if ($result) {
-            return $this->database->lastInsertId();
+            return self::$database->lastInsertId();
         }
         return false;
     }
 
-    public function db_update(array $fields, array $values, string $condition, array $condition_values) {
-        $query = "UPDATE $this->table SET ";
+    public static function db_update(array $fields, array $values, string $condition, array $condition_values) {
+        $query = "UPDATE self::table SET ";
         $set_parts = [];
 
         if (count($fields) != count($values)) {
@@ -115,7 +119,7 @@ class QueryBuilder {
         $query .= " WHERE ($condition);";
 
         $all_values = array_merge($values, $condition_values);
-        $result = $this->execute($query, $all_values);
+        $result = self::execute($query, $all_values);
 
         if ($result) {
             return true;
@@ -123,10 +127,10 @@ class QueryBuilder {
         return false;
     }
 
-    public function db_delete(string $condition, array $condition_values) {
-        $query = "DELETE FROM " . $this->table . " WHERE ($condition);";
+    public static function db_delete(string $condition, array $condition_values) {
+        $query = "DELETE FROM " . self::$table . " WHERE ($condition);";
 
-        $result = $this->execute($query, $condition_values);
+        $result = self::execute($query, $condition_values);
 
         if ($result) {
             return true;

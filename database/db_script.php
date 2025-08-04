@@ -28,8 +28,7 @@ try{
         "CREATE TABLE IF NOT EXISTS users (
             id INT PRIMARY KEY AUTO_INCREMENT,       
             username VARCHAR(18) NOT NULL UNIQUE,
-            `password` VARCHAR(24) NOT NULL,
-            is_set BOOLEAN NOT NULL DEFAULT FALSE
+            `password` VARCHAR(255) NOT NULL
         );"
     );
     $conn->exec(
