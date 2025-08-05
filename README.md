@@ -51,11 +51,11 @@ O Tasksmith aborda esse problema transformando a produtividade em um jogo. Ao ap
 - **Criar um Hábito Positivo:** Ao associar a conclusão de tarefas com uma experiência divertida, o Tasksmith ajuda a construir um hábito de produtividade sustentável.
 
 <div align="center">
-  <img src="https://github.com/IvanPSG-BR/Tasksmith-TCC/raw/main/public/assets/images/diagrama-projeto-solucao.png" alt="Projeto Solução" width="300"/>
+  <img src="https://github.com/IvanPSG-BR/Tasksmith-TCC/raw/main/public/assets/images/diagrama-projeto-cliente.png" alt="Projeto Solução" width="700"/>
 </div>
 
 <div align="center">
-  <img src="https://github.com/IvanPSG-BR/Tasksmith-TCC/raw/main/public/assets/images/diagrama-projeto-cliente.png" alt="Projeto Cliente" width="300"/>
+  <img src="https://github.com/IvanPSG-BR/Tasksmith-TCC/raw/main/public/assets/images/diagrama-projeto-solucao.png" alt="Projeto Cliente" width="700"/>
 </div>
 
 ## Funcionalidades
