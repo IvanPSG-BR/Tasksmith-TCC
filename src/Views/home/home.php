@@ -8,24 +8,24 @@
         <meta name="description" content="Agendador de Tarefas gamificado no estilo RPG Medieval">
 
         <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=MedievalSharp&family=New+Rocker&family=Pirata+One&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href=<?php echo "{$assets}/css/style.css"?>>
-        <link rel="stylesheet" href=<?php echo "{$assets}/css/pages/home.css"?>>
+        <link rel="stylesheet" href=<?= "{$assets}/css/style.css"?>>
+        <link rel="stylesheet" href=<?= "{$assets}/css/pages/home.css"?>>
 
         <title>Tasksmith - Forje suas Tarefas!</title>
-        <link rel="icon" href=<?php echo "{$assets}/../favicon.ico"?>>
+        <link rel="icon" href=<?= "{$assets}/../favicon.ico"?>>
     </head>
 
     <body>
         <header id="hdr">
             <nav class="nav justify-between">
                 <ul id="app_name">
-                    <li><img src=<?php echo "{$assets}/images/icons/notepad.webp"?> alt="notepad" id="notepad_icon"></li>
+                    <li><img src=<?= "{$assets}/images/icons/notepad.webp"?> alt="notepad" id="notepad_icon"></li>
                     <li><a href="" id="app_name_text" class="text-xl sm:text-2xl md:text-4xl">TaskSmith</a></li>
-                    <li><button class="no-bg-btn" id="anvil_btn"><img src=<?php echo "{$assets}/images/icons/anvil.webp"?> alt="anvil" id="anvil_icon"></button></li>
+                    <li><button class="no-bg-btn" id="anvil_btn"><img src=<?= "{$assets}/images/icons/anvil.webp"?> alt="anvil" id="anvil_icon"></button></li>
                 </ul>
 
                 <ul id="logo">
-                    <li><img src=<?php echo "{$assets}/images/logomark.png"?> alt="tasksmith logomark" id="logomark"></li>
+                    <li><img src=<?= "{$assets}/images/logomark.png"?> alt="tasksmith logomark" id="logomark"></li>
                 </ul>
 
                 <ul id="auth">
@@ -97,6 +97,6 @@
             <p>Todos os direitos reservados</p>            
         </footer>
 
-        <script src=<?php echo "{$assets}/js/main.js"?>></script>
+        <script src=<?= "{$assets}/js/main.js"?>></script>
     </body>
 </html>

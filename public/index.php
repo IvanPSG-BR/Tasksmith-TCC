@@ -35,5 +35,6 @@ function front_controller(string $url, string $http_method) {
     }
 }
 
-$url = "/" . $_GET['url'];
+$url = "/";
+$url .= $_GET['url'] ?? '';
 front_controller($url, $_SERVER['REQUEST_METHOD']);

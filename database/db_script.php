@@ -54,7 +54,7 @@ try{
             task_difficulty INT CHECK (task_difficulty >= 1 AND task_difficulty <= 3),
             xp_reward INT NOT NULL,
             gold_reward INT NOT NULL,
-            `timeout` TIMESTAMP NOT NULL,
+            `timeout` VARCHAR(10) NOT NULL,
             finished BOOLEAN NOT NULL DEFAULT FALSE,
             FOREIGN KEY (user_id) REFERENCES users(id)
         );"

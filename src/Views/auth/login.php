@@ -1,2 +1,2 @@
-<?php echo "Página de login"?>
+<?= "Página de login"?>
 <a href="/"><br>tela inicial (TESTE)</a>

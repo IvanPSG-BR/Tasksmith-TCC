@@ -22,14 +22,14 @@ As seguintes decisões foram cruciais para moldar o Tasksmith e seu desenvolvime
 * **Justificativa:** A escolha de uma arquitetura monolítica foi feita para **otimizar o desenvolvimento e a entrega do MVP** dentro do prazo do TCC. Esta abordagem simplifica a gestão do projeto, a depuração e a implantação inicial, permitindo um foco maior na implementação das funcionalidades essenciais. Além disso, facilita a compreensão dos fundamentos de uma aplicação web completa sem a complexidade adicional de múltiplos serviços.
 * **Alternativas Consideradas:** Arquiteturas baseadas em microsserviços foram consideradas, mas descartadas para o escopo do MVP devido à sua maior complexidade de desenvolvimento, orquestração e implantação, o que poderia desviar o foco do objetivo principal do TCC.
 * **Impacto Esperado:** Desenvolvimento ágil, menor curva de aprendizado inicial, facilidade de manutenção e implantação para o MVP.
-* **Implementação Realizada:** A estrutura final adotada organiza o projeto em diretórios claros: `src/` para código PHP, `public/` para arquivos acessíveis pelo navegador, e `config/` para configurações, mantendo a simplicidade monolítica desejada.
+* **Implementação Realizada:** A estrutura de diretórios foi estabelecida com sucesso: `src/` (código-fonte), `public/` (ponto de entrada e assets), `database/` (scripts de banco de dados) e `config/` (configurações), confirmando a base da arquitetura monolítica.
 
 ### 2.2. Tecnologias "Puras" (PHP puro, JavaScript vanilla, Tailwind CSS)
 
 * **Justificativa:** A decisão de utilizar PHP puro, JavaScript vanilla e Tailwind CSS visa demonstrar a capacidade de construir uma aplicação web robusta e funcional sem a dependência excessiva de frameworks complexos. Esta escolha promove um **aprendizado aprofundado das linguagens e tecnologias base**, permitindo um controle mais granular sobre o código e uma compreensão mais clara dos mecanismos internos da aplicação. Adicionalmente, a **curva de aprendizado menor** dessas tecnologias contribui para a otimização do tempo de entrega do projeto.
 * **Alternativas Consideradas:** Frameworks populares como Laravel (PHP), React/Vue/Angular (JavaScript) e Bootstrap/Materialize (CSS) foram consideradas. No entanto, a prioridade foi dada à compreensão dos fundamentos e à minimização de abstrações para o contexto do TCC.
 * **Impacto Esperado:** Maior controle sobre o código, otimização potencial de performance para o MVP, e um conhecimento mais sólido das tecnologias subjacentes.
-* **Implementação Realizada:** O Tailwind CSS foi configurado com sucesso para compilação automática, permitindo estilização moderna e responsiva. O sistema de roteamento foi implementado em PHP puro, demonstrando controle total sobre o fluxo da aplicação.
+* **Implementação Realizada:** O Tailwind CSS foi configurado e a base do sistema de roteamento em PHP puro foi criada. A estrutura para `Views`, `Controllers` e `Services` está no lugar, mas a lógica de negócio dentro dos `Services` ainda não foi implementada, significando que o controle total sobre o fluxo da aplicação está estruturado, mas não funcional.
 
 ### 2.3. Foco na Gamificação com Tema RPG Medieval
 
@@ -77,7 +77,7 @@ As seguintes decisões foram cruciais para moldar o Tasksmith e seu desenvolvime
   * **Refinamento dos Métodos `update` e `delete`:** Os métodos `update` e `delete` foram aprimorados para aceitar parâmetros de condição (`$condition_values`), permitindo o uso seguro de *prepared statements* em cláusulas `WHERE` e prevenindo SQL Injection.
   * **Injeção de Dependência:** O construtor da classe foi modificado para receber a conexão PDO como um parâmetro (injeção de dependência), em vez de instanciá-la internamente. Isso desacopla a classe da configuração de conexão e facilita os testes.
 * **Impacto Esperado:** Maior segurança da aplicação, código mais robusto e fácil de manter, e um aprendizado aprofundado para o usuário sobre as melhores práticas de interação com banco de dados em PHP.
-* **Aprendizado e Próximos Passos do Usuário:** Este processo proporcionou ao usuário um entendimento prático sobre Prepared Statements, bindings, `fetchAll`, `error_log`, e a diferença entre `query()` e `prepare() + execute()`. O usuário demonstrou proatividade ao buscar conhecimento adicional (vídeo tutorial) e aplicar os conceitos na implementação dos métodos CRUD e na função `execute`. As interações subsequentes refinaram o uso dos bindings, a gestão dos retornos das funções e a aplicação de injeção de dependência. O usuário planeja aprofundar esses conhecimentos após a entrega do TCC, demonstrando um compromisso com a melhoria contínua e a segurança do código.
+* **Implementação Realizada:** O `QueryBuilder.php` foi refatorado com sucesso para usar *prepared statements*, injeção de dependência e um método `execute` centralizado. Todos os métodos CRUD (`db_select`, `db_insert`, `db_update`, `db_delete`) foram implementados seguindo essas boas práticas, fornecendo uma camada de acesso a dados segura e robusta. A integração desta camada com a lógica de negócio nos `Services` é o próximo passo.
 
 ### 2.9. Metodologia de Desenvolvimento Iterativa e Incremental com Ênfase na Documentação do Processo de Aprendizado
 
@@ -90,7 +90,7 @@ As seguintes decisões foram cruciais para moldar o Tasksmith e seu desenvolvime
 * **Justificativa:** Para aumentar a segurança e a portabilidade do projeto, foi adotada a biblioteca `vlucas/phpdotenv`. Esta decisão permite que configurações sensíveis, como credenciais de banco de dados, sejam armazenadas em um arquivo `.env` que não é versionado no Git. Isso elimina a necessidade de ter dados sigilosos diretamente no código (hardcoding), facilitando a configuração do ambiente em diferentes máquinas (desenvolvimento, produção) e protegendo as credenciais.
 * **Alternativas Consideradas:** Manter as configurações em um arquivo PHP (`config/settings.php`) foi a abordagem inicial, mas foi descartada por ser menos segura e flexível.
 * **Impacto Esperado:** Maior segurança, facilidade de configuração em novos ambientes, e alinhamento com as melhores práticas de desenvolvimento de aplicações web modernas.
-* **Implementação Realizada:** A biblioteca foi adicionada via Composer. O arquivo `config/settings.php` foi modificado para carregar as variáveis do `.env`, e o `database/conn.php` foi refatorado para consumir essas variáveis, tornando a conexão com o banco de dados totalmente configurável.
+* **Implementação Realizada:** A biblioteca `vlucas/phpdotenv` foi instalada via Composer. O script `database/db_script.php` (e outros pontos de entrada) agora carrega as variáveis do arquivo `.env`, que é ignorado pelo Git, garantindo que as credenciais do banco de dados (`DB_HOST`, `DB_USER`, etc.) estejam seguras e fora do controle de versão.
 
 ### 2.11. Reavaliação do SGBD: Migração para MySQL
 
@@ -106,10 +106,10 @@ As seguintes decisões foram cruciais para moldar o Tasksmith e seu desenvolvime
   * **Camada de Repositórios Separada:** Considerada inicialmente para uma separação mais rigorosa da persistência, mas descartada para o escopo atual do MVP devido à preferência por manter a estrutura mais simples e evitar a criação de novos diretórios.
   * **Lógica de Persistência em Models:** Descartada para evitar "modelos gordos" e acoplamento forte das entidades com a camada de dados, mantendo os Models focados apenas na representação dos dados.
 * **Impacto Esperado:** Manutenção da simplicidade do projeto, organização clara da lógica de negócio nos Serviços, e agrupamento de ferramentas de banco de dados em um local dedicado (`src/Db/`), facilitando a manutenção e a compreensão do fluxo de dados.
-* **Implementação Sugerida:**
-  * **Entidades (`src/Models/`):** Foco exclusivo na representação de dados (atributos e métodos básicos). Validações de formato simples podem residir aqui.
-  * **Serviços (`src/Services/`):** Contêm a lógica de negócio complexa (cálculos, consumo de APIs, regras de jogo) e também a lógica de persistência de dados (interação direta com o banco de dados para salvar, buscar, atualizar entidades).
-  * **Ferramentas de Banco de Dados (`src/Db/`):** Novo diretório para abrigar o Query Builder e outras classes/funções utilitárias de baixo nível relacionadas à interação com o banco de dados.
+* **Implementação Atual:**
+  * **Modelos (`src/Models/`):** A estrutura de pastas existe, mas os modelos ainda precisam ser criados. Eles servirão como DTOs (Data Transfer Objects).
+  * **Serviços (`src/Services/`):** Os arquivos de serviço (ex: `UserService.php`) foram criados, mas estão vazios. É aqui que a lógica de negócio e a interação com o `QueryBuilder` irão residir.
+  * **Banco de Dados (`src/Db/`):** O diretório foi criado e contém o `QueryBuilder.php`, centralizando a lógica de acesso a dados de baixo nível.
 
 ## 3. Abrangência dos Aspectos
 

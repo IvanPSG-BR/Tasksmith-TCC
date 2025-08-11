@@ -4,11 +4,11 @@ Este documento serve como um registro consolidado das discussões técnicas, dec
 
 ## 1. Arquitetura MVC: O Papel dos Models, Services e Controllers
 
-A arquitetura do Tasksmith segue o padrão Model-View-Controller (MVC), com uma camada de Serviço adicional para encapsular a lógica de negócio, mantendo o código organizado e escalável.
+A arquitetura do Tasksmith foi **projetada** para seguir o padrão Model-View-Controller (MVC), com uma camada de Serviço adicional para encapsular a lógica de negócio. **Esta seção descreve a arquitetura alvo que está em processo de implementação.**
 
 ### 1.1. Fluxo de uma Requisição
 
-O fluxo de uma requisição típica, como um login, demonstra a interação entre as camadas:
+O fluxo de uma requisição típica, como um login, **foi planejado** para demonstrar a interação entre as camadas, conforme o diagrama abaixo. **Atualmente, a camada de Serviço (`UserService`) ainda não contém a lógica de negócio.**
 
 ```mermaid
 sequenceDiagram
@@ -16,27 +16,27 @@ sequenceDiagram
     participant Router as Roteador (index.php)
     participant Controller as AuthController
     participant Service as UserService
-    participant Model as User (Model)
+    participant QueryBuilder as QueryBuilder
     participant Database as Banco de Dados
 
-    User->>Router: 1. Acessa /login com dados (email, senha)
-    Router->>Controller: 2. Rota aciona AuthController->login()
-    Controller->>Service: 3. Chama UserService->authenticate(email, senha)
-    Service->>Model: 4. Pede ao Model para buscar usuário pelo email
-    Model->>Database: 5. Executa SELECT * FROM users WHERE email = ?
-    Database-->>Model: 6. Retorna dados do usuário
-    Model-->>Service: 7. Devolve o objeto User
-    Service->>Service: 8. Compara a senha fornecida com a do banco
-    Service-->>Controller: 9. Retorna resultado (sucesso/falha)
-    Controller->>User: 10. Redireciona para a página principal ou mostra erro
+    User->>Router: 1. Acessa /login com dados
+    Router->>Controller: 2. Rota aciona AuthController->login_process()
+    Controller->>Service: 3. Chama UserService->authenticate(...)
+    Service->>QueryBuilder: 4. Usa QueryBuilder para buscar usuário
+    QueryBuilder->>Database: 5. Executa SELECT * FROM users WHERE ...
+    Database-->>QueryBuilder: 6. Retorna dados
+    QueryBuilder-->>Service: 7. Devolve dados para o Serviço
+    Service->>Service: 8. Processa resultado (ex: verifica senha)
+    Service-->>Controller: 9. Retorna sucesso/falha
+    Controller->>User: 10. Redireciona ou mostra erro
 ```
 
 ### 1.2. Diferenciando `Model` e `Service`
 
 A regra de ouro para separar as responsabilidades:
 
-* **`Model`**: É o especialista em **dados**. Lida com o **COMO** buscar e salvar dados em uma tabela específica (CRUD).
-  * **Exemplos**: `find($id)`, `findByEmail($email)`, `save(User $user)`.
+* **`Model`**: Representa uma **entidade** da aplicação (ex: `User`, `Task`). Seu principal papel é ser uma estrutura para carregar e transportar dados. No estado atual, os `Models` não contêm lógica de persistência.
+  * **Exemplos**: `src/Models/User.php`, `src/Models/Task.php`.
 
 * **`Service`**: É o especialista em **processos e regras de negócio**. Lida com o **O QUÊ** precisa ser feito, orquestrando múltiplos passos, validações ou `Models`.
   * **Exemplos**: `authenticate($email, $password)`, `registerUser(array $data)`, `completeTask(Task $task)`.
@@ -55,38 +55,31 @@ A regra de ouro para separar as responsabilidades:
 
 ### 2.2. JWT (JSON Web Token)
 
-* **Conceito**: É um "crachá de acesso" temporário e seguro que o servidor entrega ao cliente após um login bem-sucedido. O cliente o envia de volta em cada requisição para provar que está autenticado.
-* **Fluxo**:
-    1. Usuário faz login com sucesso.
-    2. Servidor gera um token JWT assinado com uma chave secreta.
-    3. Servidor envia o JWT para o cliente.
-    4. Cliente armazena o JWT e o envia no cabeçalho `Authorization` de todas as requisições futuras.
-    5. Servidor verifica a assinatura e a validade do JWT a cada requisição para autorizar o acesso.
+* **Conceito**: É um "crachá de acesso" temporário e seguro que o servidor entrega ao cliente após um login bem-sucedido.
+* **Status de Implementação**: O uso de JWT é uma funcionalidade **planejada para o futuro**, a ser implementada na camada de Serviço para gerenciar sessões de usuários de forma segura e escalável.
 
 ---
 
-## 3. Padrões de Acesso a Dados: Active Record
+## 3. Padrão de Acesso a Dados: Query Builder e Camada de Serviço
 
-### 3.1. O que é o Padrão Active Record?
+Atualmente, o projeto **não utiliza o padrão Active Record**. Em vez disso, a interação com o banco de dados é centralizada na classe `QueryBuilder`, seguindo uma abordagem mais próxima do padrão **Data Access Object (DAO)** ou **Table Data Gateway**, onde a lógica de negócio é separada da lógica de persistência.
 
-É o padrão onde o próprio objeto do modelo (`User.php`) contém os métodos para interagir com o banco de dados (`find()`, `save()`, `delete()`). O objeto é uma representação "viva" de uma linha da tabela.
+### 3.1. O Papel do `QueryBuilder`
 
-* **Prós**: Simples, intuitivo e rápido de desenvolver.
-* **Contras**: A classe do modelo acumula mais de uma responsabilidade (dados e persistência).
-* **Exemplo Famoso**: O ORM Eloquent do framework Laravel.
+O [`src/Db/QueryBuilder.php`](src/Db/QueryBuilder.php) é a única classe responsável por construir e executar queries SQL.
 
-### 3.2. Active Record e Query Builder: Parceiros Perfeitos
+* **Responsabilidade Única**: Lida exclusivamente com a interação com o banco de dados (CRUD), utilizando `PDO` e *prepared statements* para garantir a segurança contra SQL Injection.
+* **Baixo Nível**: Oferece métodos como `db_select()`, `db_insert()`, etc., que são a base para qualquer operação de dados na aplicação.
+* **Injeção de Dependência**: A classe recebe a conexão `PDO` em seu construtor, o que a torna desacoplada e testável.
 
-O `Model` (Active Record) e o `QueryBuilder` não são concorrentes, mas sim colaboradores.
+### 3.2. Fluxo de Dados Implementado
 
-* **O `Model` (Active Record)**: É a **API de alto nível**. Define **o que** você quer fazer em termos de negócio (ex: `User::findByEmail()`).
-* **O `QueryBuilder`**: É a **ferramenta de baixo nível**. Define **como** a operação será feita no banco de dados, construindo a query SQL de forma segura e prevenindo SQL Injection.
+O fluxo de dados real (uma vez que os `Services` sejam implementados) seguirá estes passos:
 
-**Fluxo de Colaboração:**
+1. O `Controller` recebe uma requisição e chama um método no `Service` apropriado (ex: `UserService->registerUser(...)`).
+2. O `Service` executa a lógica de negócio (validações, cálculos, etc.).
+3. Para persistir ou buscar dados, o `Service` instancia e utiliza o `QueryBuilder`.
+4. O `QueryBuilder` executa a query no banco de dados.
+5. Os dados retornados são usados pelo `Service`, que pode então criar e popular um objeto de `Model` (ex: `new User(...)`) para transportar os dados de volta para o `Controller` ou outras camadas.
 
-1. O `Service` chama um método de alto nível do `Model` (ex: `User::findByEmail(...)`).
-2. O método no `Model` **delega a construção da query** para o `QueryBuilder` (ex: `QueryBuilder::select(...)`).
-3. O `QueryBuilder` retorna os dados brutos.
-4. O `Model` transforma os dados brutos em um objeto (`new User(...)`) e o retorna.
-
-Essa parceria garante um código **seguro**, **limpo**, **legível** e de **fácil manutenção**.
+Essa abordagem mantém os `Models` "limpos" (atuando como DTOs), os `Services` focados na lógica de negócio e o `QueryBuilder` como o único especialista em banco de dados, resultando em um código **seguro, organizado e de fácil manutenção.**

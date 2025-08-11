@@ -19,12 +19,13 @@ O MVP do Tasksmith para o TCC incluirá:
 
 **Estado Atual da Implementação:**
 
-* ✅ **Estrutura Base:** Arquitetura monolítica implementada com organização clara de diretórios
-* ✅ **Sistema de Roteamento:** Routes personalizado funcional com suporte a URLs amigáveis
-* 🔄 **Página Inicial:** Interface responsiva com Tailwind CSS e seção call-to-action, outras seções em progresso
-* ✅ **Configuração de Ambiente:** Tailwind CSS configurado, .htaccess implementado, estrutura de assets organizada
-* 🔄 **Páginas de Autenticação:** Estrutura criada, aguardando implementação da lógica
-* 🔄 **Funcionalidades de Gamificação:** Estrutura preparada para implementação futura
+* ✅ **Estrutura Base:** Arquitetura monolítica implementada com organização clara de diretórios (`src`, `public`, `database`).
+* ✅ **Configuração de Ambiente:** `composer.json` definido, `phpdotenv` para variáveis de ambiente e `.htaccess` para URLs amigáveis estão funcionais.
+* ✅ **Sistema de Roteamento:** `Routes.php` e o Front Controller (`public/index.php`) mapeiam URLs para os `Controllers` corretamente.
+* ✅ **Camada de Visão (Views):** Estrutura de arquivos para as páginas de `home`, `auth` e `game` está criada.
+* ✅ **Camada de Persistência:** O `QueryBuilder.php` oferece uma abstração robusta para operações de CRUD e o script `database/db_script.php` define o schema do banco de dados.
+* 🔄 **Camada de Controle (Controllers):** `Controllers` existem, mas atualmente apenas renderizam as `Views`, sem lógica de negócio.
+* ❌ **Camada de Serviço (Services):** A lógica de negócio (ex: `UserService.php`) está planejada, mas os arquivos estão vazios. Nenhuma funcionalidade principal (login, cadastro, gestão de tarefas) está implementada ainda.
 
 ## 2. Proposta de Escopo do TCC
 
@@ -41,15 +42,16 @@ Desenvolver uma aplicação web gamificada (Tasksmith) que auxilie na organizaç
 
 **Objetivos Específicos:**
 
-1. ✅ **Implementar uma arquitetura monolítica bem estruturada** com separação clara de responsabilidades entre diretórios e componentes.
-2. ✅ **Desenvolver um sistema de roteamento personalizado** em PHP puro para gerenciar navegação e URLs amigáveis.
-3. ✅ **Criar interface responsiva e atrativa** para a página inicial com elementos temáticos medievais.
-4. 🔄 **Projetar e implementar um sistema de autenticação e autorização** para usuários (estrutura preparada).
-5. 🔄 **Desenvolver as funcionalidades essenciais de gestão de tarefas (CRUD)**, incluindo suporte a sub-tarefas e metas.
-6. 🔄 **Implementar um sistema de experiência (XP) e níveis** atrelado à conclusão de tarefas, gerando "Ouro" como recompensa.
-7. ✅ **Analisar a arquitetura monolítica e a escolha de tecnologias** (PHP puro, JS vanilla, Tailwind CSS) para o desenvolvimento ágil do MVP.
-8. 🔄 **Discutir os princípios de gamificação aplicados** no Tasksmith e seus potenciais impactos na motivação do usuário.
-9. ✅ **Documentar o processo de desenvolvimento**, destacando os desafios técnicos e as soluções adotadas, como parte da estratégia de aprendizado prático.
+1. ✅ **Implementar uma arquitetura monolítica bem estruturada** (Estrutura de diretórios, `composer.json`, `.env`).
+2. ✅ **Desenvolver um sistema de roteamento personalizado** em PHP puro (Front Controller, `Routes.php`).
+3. ✅ **Definir o schema do banco de dados** e implementar uma camada de abstração de persistência (`db_script.php`, `QueryBuilder.php`).
+4. ✅ **Criar a estrutura de Views e Controllers** para as páginas principais (Home, Auth, Game).
+5. 🔄 **Implementar a lógica de negócio no `UserService`** para as funcionalidades de autenticação e autorização.
+6. 🔄 **Implementar a lógica de negócio no `TaskManagementService`** para as funcionalidades de gestão de tarefas (CRUD).
+7. 🔄 **Implementar a lógica de negócio no `GameService`** para o sistema de experiência (XP), níveis e recompensas.
+8. ✅ **Analisar a arquitetura monolítica e a escolha de tecnologias** para o desenvolvimento do MVP.
+9. 🔄 **Discutir os princípios de gamificação aplicados** no Tasksmith e seus potenciais impactos na motivação.
+10. ✅ **Documentar o processo de desenvolvimento**, destacando os desafios e soluções.
 
 **Legenda:** ✅ Concluído | 🔄 Em desenvolvimento/Planejado
 
@@ -98,60 +100,39 @@ Uma característica distintiva deste TCC será a **documentação detalhada do p
 
 Esta abordagem permitirá que o TCC não seja apenas a descrição de um produto, mas também um relato da jornada de aprendizado e resolução de problemas.
 
-## 3. Diagrama de Arquitetura Implementada (Mermaid)
+## 3. Diagrama de Arquitetura (Estado Atual)
 
 ```mermaid
 graph TD
     A[Usuário] -->|Acessa| B(Navegador Web)
-    B -->|Requisição HTTP| C(Servidor Web - Apache/XAMPP)
-    C -->|.htaccess Rewrite| D(index.php - Raiz)
-    D -->|Redireciona| E(public/index.php)
-    E -->|Inicializa| F(src/Routes.php)
-    F -->|Mapeia Rota| G(Controller Correspondente)
-
-    subgraph "Estrutura Implementada"
-        subgraph "Sistema de Roteamento ✅"
-            F --> H[Rotas Web Definidas]
-            H --> I[/home → HomeController]
-            H --> J[/login → AuthController]
-            H --> K[/signup → AuthController]
-            H --> L[/game/* → GameController]
-        end
-
-        subgraph "Controllers ✅"
-            G --> M[src/Controllers/HomeController.php]
-            G --> N[src/Controllers/AuthController.php]
-            G --> O[src/Controllers/GameController.php]
-        end
-
-        subgraph "Views e Assets ✅"
-            M --> P[src/Views/home/home.php]
-            N --> Q[src/Views/auth/*]
-            O --> R[src/Views/game/*]
-            P --> S[public/assets/*]
-        end
-
-        subgraph "Configuração e Segurança ✅"
-            C --> T[.htaccess - URLs Amigáveis]
-            T --> U[Compressão e Cache]
-            T --> V[Proteção de Arquivos]
-            E --> W[Verificação FROM_ROOT]
-        end
+    B -->|Requisição HTTP| C(Servidor Web)
+    C -->|.htaccess| E(public/index.php - Front Controller)
+    E -->|Carrega| F(src/Routes.php)
+    F -->|Mapeia Rota| G["src/Controllers/*"]
+    
+    subgraph "Estrutura Implementada ✅"
+        G --> H["src/Views/*"]
+        G --> I["src/Services/* (Estrutura Vazia)"]
+        I --> J["src/Db/QueryBuilder.php"]
+        J --> K["Schema do BD (definido em db_script.php)"]
+        
+        style H fill:#d3f8d3
+        style J fill:#d3f8d3
+        style K fill:#d3f8d3
     end
 
-    subgraph "Funcionalidades Futuras 🔄"
-        X[Banco de Dados]
-        Y[Sistema de XP/Níveis]
-        Z[Gestão de Tarefas]
-        AA[Lógica de Autenticação]
+    subgraph "Lógica de Negócio (Pendente) 🔄"
+        L["UserService<br/>(Lógica de Autenticação)"]
+        M["TaskManagementService<br/>(Lógica de CRUD de Tarefas)"]
+        N["GameService<br/>(Lógica de XP, Níveis, Recompensas)"]
+        
+        style L fill:#ffe4b5
+        style M fill:#ffe4b5
+        style N fill:#ffe4b5
     end
 
-    style F fill:#90EE90
-    style M fill:#90EE90
-    style P fill:#90EE90
-    style S fill:#90EE90
-    style T fill:#90EE90
-    style X fill:#FFE4B5
-    style Y fill:#FFE4B5
-    style Z fill:#FFE4B5
-    style AA fill:#FFE4B5
+    I -.-> L
+    I -.-> M
+    I -.-> N
+
+    linkStyle 8,9,10 stroke-width:2px,fill:none,stroke:gray,stroke-dasharray: 3 3;
