@@ -252,3 +252,45 @@ Foram aplicadas duas mudanças principais:
 * **Injeção de Dependência** é uma técnica poderosa para escrever código mais limpo, testável e de fácil manutenção, pois inverte o controle sobre as dependências.
 * A segurança contra SQL Injection deve ser uma preocupação em **todas** as partes de uma query que envolvem dados externos, incluindo a cláusula `WHERE`.
 * A refatoração contínua do código não é apenas para corrigir bugs, mas também para melhorar a arquitetura e a qualidade do software a longo prazo.
+
+## 12. Separação de Responsabilidades: `create` vs. `update`
+
+### 12.1 Descrição do Desafio
+
+Houve uma confusão conceitual sobre o papel do método `save()` no `Model` de usuário. O método tentava lidar tanto com a criação de novos usuários quanto com a atualização de usuários existentes, o que gerava uma lógica conflitante: para o registro, a existência de um usuário deveria ser um erro, enquanto para a atualização, a não existência deveria ser um erro.
+
+### 12.2 Como Foi Lidar com o Desafio
+
+A solução foi refatorar o `Model`, eliminando o método ambíguo `save()` e substituindo-o por dois métodos explícitos e com responsabilidades claras:
+
+* **`create(array $data)`:** Um método estático responsável exclusivamente por criar um novo usuário. Ele primeiro verifica se o usuário já existe e falha se for o caso.
+* **`update(int $id, array $data)`:** Um método estático responsável por atualizar um usuário existente, identificado pelo seu `id`.
+
+Essa mudança resolveu a confusão e alinhou o código com o Princípio da Responsabilidade Única.
+
+### 12.3 Lições Aprendidas
+
+* A importância de criar métodos com uma única e clara responsabilidade para evitar lógicas conflitantes e código confuso.
+* A distinção fundamental entre as operações de criar (que parte da premissa de que o dado não existe) e atualizar (que parte da premissa de que o dado já existe).
+* Refatorar em direção a métodos mais explícitos (`create`, `update`) melhora a legibilidade e a manutenção do código.
+
+## 13. Gerenciamento de Estado: Identificando o Usuário a ser Atualizado
+
+### 13.1 Descrição do Desafio
+
+Após criar o método `update(int $id, array $data)`, surgiu a dúvida de como obter o `$id` do usuário específico que precisa ser atualizado, especialmente em um contexto onde o usuário já está logado e interagindo com o sistema (por exemplo, atualizando seu próprio perfil).
+
+### 13.2 Como Foi Lidar com o Desafio
+
+A solução foi esclarecer o fluxo padrão de gerenciamento de sessão em aplicações web:
+
+1. **Armazenamento na Sessão:** No momento do login bem-sucedido, o `id` do usuário é recuperado do banco de dados e armazenado na sessão do PHP (ex: `$_SESSION['user_id'] = $user_id;`).
+2. **Recuperação da Sessão:** Para qualquer ação subsequente que exija a identidade do usuário (como uma atualização), o `id` é simplesmente lido da variável de sessão `$_SESSION['user_id']`.
+
+Também foi discutido e reforçado que o uso do `id` (chave primária) é a prática recomendada para identificar registros, em vez de outros campos como `username`, devido à sua eficiência, imutabilidade e por ser um padrão da indústria.
+
+### 13.3 Lições Aprendidas
+
+* O papel central da sessão (`$_SESSION` em PHP) para manter o estado e a identidade do usuário entre diferentes requisições.
+* O fluxo correto de autenticação: validar credenciais, buscar dados do usuário (incluindo o `id`) e armazenar o `id` na sessão.
+* A importância de usar chaves primárias (`id`) como identificadores únicos e imutáveis para operações de banco de dados, garantindo performance e integridade dos dados.

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controllers;
+use App\Services\UserService;
 
 class AuthController {
     public function signup_page() {
@@ -8,7 +9,12 @@ class AuthController {
     }
 
     public function signup_process() {
-        include_once __DIR__ . "/../Services/UserService.php";
+        $auth_data = [
+            "username" => filter_input(INPUT_POST, "username"),
+            "password"=> filter_input(INPUT_POST, "password")
+        ];
+
+
     }
 
     public function login_page() {
@@ -16,6 +22,11 @@ class AuthController {
     }
 
     public function login_process() {
-        include_once __DIR__ . "/../Services/UserService.php";
+        $auth_data = [
+            "username" => filter_input(INPUT_POST, "username"),
+            "password"=> filter_input(INPUT_POST, "password")
+        ];
+
+
     }
 }

@@ -28,6 +28,11 @@ class User {
         return $this->password = password_hash($password, PASSWORD_DEFAULT);
     }
 
+    public static function find(int $id) {
+        return QueryBuilder::db_select(values: ["*"], condition: "id = ?", condition_values: [$id]);
+    }
+    
+
     public static function find_by_username(string $username) {
         return QueryBuilder::db_select(values: ["*"], condition: "username = ?", condition_values: [$username]);
     }
@@ -41,12 +46,32 @@ class User {
         return QueryBuilder::db_select(values: ["*"]);
     }
 
-    public function save() {
-        if (!QueryBuilder::db_select(values: ["*"], condition: "username = ?", condition_values: [$this->username])) {
-            return QueryBuilder::db_insert(["username", "password"], [$this->username, $this->password]);
-        } else {
-            return QueryBuilder::db_update(["username", "password"], [$this->username, $this->password], "username = ?", [$this->username]);
+    public static function save(array $data) {
+        // 1. Verifica se o usuário já existe para evitar duplicatas
+        if (self::find_by_username($data['username'])) {
+            return false; // Falha: Usuário já existe
         }
+
+        // 2. Criptografa a senha para armazenamento seguro
+        $hashed_password = password_hash($data['password'], PASSWORD_DEFAULT);
+
+        // 3. Insere o novo usuário no banco de dados
+        return QueryBuilder::db_insert(
+            ["username", "password"],
+            [$data['username'], $hashed_password]
+        );
+    }
+
+    public static function update(int $id, array $data) {
+        // Criptografa a nova senha, se fornecida
+        $hashed_password = password_hash($data['password'], PASSWORD_DEFAULT);
+
+        return QueryBuilder::db_update(
+            ["username", "password"],
+            [$data['username'], $hashed_password],
+            "id = ?",
+            [$id]
+        );
     }
 
     public function delete($id) {

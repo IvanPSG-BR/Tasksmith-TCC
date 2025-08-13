@@ -53,18 +53,15 @@ A regra de ouro para separar as responsabilidades:
   * **Para verificar a senha (no login)**: `password_verify($senhaDigitada, $hashDoBanco);`
 * **No Banco de Dados**: A coluna da senha (`password`) deve ser do tipo **`VARCHAR(255)`** para armazenar o hash completo e ser à prova de futuros algoritmos.
 
-### 2.2. JWT (JSON Web Token)
+### 2.2. Gerenciamento de Sessão: PHP Sessions Nativas
 
-* **Conceito**: É um "crachá de acesso" temporário e seguro que o servidor entrega ao cliente após um login bem-sucedido.
-* **Status de Implementação**: O uso de JWT é uma funcionalidade **planejada para o futuro**, a ser implementada na camada de Serviço para gerenciar sessões de usuários de forma segura e escalável.
+* **Mudança de Decisão**: Inicialmente, o uso de JWT (JSON Web Token) foi considerado para o gerenciamento de sessões. No entanto, a decisão foi reavaliada em favor de uma abordagem mais simples e integrada.
+* **Solução Adotada**: Para o escopo atual do projeto, que segue uma arquitetura monolítica com renderização no lado do servidor, o **sistema de sessões nativo do PHP (`$_SESSION`)** é a abordagem mais direta, segura e eficiente. Ele se integra perfeitamente ao ecossistema PHP, eliminando a necessidade de bibliotecas externas para o gerenciamento de tokens.
+* **Status de Implementação**: O Tasksmith utilizará as sessões nativas do PHP para gerenciar a autenticação do usuário após o login.
 
 ---
 
-## 3. Padrão de Acesso a Dados: Query Builder e Camada de Serviço
-
-Atualmente, o projeto **não utiliza o padrão Active Record**. Em vez disso, a interação com o banco de dados é centralizada na classe `QueryBuilder`, seguindo uma abordagem mais próxima do padrão **Data Access Object (DAO)** ou **Table Data Gateway**, onde a lógica de negócio é separada da lógica de persistência.
-
-### 3.1. O Papel do `QueryBuilder`
+### 3. O Papel do `QueryBuilder`
 
 O [`src/Db/QueryBuilder.php`](src/Db/QueryBuilder.php) é a única classe responsável por construir e executar queries SQL.
 
@@ -72,7 +69,7 @@ O [`src/Db/QueryBuilder.php`](src/Db/QueryBuilder.php) é a única classe respon
 * **Baixo Nível**: Oferece métodos como `db_select()`, `db_insert()`, etc., que são a base para qualquer operação de dados na aplicação.
 * **Injeção de Dependência**: A classe recebe a conexão `PDO` em seu construtor, o que a torna desacoplada e testável.
 
-### 3.2. Fluxo de Dados Implementado
+### 3.1. Fluxo de Dados Implementado
 
 O fluxo de dados real (uma vez que os `Services` sejam implementados) seguirá estes passos:
 

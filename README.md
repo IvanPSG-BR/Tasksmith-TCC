@@ -155,7 +155,7 @@ Tasksmith-TCC/
 
 ### Configurando o Virtual Host (Apache)
 
-Para uma melhor experiência de desenvolvimento, é recomendado configurar um Virtual Host para que o projeto seja acessado por uma URL amigável (ex: `http://tasksmith.local`).
+Para uma melhor experiência de desenvolvimento, é recomendado configurar um Virtual Host para que o projeto seja acessado por uma URL amigável (ex: `http://tasksmith-tcc.local`).
 
 1. **Edite o arquivo `hosts` do seu sistema:**
     - **Windows:** `C:\Windows\System32\drivers\etc\hosts`
@@ -163,7 +163,7 @@ Para uma melhor experiência de desenvolvimento, é recomendado configurar um Vi
     - Adicione a seguinte linha:
 
       ```
-      127.0.0.1 tasksmith.local
+      127.0.0.1 tasksmith-tcc.local
       ```
 
 2. **Edite o arquivo de configuração de Virtual Hosts do Apache:**
@@ -173,7 +173,7 @@ Para uma melhor experiência de desenvolvimento, é recomendado configurar um Vi
       ```apache
       <VirtualHost *:80>
           DocumentRoot "/opt/lampp/htdocs/Tasksmith-TCC/"
-          ServerName tasksmith.local
+          ServerName tasksmith-tcc.local
           <Directory "/opt/lampp/htdocs/Tasksmith-TCC/">
               Options Indexes FollowSymLinks
               AllowOverride All
@@ -184,4 +184,4 @@ Para uma melhor experiência de desenvolvimento, é recomendado configurar um Vi
 
 3. **Reinicie o Apache** para que as alterações tenham efeito.
 
-4. Acesse o projeto em seu navegador através de `http://tasksmith.local`.
+4. Acesse o projeto em seu navegador através de `http://tasksmith-tcc.local`.
