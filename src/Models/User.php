@@ -9,7 +9,7 @@ class User {
 
     public function __construct(string $username, string $password) {
         $this->username = $username;
-        $this->password = password_hash($password, PASSWORD_DEFAULT);
+        $this->password = $password;
     }
 
     public function get_username() {
@@ -74,7 +74,7 @@ class User {
         );
     }
 
-    public function delete($id) {
+    public static function delete($id) {
         return QueryBuilder::db_delete("id = ?", [$id]);
     }
 }

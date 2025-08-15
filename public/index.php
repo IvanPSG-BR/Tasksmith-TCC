@@ -4,6 +4,8 @@ require_once __DIR__ . "/../config/settings.php";
 require_once ROOT_PATH . 'database/conn.php';
 use App\Routes;
 
+session_start();
+
 // Verifica se o acesso está vindo do index.php da raiz
 if (!defined('FROM_ROOT')) {
     header('Location: /');
