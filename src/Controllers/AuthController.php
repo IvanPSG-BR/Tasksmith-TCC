@@ -26,7 +26,21 @@ class AuthController {
             header("Location: /game/task-board");
             exit;
         } else {
-            // Aviso de erro
+            $_SESSION['flash_message'] = "Este nome de usuário já está em uso.";
+            header("Location: /signup");
+            exit;
+        }
+    }
+
+    public function removeaccount_process() {
+        $remove_account = UserService::delete_user();
+
+        if ($remove_account) {
+            header("Location: /");
+            exit;
+        } else {
+            header("HTTP/1.1 500 Internal Server Error");
+            exit;
         }
     }
 
@@ -42,7 +56,21 @@ class AuthController {
             header("Location: /game/task-board");
             exit;
         } else {
-            // Aviso de erro
+            $_SESSION['flash_message'] = "Usuário ou senha inválidos.";
+            header("Location: /login");
+            exit;
+        }
+    }
+
+    public function logout_process() {
+        $logout = UserService::logout();
+
+        if ($logout) {
+            header("Location: /");
+            exit;
+        } else {
+            header("HTTP/1.1 500 Internal Server Error");
+            exit;
         }
     }
 }

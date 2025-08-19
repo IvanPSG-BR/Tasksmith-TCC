@@ -19,8 +19,8 @@ class UserService{
         return $user::update($_SESSION['user_id'], self::auth_data($user));
     }
 
-    public static function delete_user(User $user): bool {
-        return $user::delete($_SESSION['user_id']);
+    public static function delete_user(): bool {
+        return User::delete($_SESSION['user_id']);
     }
 
     public static function login(User $user): bool{
@@ -43,9 +43,9 @@ class UserService{
         }
     }
 
-    public static function logout(): void {
+    public static function logout(): bool {
         session_unset();
-        session_destroy();
+        return session_destroy();
     }
 
     public static function is_logged(): bool {

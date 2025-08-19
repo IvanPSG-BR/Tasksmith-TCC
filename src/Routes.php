@@ -11,9 +11,17 @@ class Routes {
             "GET" => 'AuthController@login_page',
             "POST" => 'AuthController@login_process'
             ],
+        '/logout' => [
+            "GET" => '',
+            "POST" => 'AuthController@logout_process'
+        ],
         '/signup' => [
             "GET" => 'AuthController@signup_page',
             "POST" => 'AuthController@signup_process'
+        ],
+        '/removeaccount' => [
+            "GET" => '',
+            "POST" => 'AuthController@removeaccount_process'
         ],
         '/game' => [
             "GET" => 'GameController@taskboard_page',

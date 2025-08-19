@@ -3,6 +3,7 @@
 require_once __DIR__ . "/../config/settings.php";
 require_once ROOT_PATH . 'database/conn.php';
 use App\Routes;
+use App\Services\UserService;
 
 session_start();
 
@@ -14,6 +15,7 @@ if (!defined('FROM_ROOT')) {
 
 function front_controller(string $url, string $http_method) {
     $paths = Routes::web_routes();
+    $protected_routes = ['/game', '/game/task-board', '/game/task-forge'];
     
     if (isset($paths[$url])) {
 
@@ -23,6 +25,11 @@ function front_controller(string $url, string $http_method) {
             exit;
         }
         $controller_data = explode("@", $paths[$url][$http_method]);
+
+        if (in_array($url, $protected_routes) && !UserService::is_logged()) {
+            header('Location: /login');
+            exit;
+        }
 
         $controller = $controller_data[0];
         $action = $controller_data[1];
