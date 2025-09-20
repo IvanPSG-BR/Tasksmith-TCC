@@ -37,12 +37,7 @@ class User {
         return QueryBuilder::db_select(values: ["*"], condition: "username = ?", condition_values: [$username]);
     }
 
-    public static function all(string $field = null, string $cond_value = null) {
-        $allowed_fields = ['id', 'username']; 
-
-        if (isset($field) && in_array($field, $allowed_fields)) {
-            return QueryBuilder::db_select(values: ["*"], condition: "$field = ?", condition_values: [$cond_value]);
-        }
+    public static function all() {
         return QueryBuilder::db_select(values: ["*"]);
     }
 

@@ -23,17 +23,15 @@ class Routes {
             "GET" => '',
             "POST" => 'AuthController@removeaccount_process'
         ],
-        '/game' => [
-            "GET" => 'GameController@taskboard_page',
-            "POST" => 'GameController@game_process'
-        ],
         '/game/task-board' => [
             "GET" => 'GameController@taskboard_page',
-            "POST" => 'GameController@game_process'
+            "POST" => 'GameController@taskedit_process',
+            "PUT" => 'GameController@taskcomplete_process',
+            "DELETE" => 'GameController@taskdelete_process'
         ],
         '/game/task-forge' => [
             "GET" => 'GameController@taskforge_page',
-            "POST" => 'GameController@game_process'
+            "POST" => 'GameController@taskcreation_process'
         ]
     ];
 
