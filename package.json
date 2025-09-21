@@ -1,22 +1,19 @@
 {
-  "name": "tasksmith",
-  "version": "1.0.0",
-  "main": "index.js",
+  "name": "tasksmith-tcc",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview",
-    "tailwind": "npx @tailwindcss/cli -i ./public/assets/css/global.css -o ./public/assets/css/style.css --watch"
+    "preview": "vite preview"
   },
-  "keywords": [],
-  "author": "IvanPSG-BR",
-  "license": "GPL-3.0",
-  "description": "Lista de tarefas gamificada e imersiva com temática RPG medieval",
   "devDependencies": {
-    "tailwindcss": "^4.1.5",
-    "vite": "^6.3.2"
+    "vite": "^7.1.6"
   },
   "dependencies": {
-    "@tailwindcss/cli": "^4.1.5"
+    "@tailwindcss/vite": "^4.1.13",
+    "tailwindcss": "^4.1.13",
+    "vite-plugin-php": "^2.0.3"
   }
 }

@@ -6,7 +6,7 @@ $db_name = $_ENV["DB_NAME"];
 $db_user = $_ENV["DB_USER"];
 $db_password = $_ENV["DB_PASS"];
 
-$dsn = $sgbd . ":host=" . $db_host . ";dbname=" . $db_name;
+$dsn = $sgbd . ":host=" . $db_host . ";dbname=" . $db_name . ";port=3306";
 
 try{
     $conn = new PDO($dsn, $db_user, $db_password);

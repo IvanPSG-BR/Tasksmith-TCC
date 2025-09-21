@@ -1,18 +1,43 @@
 <?php
 
-/**
- * Arquivo index.php na raiz do projeto
- * 
- * Este arquivo serve como um redirecionador para o verdadeiro ponto de entrada
- * da aplicação que está em public/index.php
- */
+require_once __DIR__ . "/../config/settings.php";
+require_once ROOT_PATH . 'database/conn.php';
+use App\Routes;
+use App\Services\UserService;
 
-// Define a constante para indicar que estamos acessando a partir da raiz
-define('FROM_ROOT', true);
+session_start();
 
-// Inclui o arquivo index.php da pasta public
-try {
-    include_once __DIR__ . '/public/index.php';
-} catch (Throwable $e) {
-    echo "Erro: " . $e->getMessage();
+function front_controller(string $url, string $http_method) {
+    $paths = Routes::web_routes();
+    $protected_routes = ['/game', '/game/task-board', '/game/task-forge'];
+    
+    if (isset($paths[$url])) {
+
+        if (!isset($paths[$url][$http_method])) {
+            header("HTTP/1.1 405 Method Not Allowed");
+            echo "405 Método Não Permitido";
+            exit;
+        }
+        $controller_data = explode("@", $paths[$url][$http_method]);
+
+        if (in_array($url, $protected_routes) && !UserService::is_logged()) {
+            header('Location: /login');
+            exit;
+        }
+
+        $controller = $controller_data[0];
+        $action = $controller_data[1];
+
+        $current_controller = new ("App\\Controllers\\" . $controller);
+        $current_controller->$action();
+    } else {
+        // Tratar página não encontrada (404)
+        header("HTTP/1.1 404 Not Found");
+        echo "404 Página Não Encontrada";
+        exit;
+    }
 }
+
+$url = "/";
+$url .= $_GET['url'] ?? '';
+front_controller($url, $_SERVER['REQUEST_METHOD']);
