@@ -10,6 +10,7 @@
         <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=MedievalSharp&family=New+Rocker&family=Pirata+One&display=swap" rel="stylesheet">
         <link rel="stylesheet" href=<?= "{$assets}/css/style.css"?>>
         <link rel="stylesheet" href=<?= "{$assets}/css/pages/home.css"?>>
+        <link rel="stylesheet" href=<?= $assets . "/css/pages/login.css"?>>
 
         <title>Tasksmith - Forje suas Tarefas!</title>
         <link rel="icon" href=<?= "{$assets}/../favicon.ico"?>>

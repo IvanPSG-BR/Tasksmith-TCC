@@ -8,10 +8,11 @@
 
     <link rel="stylesheet" href=<?=$assets . "/css/style.css"?>>
     <link rel="stylesheet" href=<?=$assets . "/css/pages/signup.css"?>>
+    <link rel="stylesheet" href=<?=$assets . "/css/pages/login.css"?>>
 </head>
 <body>
     <div id="container" class="flex">
-        <form action="/login" method="post">
+        <form action="/login" method="post" class="hidden">
             <div id="pag_esq">
                 <div class="campo-form">
                     <label for="username">Usuário:</label>
@@ -21,8 +22,8 @@
                     <label for="password">Senha:</label>
                     <input type="password" name="password" id="password">
                 </div>
-                <div class="campo-form">
-                    <label for="pass_confirm">Confirme a Senha</label>
+                <div class="campo-form flex-column">
+                    <label for="pass_confirm">Confirme a Senha:</label>
                     <input type="password" name="pass_confirm" id="pass_confirm">
                 </div>
             </div>

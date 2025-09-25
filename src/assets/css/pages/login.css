@@ -1,0 +1,64 @@
+#login{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+}
+
+#login > div{
+    width: inherit;
+    height: inherit;
+    background-image: url("/src/assets/images/login-bg.webp");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+#login .btn-form{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#login #campos{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+#login .campo-form > input{
+    width: 15rem;
+    border-bottom: solid black 0.1rem;
+    outline-style: none;
+}
+
+#login .campo-form > label{
+    font-family: "MedievalSharp";
+    font-size: xx-large;
+    font-weight: bold;
+    color: #f2a60da8;
+    text-decoration: solid 1rem;
+    text-shadow: 0.1rem 0.1rem black;
+}
+
+#login .btn-form > button{
+    cursor: pointer;
+    font-family: "Pirata One";
+    font-size: xx-large;
+    font-weight: bold;
+    text-shadow: 0.1rem 0.1rem #000;
+    color: #f2a60d;
+    letter-spacing: 0.1rem;
+    background-color: rgb(71, 9, 100);
+    padding-block: 0.25rem;
+    padding-inline: 2rem;
+    border: 0.25rem;
+    border-radius: 0.5rem;
+    border-style: solid;
+    border-color: #730000;
+}
