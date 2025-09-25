@@ -1,28 +1,26 @@
 <?php
 
 namespace App\Controllers;
-use App\Services\UserService;
+
 use App\Models\User;
+use RedBeanPHP\R as R;
 
 class AuthController {
-    private static function new_user() {
-        $auth_data = [
-            "username" => filter_input(INPUT_POST, "username"),
-            "password"=> filter_input(INPUT_POST, "password")
-        ];
-
-        return new User($auth_data["username"], $auth_data['password']);
-    }
 
     public function signup_page() {
         include_once __DIR__ . "/../Views/auth/signup.php";
     }
 
     public function signup_process() {
-        $user = self::new_user();
-        
-        $register = UserService::register_user($user);
-        if ($register) {
+        $username = filter_input(INPUT_POST, "username");
+        $password = filter_input(INPUT_POST, "password");
+
+        $userModel = new User();
+        $user = $userModel->create($username, $password);
+
+        if ($user) {
+            $_SESSION['user_id'] = $user->id;
+            $_SESSION['username'] = $user->username;
             header("Location: /game/task-board");
             exit;
         } else {
@@ -33,15 +31,12 @@ class AuthController {
     }
 
     public function removeaccount_process() {
-        $remove_account = UserService::delete_user();
-
-        if ($remove_account) {
-            header("Location: /");
-            exit;
-        } else {
-            header("HTTP/1.1 500 Internal Server Error");
-            exit;
-        }
+        $user = R::load('users', $_SESSION['user_id']);
+        R::trash($user);
+        session_unset();
+        session_destroy();
+        header("Location: /");
+        exit;
     }
 
     public function login_page() {
@@ -49,10 +44,15 @@ class AuthController {
     }
 
     public function login_process() {
-        $user = self::new_user();
+        $username = filter_input(INPUT_POST, "username");
+        $password = filter_input(INPUT_POST, "password");
 
-        $login = UserService::login($user);
-        if ($login) {
+        $userModel = new User();
+        $user = $userModel->findByUsername($username);
+
+        if ($user && $userModel->verifyPassword($user, $password)) {
+            $_SESSION['user_id'] = $user->id;
+            $_SESSION['username'] = $user->username;
             header("Location: /game/task-board");
             exit;
         } else {
@@ -63,14 +63,9 @@ class AuthController {
     }
 
     public function logout_process() {
-        $logout = UserService::logout();
-
-        if ($logout) {
-            header("Location: /");
-            exit;
-        } else {
-            header("HTTP/1.1 500 Internal Server Error");
-            exit;
-        }
+        session_unset();
+        session_destroy();
+        header("Location: /");
+        exit;
     }
 }

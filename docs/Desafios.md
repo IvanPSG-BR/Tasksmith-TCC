@@ -73,7 +73,7 @@ O projeto enfrentou um erro de conexão com o banco de dados SQLite, manifestado
 
 ### 4.2 Como Foi Lidar com o Desafio
 
-A solução foi identificada e implementada através da modificação da string de conexão no arquivo `database/conn.php`. O problema foi resolvido utilizando a constante mágica `__DIR__` para construir um caminho absoluto correto para o arquivo do banco de dados (`tasksmith.db`). Além disso, foi crucial garantir que o diretório `database/` e o arquivo `tasksmith.db` tivessem as permissões de escrita adequadas para o usuário do servidor web.
+A solução foi identificada e implementada através da modificação da string de conexão no arquivo `src/Database/conn.php`. O problema foi resolvido utilizando a constante mágica `__DIR__` para construir um caminho absoluto correto para o arquivo do banco de dados (`tasksmith.db`). Além disso, foi crucial garantir que o diretório `src/Database/` e o arquivo `tasksmith.db` tivessem as permissões de escrita adequadas para o usuário do servidor web.
 
 ### 4.3 Lições Aprendidas
 
@@ -207,7 +207,7 @@ Considerando o prazo de entrega do TCC, o usuário decidiu priorizar a conclusã
 
 ### 10.1 Descrição do Desafio
 
-Inicialmente, a conexão com o banco de dados e outras configurações estavam definidas diretamente no código PHP (ex: `database/conn.php`). Essa abordagem, conhecida como "hardcoding", apresentava dois problemas principais:
+Inicialmente, a conexão com o banco de dados e outras configurações estavam definidas diretamente no código PHP (ex: `src/Database/conn.php`). Essa abordagem, conhecida como "hardcoding", apresentava dois problemas principais:
 
 1. **Segurança:** Expor credenciais de banco de dados diretamente no código é uma prática insegura, especialmente em repositórios versionados.
 2. **Portabilidade:** Dificultava a configuração do projeto em diferentes ambientes (desenvolvimento, produção) sem alterar o código-fonte.
@@ -221,7 +221,7 @@ A solução foi implementar a biblioteca `vlucas/phpdotenv`, uma padrão de merc
 1. **Criação do `.env`:** Um arquivo `.env` foi criado na raiz do projeto para armazenar todas as variáveis de ambiente, como `DB_HOST`, `DB_USER`, `DB_PASS`, etc.
 2. **Adição ao `.gitignore`:** O arquivo `.env` foi imediatamente adicionado ao `.gitignore` para garantir que nunca fosse enviado ao repositório.
 3. **Carregamento das Variáveis:** O arquivo `config/settings.php` foi modificado para usar o `phpdotenv` e carregar as variáveis no início da aplicação.
-4. **Consumo das Variáveis:** Arquivos como `database/conn.php` foram atualizados para consumir as variáveis globais `$_ENV` em vez de usar valores "hardcoded".
+4. **Consumo das Variáveis:** Arquivos como `src/Database/conn.php` foram atualizados para consumir as variáveis globais `$_ENV` em vez de usar valores "hardcoded".
 
 ### 10.3 Lições Aprendidas
 
@@ -235,7 +235,7 @@ A solução foi implementar a biblioteca `vlucas/phpdotenv`, uma padrão de merc
 
 A classe `QueryBuilder` (`src/Db/QueryBuilder.php`), embora funcional, apresentava duas oportunidades de melhoria arquitetônica:
 
-1. **Acoplamento:** A classe era responsável por criar sua própria instância de conexão PDO, acoplando-a diretamente ao arquivo `database/conn.php`. Isso dificultava a reutilização e os testes.
+1. **Acoplamento:** A classe era responsável por criar sua própria instância de conexão PDO, acoplando-a diretamente ao arquivo `src/Database/conn.php`. Isso dificultava a reutilização e os testes.
 2. **Segurança:** Os métodos `update` e `delete` construíam a cláusula `WHERE` por concatenação de strings, o que abria uma potencial vulnerabilidade a SQL Injection se não fosse manuseado com extremo cuidado na chamada do método.
 
 O desafio era refatorar a classe para torná-la mais desacoplada, segura e alinhada com os princípios de design de software.
@@ -294,3 +294,25 @@ Também foi discutido e reforçado que o uso do `id` (chave primária) é a prá
 * O papel central da sessão (`$_SESSION` em PHP) para manter o estado e a identidade do usuário entre diferentes requisições.
 * O fluxo correto de autenticação: validar credenciais, buscar dados do usuário (incluindo o `id`) e armazenar o `id` na sessão.
 * A importância de usar chaves primárias (`id`) como identificadores únicos e imutáveis para operações de banco de dados, garantindo performance e integridade dos dados.
+
+## 14. Desafio da Complexidade Desnecessária e "Overengineering"
+
+### 14.1 Descrição do Desafio
+
+Ao longo do desenvolvimento inicial do TCC, o projeto Tasksmith começou a acumular complexidade desnecessária e a sofrer de "overengineering". Decisões arquitetônicas e de implementação, embora bem-intencionadas, resultaram em uma base de código desorganizada, com alto acoplamento, duplicação de lógica e uma estrutura de arquivos que se tornou difícil de gerenciar e manter. Isso gerou um aumento significativo na dificuldade de desenvolvimento, causando frustração e um desgaste considerável no processo de construção do projeto. A falta de clareza e a proliferação de abstrações desnecessárias tornaram o código propenso a erros e difícil de testar.
+
+### 14.2 Como Foi Lidar com o Desafio
+
+Para superar este desafio crítico e resgatar a viabilidade do projeto dentro do prazo do TCC, foi tomada a decisão de realizar uma **refatoração completa da base de código e da estrutura de arquivos, com o auxílio de uma inteligência artificial**. Esta abordagem permitiu:
+
+* **Análise Abrangente:** A IA foi capaz de analisar rapidamente toda a codebase, identificando padrões de complexidade, duplicação e acoplamento que seriam demorados e difíceis de mapear manualmente.
+* **Proposição de Soluções Simplificadas:** Com base na análise e nas diretrizes de simplicidade fornecidas, a IA propôs um plano de refatoração focado em reduzir o boilerplate e consolidar a lógica, mantendo apenas as estruturas essenciais (Modelos e Views).
+* **Implementação Otimizada:** A execução da refatoração pela IA garantiu a aplicação consistente das novas diretrizes, como a adoção de um ORM leve (RedBeanPHP) e a reestruturação de controladores e modelos, minimizando a introdução de novos erros e acelerando o processo.
+
+### 14.3 Lições Aprendidas
+
+* A importância de **priorizar a simplicidade** e evitar o "overengineering", especialmente em projetos com prazos limitados e MVPs como um TCC.
+* O reconhecimento de que a complexidade desnecessária pode levar a um **desgaste significativo** e à perda de motivação no desenvolvimento.
+* O valor de **ferramentas e tecnologias modernas (como IA)** para auxiliar em tarefas complexas como refatoração, permitindo que os desenvolvedores se concentrem em problemas de domínio mais críticos.
+* A necessidade de **reavaliar constantemente a arquitetura** e o design do projeto para garantir que ele permaneça alinhado com os objetivos de simplicidade, manutenibilidade e escalabilidade.
+* A refatoração não é apenas sobre corrigir bugs, mas também sobre **melhorar a qualidade intrínseca do código** e a experiência de desenvolvimento.

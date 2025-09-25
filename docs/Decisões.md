@@ -37,26 +37,20 @@ As seguintes decisões foram cruciais para moldar o Tasksmith e seu desenvolvime
 * **Alternativas Consideradas:** Outros temas de gamificação (ex: ficção científica, esportes) ou abordagens mais abstratas foram possíveis, mas o tema medieval foi selecionado por sua riqueza visual e narrativa, que se alinha bem com a proposta de transformar tarefas em "aventuras".
 * **Impacto Esperado:** Aumento significativo da motivação e produtividade do usuário, diferenciação do Tasksmith no mercado de aplicativos de gestão de tarefas. Embora um nicho possa ter um alcance inicial mais restrito, a qualidade da execução tem o potencial de fomentar uma **comunidade robusta e engajada**.
 
-### 2.4. Utilização do GamifyPHP para Implementação da Gamificação
-
-* **Justificativa:** A decisão de utilizar a biblioteca GamifyPHP foi tomada para **acelerar o desenvolvimento das mecânicas de gamificação** e garantir uma implementação robusta e bem estruturada dos elementos de RPG no Tasksmith. O GamifyPHP oferece uma **base sólida e testada** para sistemas de pontuação, níveis, conquistas e recompensas, permitindo que o foco do desenvolvimento seja direcionado para a **experiência do usuário e a integração temática** ao invés da criação de algoritmos básicos de gamificação do zero. Além disso, a biblioteca é **compatível com PHP puro**, alinhando-se perfeitamente com a decisão de utilizar tecnologias "puras" no projeto.
-* **Alternativas Consideradas:** Foram avaliadas três principais alternativas: (1) **Implementação própria completa** dos sistemas de gamificação, que demandaria tempo significativo e poderia introduzir bugs desnecessários; (2) **Integração com APIs externas** como Habitica ou Todoist, que limitaria o controle sobre a experiência do usuário e criaria dependências externas; (3) **Frameworks de gamificação mais complexos**, que introduziriam overhead desnecessário para o escopo do MVP.
-* **Impacto Esperado:** Redução significativa do tempo de desenvolvimento das funcionalidades de gamificação, maior confiabilidade dos sistemas de XP e níveis, possibilidade de implementar funcionalidades avançadas (como conquistas e badges) de forma mais eficiente, e manutenção da filosofia de controle total sobre o código através de uma biblioteca leve e bem documentada.
-
-### 2.5. Definição do Escopo do Produto Mínimo Viável (MVP)
+### 2.4. Definição do Escopo do Produto Mínimo Viável (MVP)
 
 * **Justificativa:** Para garantir a conclusão do projeto dentro do prazo do TCC, foi essencial definir um escopo claro e limitado para o MVP. As funcionalidades selecionadas (Página Inicial, Autenticação, Painel do Usuário, Gestão de Tarefas CRUD, Sistema de XP e Níveis, Política de Penalidades) representam o conjunto mínimo necessário para demonstrar o conceito central de gamificação e produtividade.
 * **Alternativas Consideradas:** Funcionalidades mais avançadas, como WebSockets para notificações em tempo real, sistemas de clãs, ou uma variedade maior de itens e customizações, foram identificadas como "Trabalhos Futuros" ou "Oportunidades Futuras", mas conscientemente excluídas do MVP para evitar a diluição do foco e o atraso na entrega.
 * **Impacto Esperado:** Entrega de um produto funcional e demonstrável dentro do cronograma, validação dos princípios de gamificação aplicados.
 
-### 2.6. Implementação de Sistema de Roteamento Personalizado
+### 2.5. Implementação de Sistema de Roteamento Personalizado
 
 * **Justificativa:** A decisão de implementar um sistema de roteamento próprio ao invés de utilizar frameworks existentes foi tomada para **demonstrar compreensão dos mecanismos de roteamento web** e manter o controle total sobre o fluxo da aplicação. Esta abordagem permite um aprendizado mais aprofundado sobre como as requisições HTTP são processadas e direcionadas.
 * **Alternativas Consideradas:** Frameworks como Laravel ou Slim PHP foram considerados, mas descartados para manter a filosofia de "tecnologias puras" e maximizar o aprendizado.
 * **Impacto Esperado:** Maior compreensão dos fundamentos web, controle total sobre o roteamento, e flexibilidade para implementações futuras.
 * **Implementação Realizada:** Foi desenvolvido um sistema de roteamento em PHP puro que evoluiu de um mapeamento simples para uma classe `Routes.php` robusta, suportando diferentes métodos HTTP por rota e despachando para `Controllers` específicos. O uso de `.htaccess` foi mantido para garantir URLs amigáveis.
 
-### 2.7. Evolução do Front Controller e Organização dos Controllers
+### 2.6. Evolução do Front Controller e Organização dos Controllers
 
 * **Justificativa:** A decisão de evoluir o Front Controller e refinar a organização dos Controllers surgiu da necessidade de aprimorar a separação de responsabilidades e a capacidade de processar lógica de negócios antes da renderização das views. Inicialmente, o roteador mapeava URLs diretamente para views, o que gerava acoplamento e limitava a complexidade da lógica. A evolução visa uma arquitetura MVC mais completa, onde o Front Controller instancia controladores e chama seus métodos.
 * **Abordagens Consideradas:**
@@ -65,7 +59,7 @@ As seguintes decisões foram cruciais para moldar o Tasksmith e seu desenvolvime
 * **Impacto Esperado:** Maior separação de responsabilidades, melhor processamento de formulários e preparação de dados para views, maior flexibilidade para implementar lógica de negócios complexa, e preparação para a escalabilidade futura do projeto.
 * **Implementação Realizada:** O Front Controller (`public/index.php`) foi completamente refatorado. Ele agora instancia dinamicamente o `Controller` e invoca a `action` (método) apropriada com base na rota e no método HTTP da requisição (`GET`, `POST`, etc.). A estrutura de `Controllers` foi reorganizada por funcionalidade (`AuthController`, `HomeController`, `GameController`), abandonando a estrutura anterior que era mais focada em modelos.
 
-### 2.8. Refatoração do Método `select` e Implementação dos Métodos CRUD em `QueryBuilder.php`
+### 2.7. Refatoração do Método `select` e Implementação dos Métodos CRUD em `QueryBuilder.php`
 
 * **Justificativa:** A refatoração do método `select` foi motivada pela necessidade de aprimorar a **segurança** (prevenção de SQL Injection), a **clareza do código** e o **tratamento de erros** em uma implementação inicial feita pelo usuário. O objetivo era aplicar as melhores práticas sem descaracterizar a lógica original. A implementação dos métodos `insert`, `update` e `delete`, juntamente com a criação de uma função `execute` privada, foram passos importantes para centralizar a lógica de persistência de dados e expandir as funcionalidades de CRUD.
 * **Decisões Tomadas:**
@@ -79,27 +73,27 @@ As seguintes decisões foram cruciais para moldar o Tasksmith e seu desenvolvime
 * **Impacto Esperado:** Maior segurança da aplicação, código mais robusto e fácil de manter, e um aprendizado aprofundado para o usuário sobre as melhores práticas de interação com banco de dados em PHP.
 * **Implementação Realizada:** O `QueryBuilder.php` foi refatorado com sucesso para usar *prepared statements*, injeção de dependência e um método `execute` centralizado. Todos os métodos CRUD (`db_select`, `db_insert`, `db_update`, `db_delete`) foram implementados seguindo essas boas práticas, fornecendo uma camada de acesso a dados segura e robusta. A integração desta camada com a lógica de negócio nos `Services` é o próximo passo.
 
-### 2.9. Metodologia de Desenvolvimento Iterativa e Incremental com Ênfase na Documentação do Processo de Aprendizado
+### 2.8. Metodologia de Desenvolvimento Iterativa e Incremental com Ênfase na Documentação do Processo de Aprendizado
 
 * **Justificativa:** Esta metodologia foi adotada para que o TCC não fosse apenas a descrição de um produto final, mas também um **relato da jornada de aprendizado e resolução de problemas**. Ao documentar decisões, desafios e soluções em cada etapa, o projeto ganha um valor acadêmico adicional, servindo como um estudo de caso prático de desenvolvimento de software.
 * **Impacto Esperado:** Documentação rica em insights técnicos e pedagógicos, fortalecimento do caráter de pesquisa e aprendizado do TCC.
 * **Implementação Realizada:** Cada commit foi documentado com mensagens detalhadas explicando as mudanças implementadas, criando um histórico completo da evolução do projeto e das decisões tomadas.
 
-### 2.10. Adoção de Variáveis de Ambiente com `phpdotenv`
+### 2.9. Adoção de Variáveis de Ambiente com `phpdotenv`
 
 * **Justificativa:** Para aumentar a segurança e a portabilidade do projeto, foi adotada a biblioteca `vlucas/phpdotenv`. Esta decisão permite que configurações sensíveis, como credenciais de banco de dados, sejam armazenadas em um arquivo `.env` que não é versionado no Git. Isso elimina a necessidade de ter dados sigilosos diretamente no código (hardcoding), facilitando a configuração do ambiente em diferentes máquinas (desenvolvimento, produção) e protegendo as credenciais.
 * **Alternativas Consideradas:** Manter as configurações em um arquivo PHP (`config/settings.php`) foi a abordagem inicial, mas foi descartada por ser menos segura e flexível.
 * **Impacto Esperado:** Maior segurança, facilidade de configuração em novos ambientes, e alinhamento com as melhores práticas de desenvolvimento de aplicações web modernas.
 * **Implementação Realizada:** A biblioteca `vlucas/phpdotenv` foi instalada via Composer. O script `database/db_script.php` (e outros pontos de entrada) agora carrega as variáveis do arquivo `.env`, que é ignorado pelo Git, garantindo que as credenciais do banco de dados (`DB_HOST`, `DB_USER`, etc.) estejam seguras e fora do controle de versão.
 
-### 2.11. Reavaliação do SGBD: Migração para MySQL
+### 2.10. Reavaliação do SGBD: Migração para MySQL
 
 * **Justificativa:** Embora a adoção de variáveis de ambiente tenha tornado a aplicação agnóstica ao SGBD, foi tomada a decisão de padronizar o desenvolvimento e a documentação em torno do **MySQL**. Os principais motivos para essa escolha são a **vasta quantidade de recursos de aprendizado** (tutoriais, fóruns, documentação) disponíveis para a combinação PHP e MySQL, o que acelera a resolução de problemas, e a **praticidade oferecida por ambientes de desenvolvimento local como XAMPP/LAMPP**, que já vêm com MySQL pré-configurado e otimizado.
 * **Alternativas Consideradas:** O SQLite foi a opção inicial devido à sua simplicidade (um único arquivo, sem necessidade de servidor). No entanto, para o propósito de um TCC que visa refletir práticas de mercado, o MySQL foi considerado mais representativo e robusto.
 * **Impacto Esperado:** Maior agilidade no desenvolvimento, facilitada pelo amplo suporte da comunidade. Um ambiente de desenvolvimento mais próximo das configurações de hospedagem de produção, e maior facilidade para depurar e otimizar consultas SQL específicas do MySQL.
 * **Implementação Realizada:** O script de criação de banco de dados (`database/db_script.php`) foi revisado para garantir total compatibilidade com a sintaxe do MySQL.
 
-### 2.12. Organização da Lógica de Negócio e Persistência de Dados
+### 2.11. Organização da Lógica de Negócio e Persistência de Dados
 
 * **Justificativa:** A decisão de refinar a organização da lógica de negócio e da persistência de dados visa equilibrar a simplicidade do projeto com a manutenção de uma boa separação de responsabilidades. Em vez de introduzir uma camada de Repositórios explícita, optou-se por consolidar a lógica de persistência diretamente nos Serviços, mantendo o projeto mais enxuto e alinhado com a filosofia de "PHP puro" e "simplicidade". A criação de um diretório dedicado para ferramentas de banco de dados de baixo nível (Query Builder) garante uma organização lógica para componentes reutilizáveis.
 * **Abordagens Consideradas:**
@@ -109,16 +103,30 @@ As seguintes decisões foram cruciais para moldar o Tasksmith e seu desenvolvime
 * **Implementação Atual:**
   * **Modelos (`src/Models/`):** A estrutura de pastas existe, mas os modelos ainda precisam ser criados. Eles servirão como DTOs (Data Transfer Objects).
   * **Serviços (`src/Services/`):** Os arquivos de serviço (ex: `UserService.php`) foram criados, mas estão vazios. É aqui que a lógica de negócio e a interação com o `QueryBuilder` irão residir.
-  * **Banco de Dados (`src/Db/`):** O diretório foi criado e contém o `QueryBuilder.php`, centralizando a lógica de acesso a dados de baixo nível.
+  * **Banco de Dados (`src/Database/`):** O diretório foi criado e agora contém a configuração de conexão com o RedBeanPHP, centralizando a lógica de acesso a dados de baixo nível.
 
-## 3. Abrangência dos Aspectos
+  ### 2.12. Refatoração Completa da Base de Código e Estrutura de Arquivos com Auxílio de IA
+
+  * **Justificativa:** Devido ao aumento desnecessário da complexidade da construção do projeto ao longo do tempo, resultando em uma codebase desorganizada, com "gambiarras" e propensa a erros, foi tomada a decisão de realizar uma refatoração completa da base de código e da estrutura de arquivos. Esta refatoração foi auxiliada por uma inteligência artificial para otimizar o tempo e garantir a aplicação de melhores práticas. O objetivo principal foi simplificar o projeto, reduzir o boilerplate e melhorar a manutenibilidade, mantendo os Models e Views como as estruturas principais.
+
+  * **Principais Alterações:**
+    * **Adoção do ORM RedBeanPHP:** O `QueryBuilder` manual foi completamente removido e substituído pelo RedBeanPHP. Esta mudança simplificou drasticamente as operações de banco de dados, permitindo uma interação mais direta e intuitiva com a persistência.
+    * **Modelos Active Record:** As classes `User` e `Task` foram refatoradas para incorporar sua própria lógica de persistência, seguindo o padrão Active Record do RedBeanPHP. Isso eliminou a necessidade de uma camada de serviço separada para operações CRUD (Create, Read, Update, Delete), reduzindo o número de arquivos e a complexidade.
+    * **Simplificação da Estrutura de Diretórios:** O diretório `src/Services` foi limpo, e a lógica de negócios foi consolidada nos modelos e no novo `GameService`. A estrutura de diretórios do banco de dados foi unificada em `src/Database/`, removendo redundâncias.
+    * **Controladores Enxutos:** Os controladores `AuthController` e `GameController` foram refatorados para interagir diretamente com os modelos, tornando-os mais simples, mais focados na orquestração das requisições e menos acoplados a camadas intermediárias.
+    * **Tratamento de Erros Centralizado:** Um mecanismo robusto de tratamento de exceções foi implementado no `index.php` para capturar erros de forma centralizada e retornar respostas HTTP apropriadas. Novas exceções personalizadas (`ValidationException`, `AuthenticationException`, `AuthorizationException`) foram criadas em `src/Exceptions/` para um controle de erro mais granular.
+    * **Gamificação:** A base para a lógica de gamificação foi estabelecida com a criação do modelo `Character` e a expansão do `GameService`, que agora lida com a conclusão de tarefas e a aplicação de recompensas aos personagens dos usuários.
+
+  * **Impacto Esperado:** O projeto agora é significativamente mais organizado, mais fácil de entender e manter, e menos propenso a erros. A simplicidade da arquitetura e a adoção de um ORM moderno contribuem para um desenvolvimento mais ágil e uma base de código mais limpa.
+
+  ## 3. Abrangência dos Aspectos
 
 ### 3.1. Arquitetura
 
 A arquitetura do Tasksmith é monolítica, com uma clara separação lógica entre o frontend e o backend.
 
 * **Frontend:** Desenvolvido com HTML, CSS (utilizando Tailwind CSS para utilitários e estilização rápida) e JavaScript vanilla para interatividade. As views são renderizadas no servidor e complementadas com lógica no cliente.
-* **Backend:** Implementado em PHP puro, responsável pela lógica de negócios, manipulação de dados e interação com o banco de dados. Inclui módulos para autenticação, gestão de tarefas, sistema de XP/Níveis, loja e customização.
+* **Backend:** Implementado em PHP puro, responsável pela lógica de negócios, manipulação de dados e interação com o banco de dados. Inclui módulos para autenticação, gestão de tarefas e sistema de XP/Níveis.
 * **Banco de Dados:** Utilizado para persistir todos os dados da aplicação, incluindo usuários, tarefas, itens, inventário e notificações.
 
 ### 3.2. Funcionalidades
@@ -126,7 +134,7 @@ A arquitetura do Tasksmith é monolítica, com uma clara separação lógica ent
 O MVP do Tasksmith abrange as seguintes funcionalidades principais:
 
 * **Autenticação e Autorização:** Login e cadastro de usuários.
-* **Gestão de Tarefas (CRUD):** Criação, leitura, atualização e exclusão de tarefas, incluindo suporte a sub-tarefas e marcação de conclusão.
+* **Gestão de Tarefas (CRUD):** Criação, leitura, atualização e exclusão de tarefas, incluindo suporte a marcação de conclusão.
 * **Sistema de XP e Níveis:** Geração de pontos de experiência e "Ouro" ao concluir tarefas, com progressão de nível do personagem.
 * **Política de Penalidades:** Dedução de XP ou Ouro para tarefas não cumpridas no prazo.
 

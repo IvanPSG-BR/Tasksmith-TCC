@@ -64,9 +64,9 @@ O Tasksmith aborda esse problema transformando a produtividade em um jogo. Ao ap
 
 As funcionalidades essenciais desenvolvidas para o Produto Mínimo Viável são:
 
-- **Sistema de Autenticação:** Cadastro e login de usuários.
-- **Gestão de Tarefas (Missões):** Criação, edição e exclusão de tarefas.
-- **Sistema de Progressão:** Mecanismo de ganho de experiência (XP) e sistema de níveis.
+- **Sistema de Autenticação:** Cadastro, login, logout e remoção de conta de usuários.
+- **Gestão de Tarefas (Missões):** Criação, edição, visualização, conclusão e exclusão de tarefas.
+- **Sistema de Progressão:** Mecanismo de ganho de experiência (XP) e sistema de níveis para o personagem.
 - **Painel de Tarefas:** Interface para visualização e gerenciamento das missões.
 - **Interface Temática:** Design e elementos visuais imersos na temática de fantasia medieval.
 
@@ -79,10 +79,10 @@ As funcionalidades essenciais desenvolvidas para o Produto Mínimo Viável são:
 
 ## Tecnologias Utilizadas
 
-- **Backend:** PHP 8.2+
-- **Frontend:** HTML5, TailwindCSS, JavaScript (Vanilla)
+- **Backend:** PHP 8.2+, RedBeanPHP (ORM)
+- **Frontend:** HTML5, TailwindCSS, JavaScript + Vite
 - **Banco de Dados:** MySQL
-- **Servidor:** Apache (via XAMPP/LAMPP)
+- **Servidor:** Apache (via XAMPP/LAMPP) ou PHP Server (via Vite + `vite-plugin-php`)
 - **Gerenciador de Dependências:** Composer (PHP), NPM (Node.js)
 
 ## Estrutura do Projeto
@@ -92,16 +92,16 @@ A estrutura de arquivos do projeto segue o padrão MVC (Model-View-Controller) d
 ```
 Tasksmith-TCC/
 ├── config/               # Configurações da aplicação
-├── database/             # Conexão e scripts do banco de dados
+├── src/Database/         # Conexão e scripts do banco de dados
 ├── docs/                 # Documentação do projeto
 ├── public/               # Raiz pública do servidor (ponto de entrada)
 │   ├── assets/           # Recursos (CSS, JS, imagens)
 │   └── index.php         # Front Controller
 ├── src/                  # Código-fonte da aplicação
 │   ├── Controllers/      # Controladores
-│   ├── Db/               # Classes de acesso ao banco (QueryBuilder)
-│   ├── Models/           # Modelos de dados (Entidades)
-│   ├── Services/         # Lógica de negócios
+│   ├── Exceptions/       # Classes de exceção personalizadas
+│   ├── Models/           # Modelos de dados (Entidades Active Record com RedBeanPHP)
+│   ├── Services/         # Lógica de negócios (GameService)
 │   ├── Views/            # Arquivos de apresentação (HTML/PHP)
 │   └── Routes.php        # Roteador
 ├── .env.example          # Exemplo de arquivo de ambiente
@@ -119,7 +119,7 @@ Tasksmith-TCC/
 - PHP 8.2 ou superior
 - Composer
 - Node.js e NPM
-- Servidor Apache (XAMPP, LAMP, etc.)
+- Servidor Web (Apache via XAMPP/LAMPP ou PHP Server via Vite)
 
 ### Passo a Passo
 
@@ -142,20 +142,25 @@ Tasksmith-TCC/
     npm install
     ```
 
-4. **Compile os estilos do TailwindCSS:**
-    - Para desenvolvimento (observa mudanças):
-
-   ```bash
-   npm run tailwind
-   ```
-
-5. **Configure o banco de dados:**
+4. **Configure o banco de dados:**
     - Renomeie `.env.example` para `.env`.
-    - O script `database/db_script.php` pode ser executado para criar a estrutura inicial do banco de dados SQLite.
+    - Edite o arquivo `.env` com as credenciais do seu banco de dados MySQL.
+    - O script `src/Database/db_script.php` pode ser executado para criar a estrutura inicial do banco de dados.
+
+5. **Inicie o servidor de desenvolvimento:**
+    - Para desenvolvimento com Vite e PHP Server:
+
+      ```bash
+      npm run dev
+      ```
+
+      (Isso iniciará o servidor Vite e o PHP Server automaticamente)
+    - Para uso com Apache (requer configuração de Virtual Host):
+      Siga as instruções abaixo para configurar um Virtual Host.
 
 ### Configurando o Virtual Host (Apache)
 
-Para uma melhor experiência de desenvolvimento, é recomendado configurar um Virtual Host para que o projeto seja acessado por uma URL amigável (ex: `http://tasksmith-tcc.local`).
+Para uma melhor experiência de desenvolvimento com Apache, é recomendado configurar um Virtual Host para que o projeto seja acessado por uma URL amigável (ex: `http://tasksmith-tcc.local`).
 
 1. **Edite o arquivo `hosts` do seu sistema:**
     - **Windows:** `C:\Windows\System32\drivers\etc\hosts`

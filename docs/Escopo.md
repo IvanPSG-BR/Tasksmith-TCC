@@ -19,13 +19,13 @@ O MVP do Tasksmith para o TCC incluirá:
 
 **Estado Atual da Implementação:**
 
-* ✅ **Estrutura Base:** Arquitetura monolítica implementada com organização clara de diretórios (`src`, `public`, `database`).
+* ✅ **Estrutura Base:** Arquitetura monolítica implementada com organização clara de diretórios (`src`, `public`, `src/Database`).
 * ✅ **Configuração de Ambiente:** `composer.json` definido, `phpdotenv` para variáveis de ambiente e `.htaccess` para URLs amigáveis estão funcionais.
-* ✅ **Sistema de Roteamento:** `Routes.php` e o Front Controller (`public/index.php`) mapeiam URLs para os `Controllers` corretamente.
+* ✅ **Sistema de Roteamento:** `Routes.php` e o Front Controller (`index.php`) mapeiam URLs para os `Controllers` corretamente.
 * ✅ **Camada de Visão (Views):** Estrutura de arquivos para as páginas de `home`, `auth` e `game` está criada.
-* ✅ **Camada de Persistência:** O `QueryBuilder.php` oferece uma abstração robusta para operações de CRUD e o script `database/db_script.php` define o schema do banco de dados.
-* 🔄 **Camada de Controle (Controllers):** `Controllers` existem, mas atualmente apenas renderizam as `Views`, sem lógica de negócio.
-* ❌ **Camada de Serviço (Services):** A lógica de negócio (ex: `UserService.php`) está planejada, mas os arquivos estão vazios. Nenhuma funcionalidade principal (login, cadastro, gestão de tarefas) está implementada ainda.
+* ✅ **Camada de Persistência:** O ORM RedBeanPHP foi integrado, substituindo o `QueryBuilder.php` e fornecendo uma abstração robusta para operações de CRUD. O script `src/Database/db_script.php` define o schema do banco de dados.
+* ✅ **Camada de Controle (Controllers):** Os `Controllers` foram refatorados para interagir diretamente com os modelos Active Record, orquestrando as requisições e a lógica de negócio.
+* ✅ **Camada de Serviço (Services):** Os serviços `UserService` e `TaskManagementService` foram removidos. O `GameService` foi preenchido com a lógica de gamificação.
 
 ## 2. Proposta de Escopo do TCC
 
@@ -44,13 +44,13 @@ Desenvolver uma aplicação web gamificada (Tasksmith) que auxilie na organizaç
 
 1. ✅ **Implementar uma arquitetura monolítica bem estruturada** (Estrutura de diretórios, `composer.json`, `.env`).
 2. ✅ **Desenvolver um sistema de roteamento personalizado** em PHP puro (Front Controller, `Routes.php`).
-3. ✅ **Definir o schema do banco de dados** e implementar uma camada de abstração de persistência (`db_script.php`, `QueryBuilder.php`).
+3. ✅ **Definir o schema do banco de dados** e integrar o ORM RedBeanPHP para persistência (`db_script.php`, RedBeanPHP).
 4. ✅ **Criar a estrutura de Views e Controllers** para as páginas principais (Home, Auth, Game).
-5. 🔄 **Implementar a lógica de negócio no `UserService`** para as funcionalidades de autenticação e autorização.
-6. 🔄 **Implementar a lógica de negócio no `TaskManagementService`** para as funcionalidades de gestão de tarefas (CRUD).
-7. 🔄 **Implementar a lógica de negócio no `GameService`** para o sistema de experiência (XP), níveis e recompensas.
+5. ✅ **Implementar a lógica de autenticação e autorização** diretamente nos modelos e controladores.
+6. ✅ **Implementar a lógica de gestão de tarefas (CRUD)** diretamente nos modelos e controladores.
+7. ✅ **Implementar a lógica de gamificação** no `GameService` para o sistema de experiência (XP), níveis e recompensas.
 8. ✅ **Analisar a arquitetura monolítica e a escolha de tecnologias** para o desenvolvimento do MVP.
-9. 🔄 **Discutir os princípios de gamificação aplicados** no Tasksmith e seus potenciais impactos na motivação.
+9. ✅ **Discutir os princípios de gamificação aplicados** no Tasksmith e seus potenciais impactos na motivação.
 10. ✅ **Documentar o processo de desenvolvimento**, destacando os desafios e soluções.
 
 **Legenda:** ✅ Concluído | 🔄 Em desenvolvimento/Planejado
@@ -106,33 +106,23 @@ Esta abordagem permitirá que o TCC não seja apenas a descrição de um produto
 graph TD
     A[Usuário] -->|Acessa| B(Navegador Web)
     B -->|Requisição HTTP| C(Servidor Web)
-    C -->|.htaccess| E(public/index.php - Front Controller)
+    C -->|.htaccess| E(index.php - Front Controller)
     E -->|Carrega| F(src/Routes.php)
     F -->|Mapeia Rota| G["src/Controllers/*"]
     
     subgraph "Estrutura Implementada ✅"
         G --> H["src/Views/*"]
-        G --> I["src/Services/* (Estrutura Vazia)"]
-        I --> J["src/Db/QueryBuilder.php"]
-        J --> K["Schema do BD (definido em db_script.php)"]
+        G --> I["src/Models/* (Active Record com RedBeanPHP)"]
+        I --> J["src/Database/conn.php (Configuração RedBeanPHP)"]
+        J --> K["Schema do BD (definido em src/Database/db_script.php)"]
+        G --> L["src/Services/GameService.php (Lógica de Gamificação)"]
         
         style H fill:#d3f8d3
+        style I fill:#d3f8d3
         style J fill:#d3f8d3
         style K fill:#d3f8d3
-    end
-
-    subgraph "Lógica de Negócio (Pendente) 🔄"
-        L["UserService<br/>(Lógica de Autenticação)"]
-        M["TaskManagementService<br/>(Lógica de CRUD de Tarefas)"]
-        N["GameService<br/>(Lógica de XP, Níveis, Recompensas)"]
-        
-        style L fill:#ffe4b5
-        style M fill:#ffe4b5
-        style N fill:#ffe4b5
+        style L fill:#d3f8d3
     end
 
     I -.-> L
-    I -.-> M
-    I -.-> N
-
-    linkStyle 8,9,10 stroke-width:2px,fill:none,stroke:gray,stroke-dasharray: 3 3;
+```
