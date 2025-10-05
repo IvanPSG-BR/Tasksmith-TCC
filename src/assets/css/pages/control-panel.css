@@ -1,0 +1,149 @@
+header{
+    background-color: #231a2b;
+}
+
+body{
+    background-color: #06060a;
+    overflow-y: hidden;
+}
+
+body p, h1, h2, h3, h4, h5, h6, span{
+    color: silver;
+}
+
+nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav > div{
+    display: flex;
+    align-items: center;
+}
+
+#logomark{
+    width:3rem;
+}
+
+#app_name{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-inline: 1.6rem;
+    background-image: url(../images/medieval-elements/frames/rectangle-frame-3-darkbrown.webp);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 120%;
+    width: fit-content;
+    max-height: 5vh;
+    min-height: min-content;
+}
+
+#notepad_icon{
+    width: 1.25rem;
+}
+
+#app_name_text{
+    font-family: "MedievalSharp", cursive;
+    font-size: x-large;
+    color: #f2a60d;
+    text-shadow: 0rem -0.1rem rgba(255, 255, 255, 0.699);
+    filter: contrast(1.2);
+    padding-inline: 0.2rem;
+    white-space: nowrap;
+}
+
+#anvil_icon{
+    width: 1.5rem;
+}
+
+.fa-circle-user{
+    font-size: 2.5rem;
+    color: silver;
+}
+
+main{
+    display: flex;
+}
+
+aside{
+    background-color: #1a0025;
+    width: 20vw;
+    height: 92vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+aside > div{
+    display: flex;
+    flex-direction: column;
+}
+
+#hamburguer{
+    display: flex;
+    justify-content: start;
+}
+
+#hamburguer > button{
+    width: fit-content;
+}
+
+.fa-bars{
+    color: #730000;
+}
+
+#pages{
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+.page{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #f2a60d;
+}
+
+#footer{
+    padding-top: 6rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+}
+
+#footer > p{
+    font-size: small;
+    text-align: center;
+}
+
+#container{
+    width: 80vw;
+    display: flex;
+    flex-direction: column;
+}
+
+#container > div{
+    display: flex;
+}
+
+#info{
+    justify-content: center;
+}
+
+.character{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.stats{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    padding-top: 6rem;
+}

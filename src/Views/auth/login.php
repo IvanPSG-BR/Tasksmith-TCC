@@ -12,7 +12,7 @@
             </div>
             <div class="campo-form">
                 <label for="password">Senha:</label>
-                <input type="text" name="password" id="password">
+                <input type="password" name="password" id="password">
             </div>            
         </div>
         <div class="btn-form">

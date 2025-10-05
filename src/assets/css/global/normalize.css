@@ -34,3 +34,7 @@ main{
 footer{
     overflow-y: hidden;
 }
+
+button{
+    cursor: pointer;
+}

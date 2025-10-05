@@ -12,7 +12,7 @@
 </head>
 <body>
     <div id="container" class="flex">
-        <form action="/login" method="post" class="hidden">
+        <form action="/signup" method="post">
             <div id="pag_esq">
                 <div class="campo-form">
                     <label for="username">Usuário:</label>
@@ -33,6 +33,9 @@
                 </div>
             </div>
         </form>
+        
+        <!--<?php include ROOT_PATH . "src/Views/auth/login.php"?>-->
+        
     </div>
 </body>
 </html>
