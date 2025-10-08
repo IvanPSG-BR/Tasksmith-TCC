@@ -81,29 +81,60 @@
             <div>
                 <form action="/game/task-forge" method="post">
                     <div>
-                        <div>
-                            <input type="text" name="" id="" placeholder="Título da Missão">
+                        <div class="main-data task-name">
+                            <input type="text" name="task_name" id="task_name" placeholder="Título da Missão" required>
                             <button type="submit">Forjar</button>
                         </div>
-                        <div>
-                            <input type="text" name="" id="" placeholder="Descrição...">
+                        <div class="main-data task-description">
+                            <textarea type="text" name="task_description" id="task_description" placeholder="Descrição..." cols=55 rows=10></textarea>
                         </div>
                     </div>
                     <div>
-                        <div>
+                        <div class="secondary-data task-difficulty">
+                            <script>
+                                function setTaskDifficulty(difficulty) {
+                                    document.getElementById('task_difficulty').value = difficulty;
+                                    switch (difficulty) {
+                                        case 1:
+                                            document.getElementById('easy').classList.add('text-red-900');
+                                            document.getElementById('medium').classList.remove('text-red-900');
+                                            document.getElementById('hard').classList.remove('text-red-900');
+                                            break;
+                                        case 2:
+                                            document.getElementById('easy').classList.add('text-red-900');
+                                            document.getElementById('medium').classList.add('text-red-900');
+                                            document.getElementById('hard').classList.remove('text-red-900');
+                                            break;
+                                        case 3:
+                                            document.getElementById('easy').classList.add('text-red-900');
+                                            document.getElementById('medium').classList.add('text-red-900');
+                                            document.getElementById('hard').classList.add('text-red-900');
+                                            break;
+                                    
+                                        default:
+                                            break;
+                                    }
+                                }
+                            </script>
+
                             <h3>Dificuldade</h3>
-                            <div>
-                                <input type="hidden" name="selected_difficulty" id="selected_difficulty">
-                                <button onclick="difficulty = 1">
-                                    <i class="fa-regular fa-star"></i>
+                            <div id="difficulty_btns">
+                                <input type="hidden" name="task_difficulty" id="task_difficulty" required>
+
+                                <button type="button" onclick="setTaskDifficulty(1)">
+                                    <i class="fa-regular fa-star" id="easy"></i>
                                 </button>
-                                <button onclick="difficulty = 2"><i class="fa-regular fa-star"></i></button>
-                                <button onclick="difficulty = 3"><i class="fa-regular fa-star"></i></button>
+                                <button type="button" onclick="setTaskDifficulty(2)">
+                                    <i class="fa-regular fa-star" id="medium"></i>
+                                </button>
+                                <button type="button" onclick="setTaskDifficulty(3)">
+                                    <i class="fa-regular fa-star" id="hard"></i>
+                                </button>
                             </div>
                         </div>
-                        <div>
+                        <div class="secondary-data timeout">
                             <h3>Prazo</h3>
-                            <input type="date" name="" id="">
+                            <input type="date" name="task_timeout" id="task_timeout" required>
                         </div>
                     </div>
                 </form>

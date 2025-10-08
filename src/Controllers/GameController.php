@@ -128,7 +128,7 @@ class GameController {
             $taskModel = new Task();
             $taskModel->create($task_data);
             
-            header("Location: /game/task-board");
+            header("Location: /game/task-forge");
             exit;
         } catch (Exception $e) {
             header("HTTP/1.1 500 Internal Server Error");
