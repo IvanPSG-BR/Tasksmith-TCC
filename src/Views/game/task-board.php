@@ -81,41 +81,47 @@
             <div>
                 <div class="tasks-status">
                     <div><h3>A Fazer</h3></div>
-                    <div class="to-do">
-                        <div class="left_arrow"><i class="fa-regular fa-circle-left"></i></div>
+                    <button type="button"> <!-- TODO: para cada tarefa no banco, pegar dados referentes às tarefas A FAZER -->
+                        <div class="to-do">
+                            <div class="left_arrow"><i class="fa-regular fa-circle-left"></i></div>
 
-                        <div class="task-content">
-                            <h4>placeholder</h4>
-                            <button><i class="fa-solid fa-pen-to-square"></i></button>
-                            <button><i class="fa-solid fa-trash-can"></i></button>
+                            <div class="task-content">
+                                <h4>placeholder</h4>
+                                <button><i class="fa-solid fa-pen-to-square"></i></button>
+                                <button><i class="fa-solid fa-trash-can"></i></button>
+                            </div>
+
+                            <div class="right_arrow"><i class="fa-regular fa-circle-right"></i></div>
                         </div>
-
-                        <div class="right_arrow"><i class="fa-regular fa-circle-right"></i></div>
-                    </div>
+                    </button>
                 </div>
 
                 <div class="tasks-status">
                     <div><h3>Em Progresso</h3></div>
                     <div class="in-progress">
-                        <div class="left_arrow"><i class="fa-regular fa-circle-left"></i></div>
+                        <button type="button"> <!-- TODO: para cada tarefa no banco, pegar dados referentes às tarefas EM PROGRESSO -->
+                            <div class="left_arrow"><i class="fa-regular fa-circle-left"></i></div>
 
-                        <div class="task-content">
-                            <h4>placeholder</h4>
-                            <button><i class="fa-solid fa-pen-to-square"></i></button>
-                            <button><i class="fa-solid fa-trash-can"></i></button>
-                        </div>
+                            <div class="task-content">
+                                <h4>placeholder</h4> 
+                                <button><i class="fa-solid fa-pen-to-square"></i></button>
+                                <button><i class="fa-solid fa-trash-can"></i></button>
+                            </div>
 
-                        <div class="right_arrow"><i class="fa-regular fa-circle-right"></i></div>
+                            <div class="right_arrow"><i class="fa-regular fa-circle-right"></i></div>
+                        </button>
                     </div>
                 </div>
 
                 <div class="tasks-status">
-                    <div><h3>Finalizado</h3></div>
-                    <div class="done">
-                        <h4>placeholder</h4>
-                        <i class="fa-solid fa-check"></i>
-                        <button><i class="fa-solid fa-trash-can"></i></button>
-                    </div>
+                    <button type="button"> <!-- TODO: para cada tarefa no banco, pegar dados referentes às tarefas EM PROGRESSO -->
+                        <div><h3>Finalizado</h3></div>
+                        <div class="done">
+                            <h4>placeholder</h4>
+                            <i class="fa-solid fa-check"></i>
+                            <button><i class="fa-solid fa-trash-can"></i></button>
+                        </div>
+                    </button>
                 </div>
             </div>
         </div>

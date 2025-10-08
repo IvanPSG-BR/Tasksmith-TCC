@@ -24,7 +24,7 @@ class Task extends \RedBeanPHP\SimpleModel {
         $task->task_description = $data['task_description'];
         $task->task_difficulty = $data['task_difficulty'];
         $task->timeout = $data['timeout'];
-        $task->finished = false;
+        $task->task_status = 'to_do';
 
         $rewards = $this->calculateRewards($task->task_difficulty);
         $task->xp_reward = $rewards['xp'];
@@ -49,13 +49,19 @@ class Task extends \RedBeanPHP\SimpleModel {
         return $task;
     }
 
-    public function complete(int $id, bool $is_finished): ?\RedBeanPHP\OODBBean {
+    public function updateStatus(int $id, string $status): ?\RedBeanPHP\OODBBean {
         $task = R::load('tasks', $id);
         if (!$task->id) {
             return null;
         }
 
-        $task->finished = $is_finished;
+        $valid_statuses = ['to_do', 'in_progress', 'finished'];
+        if (!in_array($status, $valid_statuses)) {
+            // Or throw an exception
+            return null;
+        }
+
+        $task->task_status = $status;
         R::store($task);
         return $task;
     }

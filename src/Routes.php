@@ -25,8 +25,8 @@ class Routes {
         ],
         '/game/task-board' => [
             "GET" => 'GameController@taskboard_page',
-            "POST" => 'GameController@taskedit_process',
-            "PUT" => 'GameController@taskcomplete_process',
+            "PUT" => 'GameController@taskedit_process',
+            "PATCH" => 'GameController@task_status_process',
             "DELETE" => 'GameController@taskdelete_process'
         ],
         '/game/task-forge' => [

@@ -87,25 +87,49 @@ class GameController {
         }
     }
 
-    public function taskcomplete_process() {
+    public function task_status_process() {
         header('Content-Type: application/json');
         parse_str(file_get_contents("php://input"), $data);
         
         $task_id = filter_var($data['task_id'] ?? null, FILTER_VALIDATE_INT);
-        $is_finished = filter_var($data['is_finished'] ?? null, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
+        $task_status = filter_var($data['task_status'] ?? null);
 
-        if (!$task_id || $is_finished === null) {
+        $valid_statuses = ['to_do', 'in_progress', 'finished'];
+        if (!$task_id || !$task_status || !in_array($task_status, $valid_statuses)) {
             http_response_code(400);
             echo json_encode(['error' => 'Parâmetros inválidos.']);
             return;
         }
 
         try {
-            $gameService = new GameService();
-            $gameService->completeTask($task_id, $_SESSION['user_id']);
+            $taskModel = new Task();
+            $task = $taskModel->findById($task_id);
+
+            if (!$task || $task->user_id !== $_SESSION['user_id']) {
+                http_response_code(403);
+                echo json_encode(['error' => 'Acesso negado.']);
+                return;
+            }
+
+            // Previne que as recompensas sejam aplicadas múltiplas vezes
+            if ($task->task_status === 'finished' && $task_status === 'finished') {
+                http_response_code(200);
+                echo json_encode(['success' => 'Tarefa já estava finalizada.']);
+                return;
+            }
+
+            $taskModel->updateStatus($task_id, $task_status);
+            
+            $message = 'Status da tarefa atualizado.';
+
+            if ($task_status === 'finished') {
+                $gameService = new GameService();
+                $gameService->completeTask($task_id, $_SESSION['user_id']);
+                $message = 'Status da tarefa atualizado e recompensas aplicadas.';
+            }
             
             http_response_code(200);
-            echo json_encode(['success' => 'Status da tarefa atualizado e recompensas aplicadas.']);
+            echo json_encode(['success' => $message]);
 
         } catch (Exception $e) {
             http_response_code(500);
