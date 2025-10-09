@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\User;
+use App\Services\GameService;
 use RedBeanPHP\R as R;
 
 class AuthController {
@@ -14,6 +15,7 @@ class AuthController {
     public function signup_process() {
         $username = filter_input(INPUT_POST, "username");
         $password = filter_input(INPUT_POST, "password");
+        $characterName = filter_input(INPUT_POST, 'character_name');
 
         $userModel = new User();
         $user = $userModel->create($username, $password);
@@ -21,6 +23,9 @@ class AuthController {
         if ($user) {
             $_SESSION['user_id'] = $user->id;
             $_SESSION['username'] = $user->username;
+
+            GameService::createCharacter($user->id, $characterName);
+
             header("Location: /game/task-board");
             exit;
         } else {

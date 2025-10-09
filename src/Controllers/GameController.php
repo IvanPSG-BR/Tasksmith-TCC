@@ -123,8 +123,7 @@ class GameController {
             $message = 'Status da tarefa atualizado.';
 
             if ($task_status === 'finished') {
-                $gameService = new GameService();
-                $gameService->completeTask($task_id, $_SESSION['user_id']);
+                GameService::completeTask($task_id, $_SESSION['user_id']);
                 $message = 'Status da tarefa atualizado e recompensas aplicadas.';
             }
             
@@ -146,8 +145,6 @@ class GameController {
                 'task_difficulty' => filter_input(INPUT_POST, "task_difficulty", FILTER_VALIDATE_INT),
                 'timeout' => filter_input(INPUT_POST, "task_timeout"),
             ];
-
-            // TODO: Adicionar validação dos dados de entrada
 
             $taskModel = new Task();
             $taskModel->create($task_data);

@@ -3,18 +3,9 @@
 namespace App\Models;
 
 use RedBeanPHP\R as R;
+use App\Services\GameService;
 
 class Task extends \RedBeanPHP\SimpleModel {
-
-    // TODO: Mover esta lógica para um Service de Gamificação no futuro.
-    private function calculateRewards(int $difficulty): array {
-        return match ($difficulty) {
-            1 => ['xp' => 10, 'gold' => 5],
-            2 => ['xp' => 15, 'gold' => 15],
-            3 => ['xp' => 25, 'gold' => 30],
-            default => ['xp' => 0, 'gold' => 0],
-        };
-    }
 
     public function create(array $data): ?\RedBeanPHP\OODBBean {
         $task = R::dispense('tasks');
@@ -26,9 +17,9 @@ class Task extends \RedBeanPHP\SimpleModel {
         $task->timeout = $data['timeout'];
         $task->task_status = 'to_do';
 
-        $rewards = $this->calculateRewards($task->task_difficulty);
+        $rewards = GameService::calculateRewards($task->task_difficulty);
         $task->xp_reward = $rewards['xp'];
-        $task->gold_reward = $rewards['gold'];
+        $task->gold_reward = $rewards['gold_amount'];
 
         R::store($task);
         return $task;
