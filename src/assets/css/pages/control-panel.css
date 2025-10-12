@@ -213,3 +213,59 @@ form{
     text-shadow: #000000 -0.05rem 0.1rem;
 }
 
+#task-board h4{
+    text-wrap: nowrap;
+}
+
+#task-board .fa-trash-can{
+    color: red;
+}
+
+#task-board .fa-pen-to-square{
+    color: blue;
+}
+
+#task-board .fa-circle-left, #task-board .fa-circle-right{
+    color: #f2a60dbd;
+}
+
+#task-board #manager{
+    height: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+#task-board .tasks-status{
+    overflow-y: scroll;
+    width: 20rem;
+    height: 90%;
+    border: solid 0.2rem;
+    border-radius: 0.6rem;
+}
+
+#task-board .field{
+    padding-block: 0.5rem;
+}
+
+#task-board .task, #task-board .task-content > .always-visible{
+    display: flex;
+}
+
+#task-board .task{
+    padding: 0.5rem;
+    justify-content: space-around;
+}
+
+#task-board .task-content{
+    display: flex;
+    flex-direction: column;
+}
+
+#task-board .task-content > .always-visible{
+    gap: 0.5rem;
+}
+
+#task-board .field{
+    display: flex;
+    justify-content: center;
+}

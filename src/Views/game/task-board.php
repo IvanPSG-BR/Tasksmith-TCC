@@ -1,7 +1,14 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <?php $assets = WEBROOT . "src/assets";?>
+    <?php
+    use App\Models\Task;
+    $assets = WEBROOT . "src/assets";
+
+    $tarefas = new Task();
+    $tarefas_do_usuario = $tarefas->findFromUser($_SESSION["user_id"]);
+    ?>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tasksmith - Taskboard</title>
@@ -65,63 +72,112 @@
                 </div>
                 <div class="stats">
                     <div class="hp">
-                        <i class="fa-solid fa-heart"></i>
-                        <i class="fa-solid fa-heart"></i>
-                        <i class="fa-solid fa-heart"></i>
+                        <i class="fa-solid fa-heart text-red-700"></i>
+                        <i class="fa-solid fa-heart text-red-700"></i>
+                        <i class="fa-solid fa-heart text-red-700"></i>
                     </div>
                     <div class="xp">
-                        <progress value="0" max="100">0%</progress>
+                        <progress value="0" max="100" class="bg-sky-200">0%</progress>
                     </div>
                     <div class="gold">
-                        <i class="fa-solid fa-coins"></i>
+                        <i class="fa-solid fa-coins text-yellow-400"></i>
                     </div>
                 </div>
             </div>
 
-            <div>
+            <div id="manager">
                 <div class="tasks-status">
-                    <div><h3>A Fazer</h3></div>
-                    <button type="button"> <!-- TODO: para cada tarefa no banco, pegar dados referentes às tarefas A FAZER -->
-                        <div class="to-do">
-                            <div class="left_arrow"><i class="fa-regular fa-circle-left"></i></div>
-
-                            <div class="task-content">
-                                <h4>placeholder</h4>
-                                <button><i class="fa-solid fa-pen-to-square"></i></button>
-                                <button><i class="fa-solid fa-trash-can"></i></button>
+                    <div class="field"><h3>A Fazer</h3></div>
+                    <div class="to-do">
+                        <?php
+                        foreach ($tarefas_do_usuario as $tarefa):
+                        ?>
+                        <div class="task">
+                            <div class=<?=$tarefa->task_status == "to_do" ? "left_arrow" : "hidden"?>>
+                                <button type="button"><i class="fa-regular fa-circle-left"></i></button>
                             </div>
 
-                            <div class="right_arrow"><i class="fa-regular fa-circle-right"></i></div>
+                            <div class="task-content">
+                                <div class="always-visible">
+                                    <h4><?=$tarefa->task_status == "to_do" ? $tarefa->task_name : ""?></h4> 
+                                    <button class=<?=$tarefa->task_status == "to_do" ? "" : "hidden"?>><i class="fa-solid fa-pen-to-square"></i></button>
+                                    <button class=<?=$tarefa->task_status == "to_do" ? "" : "hidden"?>><i class="fa-solid fa-trash-can"></i></button>
+                                </div>
+                                <div class="desc hidden">
+                                    <p>
+                                        <?=$tarefa->task_description?>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class=<?=$tarefa->task_status == "to_do" ? "right_arrow" : "hidden"?>>
+                                <button type="button"><i class="fa-regular fa-circle-right"></i></button>
+                            </div>
                         </div>
-                    </button>
-                </div>
-
-                <div class="tasks-status">
-                    <div><h3>Em Progresso</h3></div>
-                    <div class="in-progress">
-                        <button type="button"> <!-- TODO: para cada tarefa no banco, pegar dados referentes às tarefas EM PROGRESSO -->
-                            <div class="left_arrow"><i class="fa-regular fa-circle-left"></i></div>
-
-                            <div class="task-content">
-                                <h4>placeholder</h4> 
-                                <button><i class="fa-solid fa-pen-to-square"></i></button>
-                                <button><i class="fa-solid fa-trash-can"></i></button>
-                            </div>
-
-                            <div class="right_arrow"><i class="fa-regular fa-circle-right"></i></div>
-                        </button>
+                        <?php
+                        endforeach;
+                        ?>
                     </div>
                 </div>
 
                 <div class="tasks-status">
-                    <button type="button"> <!-- TODO: para cada tarefa no banco, pegar dados referentes às tarefas EM PROGRESSO -->
-                        <div><h3>Finalizado</h3></div>
-                        <div class="done">
-                            <h4>placeholder</h4>
-                            <i class="fa-solid fa-check"></i>
-                            <button><i class="fa-solid fa-trash-can"></i></button>
+                    <div class="field"><h3>Em Progresso</h3></div>
+                    <div id="in_progress">
+                        <?php
+                        foreach ($tarefas_do_usuario as $tarefa):
+                        ?>
+                        <div class="task">
+                            <div class=<?=$tarefa->task_status == "in_progress" ? "left_arrow" : "hidden"?>>
+                                <button type="button"><i class="fa-regular fa-circle-left"></i></button>
+                            </div>
+
+                            <div class="task-content">
+                                <div class="always-visible">
+                                    <h4><?=$tarefa->task_status == "in_progress" ? $tarefa->task_name : ""?></h4> 
+                                    <button class=<?=$tarefa->task_status == "in_progress" ? "" : "hidden"?>><i class="fa-solid fa-pen-to-square"></i></button>
+                                    <button class=<?=$tarefa->task_status == "in_progress" ? "" : "hidden"?>><i class="fa-solid fa-trash-can"></i></button>
+                                </div>
+                                <div class="desc hidden">
+                                    <p>
+                                        <?=$tarefa->task_description?>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class=<?=$tarefa->task_status == "in_progress" ? "right_arrow" : "hidden"?>>
+                                <button type="button"><i class="fa-regular fa-circle-right"></i></button>
+                            </div>
                         </div>
-                    </button>
+                        <?php
+                        endforeach;
+                        ?>
+                    </div>
+                </div>
+
+                <div class="tasks-status">
+                    <div class="field"><h3>Finalizado</h3></div>
+                    <div class="done">
+                        <?php
+                        foreach ($tarefas_do_usuario as $tarefa):
+                        ?>
+                        <div class=<?=$tarefa->task_status == "finished" ? "task" : "hidden"?>>
+                            <div class="task-content">
+                                <div class="always-visible">
+                                    <h4><?=$tarefa->task_status == "finished" ? $tarefa->task_name : ""?></h4>
+                                    <i class="fa-solid fa-check"></i>
+                                    <button><i class="fa-solid fa-trash-can"></i></button>
+                                </div>
+                                <div class="desc hidden">
+                                    <p>
+                                        <?=$tarefa->task_description?>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <?php
+                        endforeach;
+                        ?>
+                    </div>
                 </div>
             </div>
         </div>

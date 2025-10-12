@@ -65,15 +65,15 @@
                 </div>
                 <div class="stats">
                     <div class="hp">
-                        <i class="fa-solid fa-heart"></i>
-                        <i class="fa-solid fa-heart"></i>
-                        <i class="fa-solid fa-heart"></i>
+                        <i class="fa-solid fa-heart text-red-700"></i>
+                        <i class="fa-solid fa-heart text-red-700"></i>
+                        <i class="fa-solid fa-heart text-red-700"></i>
                     </div>
                     <div class="xp">
-                        <progress value="0" max="100">0%</progress>
+                        <progress value="0" max="100" class="bg-sky-200">0%</progress>
                     </div>
                     <div class="gold">
-                        <i class="fa-solid fa-coins"></i>
+                        <i class="fa-solid fa-coins text-yellow-400"></i>
                     </div>
                 </div>
             </div>

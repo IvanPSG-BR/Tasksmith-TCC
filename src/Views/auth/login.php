@@ -15,11 +15,11 @@
             <div id="campos">
                 <div class="campo-form">
                     <label for="username">Usuário:</label>
-                    <input type="text" name="username" id="username">
+                    <input type="text" name="username" id="username" required>
                 </div>
                 <div class="campo-form">
                     <label for="password">Senha:</label>
-                    <input type="password" name="password" id="password">
+                    <input type="password" name="password" id="password" required>
                 </div>            
             </div>
             <div class="btn-form">

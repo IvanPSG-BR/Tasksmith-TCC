@@ -15,19 +15,19 @@
             <div id="pag_esq">
                 <div class="campo-form flex flex-col">
                     <label for="username">Usuário:</label>
-                    <input type="text" name="username" id="username">
+                    <input type="text" name="username" id="username" required>
                 </div>
                 <div class="campo-form flex flex-col">
                     <label for="password">Senha:</label>
-                    <input type="password" name="password" id="password">
+                    <input type="password" name="password" id="password" required>
                 </div>
                 <div class="campo-form flex flex-col">
                     <label for="pass_confirm">Confirme a Senha:</label>
-                    <input type="password" name="pass_confirm" id="pass_confirm">
+                    <input type="password" name="pass_confirm" id="pass_confirm" required>
                 </div>
                 <div class="campo-form flex flex-col">
                     <label for="character_name">Nome do Personagem:</label>
-                    <input type="text" name="character_name" id="character_name">
+                    <input type="text" name="character_name" id="character_name" required>
                 </div>
             </div>
             <div id="pag_dir">
