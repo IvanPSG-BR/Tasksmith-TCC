@@ -87,23 +87,23 @@
 
             <div id="manager">
                 <div class="tasks-status">
-                    <div class="field"><h3>A Fazer</h3></div>
+                    <div class="field"><h3 id="status">A Fazer</h3></div>
                     <div class="to-do">
                         <?php
                         foreach ($tarefas_do_usuario as $tarefa):
                         ?>
                         <div class="task">
                             <div class=<?=$tarefa->task_status == "to_do" ? "left_arrow" : "hidden"?>>
-                                <button type="button"><i class="fa-regular fa-circle-left"></i></button>
+                                <button type="button" id="left_btn"><i class="fa-regular fa-circle-left"></i></button>
                             </div>
 
                             <div class="task-content">
                                 <div class="always-visible">
-                                    <h4><?=$tarefa->task_status == "to_do" ? $tarefa->task_name : ""?></h4> 
-                                    <button class=<?=$tarefa->task_status == "to_do" ? "" : "hidden"?>><i class="fa-solid fa-pen-to-square"></i></button>
-                                    <button class=<?=$tarefa->task_status == "to_do" ? "" : "hidden"?>><i class="fa-solid fa-trash-can"></i></button>
+                                    <h4 id="task_name"><?=$tarefa->task_status == "to_do" ? $tarefa->task_name : ""?></h4> 
+                                    <button id="edit_btn" class="<?=$tarefa->task_status == "to_do" ? "" : "hidden"?>"><i class="fa-solid fa-pen-to-square"></i></button>
+                                    <button id="delete_btn" class="<?=$tarefa->task_status == "to_do" ? "" : "hidden"?>"><i class="fa-solid fa-trash-can"></i></button>
                                 </div>
-                                <div class="desc hidden">
+                                <div class="desc hidden" id="description">
                                     <p>
                                         <?=$tarefa->task_description?>
                                     </p>
@@ -111,7 +111,7 @@
                             </div>
 
                             <div class=<?=$tarefa->task_status == "to_do" ? "right_arrow" : "hidden"?>>
-                                <button type="button"><i class="fa-regular fa-circle-right"></i></button>
+                                <button type="button" id="right_btn"><i class="fa-regular fa-circle-right"></i></button>
                             </div>
                         </div>
                         <?php
@@ -121,23 +121,23 @@
                 </div>
 
                 <div class="tasks-status">
-                    <div class="field"><h3>Em Progresso</h3></div>
+                    <div class="field"><h3 id="status">Em Progresso</h3></div>
                     <div id="in_progress">
                         <?php
                         foreach ($tarefas_do_usuario as $tarefa):
                         ?>
                         <div class="task">
                             <div class=<?=$tarefa->task_status == "in_progress" ? "left_arrow" : "hidden"?>>
-                                <button type="button"><i class="fa-regular fa-circle-left"></i></button>
+                                <button type="button" id="left_btn"><i class="fa-regular fa-circle-left"></i></button>
                             </div>
 
                             <div class="task-content">
                                 <div class="always-visible">
                                     <h4><?=$tarefa->task_status == "in_progress" ? $tarefa->task_name : ""?></h4> 
-                                    <button class=<?=$tarefa->task_status == "in_progress" ? "" : "hidden"?>><i class="fa-solid fa-pen-to-square"></i></button>
-                                    <button class=<?=$tarefa->task_status == "in_progress" ? "" : "hidden"?>><i class="fa-solid fa-trash-can"></i></button>
+                                    <button id="edit_btn" class="<?=$tarefa->task_status == "in_progress" ? "" : "hidden"?>"><i class="fa-solid fa-pen-to-square"></i></button>
+                                    <button id="delete_btn" class="<?=$tarefa->task_status == "in_progress" ? "" : "hidden"?>"><i class="fa-solid fa-trash-can"></i></button>
                                 </div>
-                                <div class="desc hidden">
+                                <div class="desc hidden" id="description">
                                     <p>
                                         <?=$tarefa->task_description?>
                                     </p>
@@ -145,7 +145,7 @@
                             </div>
 
                             <div class=<?=$tarefa->task_status == "in_progress" ? "right_arrow" : "hidden"?>>
-                                <button type="button"><i class="fa-regular fa-circle-right"></i></button>
+                                <button type="button" id="right_btn"><i class="fa-regular fa-circle-right"></i></button>
                             </div>
                         </div>
                         <?php
@@ -155,7 +155,7 @@
                 </div>
 
                 <div class="tasks-status">
-                    <div class="field"><h3>Finalizado</h3></div>
+                    <div class="field"><h3 id="status">Finalizado</h3></div>
                     <div class="done">
                         <?php
                         foreach ($tarefas_do_usuario as $tarefa):
