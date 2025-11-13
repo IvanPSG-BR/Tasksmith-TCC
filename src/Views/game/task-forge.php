@@ -1,7 +1,12 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <?php $assets = WEBROOT . "src/assets";?>
+    <?php 
+    use App\Models\Character;
+    $assets = WEBROOT . "src/assets";
+    $personagem = new Character();
+    $nome_personagem = $personagem->findByUserId($_SESSION["user_id"])["character_name"];
+    ?>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tasksmith - Taskforge</title>
@@ -60,7 +65,7 @@
         <div id="container">
             <div id="info">
                 <div class="character">
-                    <h2>Nome do Personagem</h2>
+                    <h2><?=$nome_personagem?></h2>
                     <img src=<?=$assets . "/images/character-1.png"?> alt="">
                 </div>
                 <div class="stats">

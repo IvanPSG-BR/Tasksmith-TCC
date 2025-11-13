@@ -17,122 +17,146 @@ class GameController {
     }
 
     public function taskedit_process() {
-        $task_id = filter_input(INPUT_POST, "task_id", FILTER_VALIDATE_INT);
-        if (!$task_id) {
-            header("HTTP/1.1 400 Bad Request");
-            exit;
+        header('Content-Type: application/json');
+        $data = json_decode(file_get_contents("php://input"), true);
+
+        $taskId = filter_var($data['taskId'] ?? null);
+        $taskName = filter_var($data['taskName'] ?? null);
+        $taskDescription = filter_var($data['taskDescription'] ?? null);
+
+        if (!$taskId) {
+            http_response_code(400);
+            echo json_encode(['success' => false, 'error' => 'ID da tarefa é obrigatório.']);
+            return;
         }
 
         try {
             $taskModel = new Task();
-            $existing_task = $taskModel->findById($task_id);
+            $existing_task = $taskModel->findById($taskId);
 
-            if (!$existing_task || $existing_task->user_id !== $_SESSION["user_id"]) {
-                header("HTTP/1.1 403 Forbidden");
-                exit;
+            if (!$existing_task || (int)$existing_task->user_id !== $_SESSION["user_id"]) {
+                http_response_code(403);
+                echo json_encode(['success' => false, 'error' => 'Acesso negado.']);
+                return;
             }
 
             $task_data = [
-                'task_name' => filter_input(INPUT_POST, "task_name"),
-                'task_description' => filter_input(INPUT_POST, "task_description"),
-                'task_difficulty' => filter_input(INPUT_POST, "task_difficulty", FILTER_VALIDATE_INT),
-                'timeout' => filter_input(INPUT_POST, "task_timeout"),
+                'task_name' => $taskName,
+                'task_description' => $taskDescription,
             ];
             
-            // Remove chaves nulas para não sobrescrever com nada
-            $task_data = array_filter($task_data, function($value) {
-                return $value !== null && $value !== '';
-            });
+            $task_data = array_filter($task_data, fn($value) => $value !== null);
 
-            $taskModel->updateTask($task_id, $task_data);
-            header("Location: /game/task-board");
-            exit;
+            if ($taskModel->updateTask($taskId, $task_data)) {
+                echo json_encode(['success' => true]);
+            } else {
+                http_response_code(500);
+                echo json_encode(['success' => false, 'error' => 'Erro ao atualizar a tarefa.']);
+            }
         } catch (Exception $e) {
-            header("HTTP/1.1 500 Internal Server Error");
-            exit;
+            http_response_code(500);
+            echo json_encode(['success' => false, 'error' => 'Erro interno do servidor.']);
         }
     }
 
     public function taskdelete_process() {
         header('Content-Type: application/json');
-        parse_str(file_get_contents("php://input"), $data);
-        $task_id = filter_var($data['task_id'] ?? null, FILTER_VALIDATE_INT);
+        $data = json_decode(file_get_contents("php://input"), true);
+        $taskId = filter_var($data['taskId'] ?? null, FILTER_VALIDATE_INT);
 
-        if (!$task_id) {
+        if (!$taskId) {
             http_response_code(400);
-            echo json_encode(['error' => 'ID da tarefa é obrigatório.']);
+            echo json_encode(['success' => false, 'error' => 'ID da tarefa é obrigatório.']);
             return;
         }
 
         try {
             $taskModel = new Task();
-            $existing_task = $taskModel->findById($task_id);
+            $existing_task = $taskModel->findById($taskId);
 
-            if (!$existing_task || $existing_task->user_id !== $_SESSION['user_id']) {
+            if (!$existing_task || (int)$existing_task->user_id !== $_SESSION['user_id']) {
                 http_response_code(403);
-                echo json_encode(['error' => 'Acesso negado.']);
+                echo json_encode(['success' => false, 'error' => 'Acesso negado.']);
                 return;
             }
 
-            if ($taskModel->deleteTask($task_id)) {
-                http_response_code(200);
-                echo json_encode(['success' => 'Tarefa excluída.']);
+            if ($taskModel->deleteTask($taskId)) {
+                echo json_encode(['success' => true]);
             } else {
                 http_response_code(500);
-                echo json_encode(['error' => 'Erro ao excluir a tarefa.']);
+                echo json_encode(['success' => false, 'error' => 'Erro ao excluir a tarefa.']);
             }
         } catch (Exception $e) {
             http_response_code(500);
-            echo json_encode(['error' => 'Erro interno do servidor.']);
+            echo json_encode(['success' => false, 'error' => 'Erro interno do servidor.']);
         }
     }
 
     public function task_status_process() {
         header('Content-Type: application/json');
-        parse_str(file_get_contents("php://input"), $data);
+        $data = json_decode(file_get_contents("php://input"), true);
         
-        $task_id = filter_var($data['task_id'] ?? null, FILTER_VALIDATE_INT);
-        $task_status = filter_var($data['task_status'] ?? null);
+        $taskId = filter_var($data['taskId'] ?? null, FILTER_VALIDATE_INT);
+        $newStatus = filter_var($data['newStatus'] ?? null);
 
         $valid_statuses = ['to_do', 'in_progress', 'finished'];
-        if (!$task_id || !$task_status || !in_array($task_status, $valid_statuses)) {
+        if (!$taskId || !$newStatus || !in_array($newStatus, $valid_statuses)) {
             http_response_code(400);
-            echo json_encode(['error' => 'Parâmetros inválidos.']);
+            echo json_encode(['success' => false, 'error' => 'Parâmetros inválidos.']);
             return;
         }
 
         try {
             $taskModel = new Task();
-            $task = $taskModel->findById($task_id);
+            $task = $taskModel->findById($taskId);
 
-            if (!$task || $task->user_id !== $_SESSION['user_id']) {
+            if (!$task || (int)$task->user_id !== $_SESSION['user_id']) {
                 http_response_code(403);
-                echo json_encode(['error' => 'Acesso negado.']);
+                echo json_encode(['success' => false, 'error' => 'Acesso negado.']);
                 return;
             }
 
-            // Previne que as recompensas sejam aplicadas múltiplas vezes
-            if ($task->task_status === 'finished' && $task_status === 'finished') {
-                http_response_code(200);
-                echo json_encode(['success' => 'Tarefa já estava finalizada.']);
-                return;
+            // Verifica se a tarefa já estava finalizada para evitar aplicar recompensas duplicadas
+            $wasAlreadyFinished = ($task->task_status === 'finished');
+
+            $taskModel->updateStatus($taskId, $newStatus);
+
+            $response = ['success' => true];
+
+            // Aplica recompensas apenas se a tarefa não estava finalizada antes
+            if ($newStatus === 'finished' && !$wasAlreadyFinished) {
+                $rewardResult = GameService::applyTaskRewards($taskId, $_SESSION['user_id']);
+                if ($rewardResult['success']) {
+                    $response['character'] = [
+                        'level' => $rewardResult['character']->level,
+                        'xp' => $rewardResult['character']->xp,
+                        'hp' => $rewardResult['character']->hp,
+                        'gold_amount' => $rewardResult['character']->gold_amount
+                    ];
+                    $response['rewards'] = $rewardResult['rewards'];
+                } else {
+                    error_log("Erro ao aplicar recompensas para tarefa {$taskId}: " . $rewardResult['error']);
+                    $response['warning'] = 'Tarefa atualizada, mas houve problema ao aplicar recompensas';
+                }
+            } else {
+                // Se não aplicou recompensas, ainda retorna dados atuais do personagem
+                $characterModel = new \App\Models\Character();
+                $updatedCharacter = $characterModel->findByUserId($_SESSION['user_id']);
+                if ($updatedCharacter) {
+                    $response['character'] = [
+                        'level' => $updatedCharacter->level,
+                        'xp' => $updatedCharacter->xp,
+                        'hp' => $updatedCharacter->hp,
+                        'gold_amount' => $updatedCharacter->gold_amount
+                    ];
+                }
             }
 
-            $taskModel->updateStatus($task_id, $task_status);
-            
-            $message = 'Status da tarefa atualizado.';
-
-            if ($task_status === 'finished') {
-                GameService::completeTask($task_id, $_SESSION['user_id']);
-                $message = 'Status da tarefa atualizado e recompensas aplicadas.';
-            }
-            
-            http_response_code(200);
-            echo json_encode(['success' => $message]);
+            echo json_encode($response);
 
         } catch (Exception $e) {
             http_response_code(500);
-            echo json_encode(['error' => 'Erro interno do servidor.']);
+            echo json_encode(['success' => false, 'error' => 'Erro interno do servidor.']);
         }
     }
 
